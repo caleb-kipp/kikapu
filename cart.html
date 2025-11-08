@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cart — Caleb's Store (Mega Cart)</title>
+  <meta name="description" content="Caleb's Store — advanced cart with real payment integrations (Stripe, Mpesa, Airtel) demo." />
+        <script src="index1.js"></script>
+             <script src="privacy.js"></script>
+  <!-- Replace with your Stripe publishable key in the script below -->
+  <style>
+    /* ====== Base / variables ====== */
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --danger:#ef4444;
+      --glass: rgba(255,255,255,0.7);
+      --shadow: 0 6px 18px rgba(20,30,50,0.08);
+      --radius: 14px;
+      --gap:14px;
+      --green:#16a34a;
+      --max-w:1200px;
+      --text:#0f172a;
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --card:#081026;
+      --muted:#94a3b8;
+      --accent:#60a5fa;
+      --glass: rgba(14,20,34,0.6);
+      --shadow: 0 8px 30px rgba(0,0,0,0.6);
+      --text:#e6eef8;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg), #e9eef8 120%);
+      color:var(--text);padding:24px;display:flex;justify-content:center;
+    }
+
+    .wrap{max-width:var(--max-w);width:100%;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:grid;place-items:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}
+    nav a{margin-right:12px;color:var(--muted);text-decoration:none}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow)}
+    .btn:active{transform:translateY(1px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted)}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    h1,h2,h3{margin:0 0 8px 0}
+    h2{font-size:18px}
+    .muted{color:var(--muted)}
+    .small{font-size:13px;color:var(--muted)}
+    .grid{display:flex;gap:var(--gap);flex-wrap:wrap}
+
+    /* ====== Left column ====== */
+    section{min-width:300px}
+    #cart-count-badge{background:var(--accent);color:white;padding:4px 8px;border-radius:999px;font-size:13px}
+    .cart-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+    .cart-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;transition:transform .22s ease,opacity .22s;overflow:hidden}
+    .cart-item img{width:110px;height:82px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .cart-meta{flex:1}
+    .cart-meta h3{margin:0;font-size:16px}
+    .specs label{font-size:13px;color:var(--muted);margin-right:12px}
+    .qty-control input{width:64px;padding:6px;border-radius:8px;border:1px solid #e6e9ef}
+    .total-line{font-weight:700;font-size:15px;margin-top:6px}
+    .delete-btn{background:transparent;border:none;font-size:18px;cursor:pointer}
+
+    /* Empty */
+    .empty{padding:24px;text-align:center;color:var(--muted)}
+
+    /* ====== Right summary ====== */
+    aside{position:relative}
+    .summary-row{display:flex;justify-content:space-between;padding:6px 0}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,#e6e9ef,transparent);margin:10px 0;border-radius:2px}
+    .address-list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+    .address-item{padding:8px;border-radius:8px;border:1px dashed rgba(0,0,0,0.06);display:flex;justify-content:space-between;align-items:center}
+    .pay-method { padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:transparent}
+    .pay-method.active{outline:2px solid rgba(37,99,235,0.14);background:linear-gradient(90deg,var(--glass),transparent)}
+
+    /* recommendations */
+    .recommendations{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .related-item,.bundle-item{width:150px;background:linear-gradient(180deg,transparent, rgba(0,0,0,0.02));border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;align-items:center}
+    .related-item img{width:100%;height:80px;object-fit:cover;border-radius:8px}
+    .related-content h4{font-size:14px;margin:0}
+    .related-content p{margin:0}
+
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:60}
+    .lightbox img{max-width:90%;max-height:90%;border-radius:8px}
+
+    /* Toast */
+    .toast{position:fixed;right:20px;bottom:20px;background:var(--card);padding:10px 14px;border-radius:10px;box-shadow:var(--shadow);display:none}
+
+    /* Animations */
+    .fade-in{animation:fadeIn .28s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr; padding-bottom:60px}
+      aside{order:2}
+    }
+
+    /* Dark mode toggle */
+    .toggle{display:flex;align-items:center;gap:8px}
+    .switch{width:44px;height:26px;background:#111;border-radius:999px;position:relative;cursor:pointer}
+    .switch .dot{position:absolute;width:20px;height:20px;border-radius:999px;top:3px;left:3px;background:white;transition:left .18s}
+    [data-theme="dark"] .switch{background:#23304a}
+    [data-theme="dark"] .switch .dot{left:21px}
+
+    /* small helpers */
+    .muted.small.inline{display:inline-block;margin-left:8px}
+    .controls-row{display:flex;align-items:center;gap:8px}
+    textarea{font-family:inherit}
+    .price{font-weight:700}
+    .badge{background:var(--green);color:white;padding:4px 8px;border-radius:999px;font-size:12px}
+  </style>
+</head>
+<body>
+
+  <div class="wrap" id="app" role="application" aria-label="Shopping cart application">
+    <header style="grid-column:1/-1;display:flex;align-items:center;justify-content:space-between">
+      <div class="brand">
+        <a class="logo" href="index.html" aria-label="Caleb's Store logo">CS</a>
+        <div>
+          <div style="font-weight:700">Caleb's Store</div>
+          <div class="small muted">Mega Cart</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <nav aria-label="Top links">
+          <a href="index.html">Home</a>
+          <a href="cart.html">Cart</a>
+          <a href="checkout.html">Checkout</a>
+          <a href="orders.html">Orders</a>
+        </nav>
+
+        <div class="toggle" title="Toggle dark mode">
+          <div class="small muted">Dark</div>
+          <div class="switch" id="themeSwitch" role="switch" aria-checked="false" tabindex="0">
+            <div class="dot"></div>
+          </div>
+        </div>
+
+        <button class="btn" id="view-cart-btn" onclick="document.getElementById('cart-focus').scrollIntoView({behavior:'smooth'})">View cart <span id="cart-count-badge" style="margin-left:8px">0</span></button>
+      </div>
+    </header>
+
+    <!-- Left: Cart Items -->
+    <section aria-label="Cart area" id="cart-focus">
+      <div class="card" aria-labelledby="items-heading">
+        <h2 id="items-heading">Items in your cart <span id="cart-sub-badge" class="muted" style="font-weight:600;margin-left:8px"></span></h2>
+
+        <div id="cart-empty" class="muted empty" style="display:none;padding:16px">Your cart is empty. <a href="index.html">Continue shopping</a></div>
+
+        <div id="cart-list" class="cart-list" aria-live="polite"></div>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <!-- Promo / Gift / Notes -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <label for="promo-code" class="small">Promo / Coupon</label>
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <input type="text" id="promo-code" placeholder="Enter promo code" aria-label="Promo code" style="flex:1;padding:10px;border-radius:8px;border:1px solid #e6e9ef" />
+              <button class="btn" id="apply-promo">Apply</button>
+            </div>
+            <div id="promo-feedback" class="small muted" style="margin-top:8px"></div>
+          </div>
+
+          <div style="min-width:200px">
+            <label class="small">Gift wrapping</label>
+            <div class="controls-row" style="margin-top:6px">
+              <label><input type="checkbox" id="gift-wrap"> Add gift wrapping ($5.00)</label>
+            </div>
+          </div>
+
+          <div style="flex-basis:100%;">
+            <label class="small" for="order-notes">Order / item notes (optional)</label>
+            <textarea id="order-notes" rows="2" placeholder="Add any notes for the seller (e.g., color/size reminders)" aria-label="Order notes" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <!-- Recommendations / Cross-sells -->
+      <div class="card" aria-labelledby="recommendations-heading">
+        <h2 id="recommendations-heading">You May Also Like</h2>
+        <p class="small muted">Products recommended based on what's in your cart.</p>
+        <div id="recommendations" class="recommendations" aria-live="polite"></div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <!-- Reviews & AR placeholder -->
+      <div class="card" aria-labelledby="extras-heading">
+        <h2 id="extras-heading">Product Extras</h2>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <h4>Customer reviews (demo)</h4>
+            <div id="reviews-area" class="reviews" aria-live="polite"></div>
+          </div>
+          <div style="width:220px">
+            <h4>AR / 360 placeholder</h4>
+            <div class="small muted">Integrate <code>&lt;model-viewer&gt;</code> or WebXR for AR experiences. (Demo placeholder)</div>
+            <div style="margin-top:8px"><button class="btn" id="open-ar-btn">Open AR (demo)</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Summary & Checkout -->
+    <aside>
+      <div class="card" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Order Summary</h2>
+
+        <div class="summary-row"><div>Items subtotal</div><div id="subtotal-amount">$0.00</div></div>
+
+        <div style="margin-top:6px">
+          <label for="shipping-method" class="small">Shipping method</label>
+          <select id="shipping-method" aria-label="Shipping method" style="width:100%;padding:8px;border-radius:8px;margin-top:6px">
+            <option value="5" selected>Standard — $5.00</option>
+            <option value="15">Express — $15.00</option>
+            <option value="0">Pickup — $0.00</option>
+          </select>
+        </div>
+
+        <div style="margin-top:6px">
+          <label for="tax-rate" class="small">Tax rate</label>
+          <select id="tax-rate" aria-label="Tax rate" style="width:100%;padding:8px;border-radius:8px;margin-top:6px">
+            <option value="0">0%</option>
+            <option value="0.05" selected>5%</option>
+            <option value="0.12">12%</option>
+          </select>
+        </div>
+
+        <div class="summary-row"><div>Shipping</div><div id="shipping-amount">$0.00</div></div>
+        <div class="summary-row"><div>Tax</div><div id="tax-amount">$0.00</div></div>
+        <div class="summary-row"><div>Discount</div><div id="discount-amount">-$0.00</div></div>
+
+        <div class="divider"></div>
+
+        <div class="summary-row" style="font-size:18px;font-weight:700"><div>Total</div><div id="total-amount">$0.00</div></div>
+
+        <div style="margin-top:12px">
+          <label class="small">Delivery address</label>
+          <div id="address-book" class="address-list"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" id="add-address-btn">Add Address</button>
+            <button class="btn-ghost" id="edit-address-btn">Edit Selected</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label class="small">Payment</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <button class="pay-method" data-id="mpesa" id="pay-mpesa">Mpesa</button>
+            <button class="pay-method" data-id="airtel" id="pay-airtel">Airtel Money</button>
+            <button class="pay-method" data-id="card" id="pay-card">Card (Stripe)</button>
+          </div>
+          <div class="small muted" style="margin-top:8px">Real payment happens on the checkout page using secure gateway integration.</div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn" id="checkout-button">Proceed to Checkout</button>
+          <button class="btn-ghost" id="save-wish-btn">Save Cart to Wishlist</button>
+        </div>
+
+        <div style="margin-top:10px;font-size:13px;color:var(--muted)">
+          <div>Secure checkout — in production, initiate payments server-side (Stripe/Mpesa/Airtel) and validate amounts server-side.</div>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <!-- Bundles & upsells -->
+      <div class="card" aria-labelledby="upsell-heading">
+        <h3 id="upsell-heading">Offers & Bundles</h3>
+        <div id="bundles" style="display:flex;flex-direction:column;gap:10px;margin-top:8px"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" onclick="closeLightbox(event)">
+    <img id="lightbox-img" src="" alt="Zoomed image">
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Stripe JS (only used for redirect to Checkout) -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script>
+    /************************************************************************
+     * Mega cart.js - integrated & improved
+     *
+     * Notes:
+     * - For real payments you MUST implement server endpoints:
+     *    POST /api/create-checkout-session  -> create Stripe Checkout session (server uses Stripe secret key)
+     *    POST /api/mpesa/pay               -> trigger MPESA STK push (server handles credentials & tokens)
+     *    POST /api/airtel/pay              -> trigger Airtel Money payment (server handles credentials)
+     *
+     * - This client calls those endpoints and expects JSON responses.
+     * - Replace STRIPE_PUBLISHABLE_KEY below with your Stripe publishable key.
+     ************************************************************************/
+
+    // ====== Config ======
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOURS'; // <-- replace
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+    // Simple toast helper
+    const toastEl = document.getElementById('toast');
+    function showToast(msg, ms = 3000) {
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      setTimeout(() => { toastEl.style.display = 'none'; }, ms);
+    }
+
+    // Helper: currency format
+    const fmt = n => '$' + Number(n||0).toFixed(2);
+
+    // ======= Load cart from localStorage (backwards compatible) =======
+    let cart = JSON.parse(localStorage.getItem('ss_cart') || '[]');
+
+    // if no cart, seed demo item (optional)
+    if(!cart.length){
+      // leave empty by default; uncomment to seed demo:
+      // cart.push({ title: 'Caleb Tee', price: 24.99, quantity: 1, image: 'https://via.placeholder.com/300x200?text=Caleb+Tee', description: 'Comfort cotton tee', colors:['Red','Blue','Black'], sizes:['S','M','L']});
+      // saveCart();
+    }
+
+    // ======= DOM refs =======
+    const $ = sel => document.querySelector(sel);
+    const cartList = document.getElementById('cart-list');
+    const cartBadge = document.getElementById('cart-count-badge');
+    const cartSubBadge = document.getElementById('cart-sub-badge');
+    const subtotalAmount = document.getElementById('subtotal-amount');
+    const shippingAmount = document.getElementById('shipping-amount');
+    const taxAmount = document.getElementById('tax-amount');
+    const totalAmount = document.getElementById('total-amount');
+    const discountAmount = document.getElementById('discount-amount');
+    const shippingSelect = document.getElementById('shipping-method');
+    const taxSelect = document.getElementById('tax-rate');
+    const giftWrapCheckbox = document.getElementById('gift-wrap');
+    const promoInput = document.getElementById('promo-code');
+    const promoFeedback = document.getElementById('promo-feedback');
+    const recommendationsEl = document.getElementById('recommendations');
+    const bundlesEl = document.getElementById('bundles');
+    const reviewsArea = document.getElementById('reviews-area');
+    const addressBook = document.getElementById('address-book');
+    const orderNotes = document.getElementById('order-notes');
+
+    // Payment UI
+    const payMpesaBtn = document.getElementById('pay-mpesa');
+    const payAirtelBtn = document.getElementById('pay-airtel');
+    const payCardBtn = document.getElementById('pay-card');
+    let selectedPay = 'card';
+
+    // theme toggle
+    const themeSwitch = document.getElementById('themeSwitch');
+
+    // ======= Utilities =======
+    function saveCart(){
+      localStorage.setItem('ss_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function calculateTotals(){
+      // compute subtotal (digit-by-digit style, careful sums)
+      let subtotal = 0;
+      for (let i = 0; i < cart.length; i++){
+        const item = cart[i];
+        const qty = Number(item.quantity || 1);
+        // multiply as integers: convert to cents
+        const cents = Math.round(Number(item.price || 0) * 100);
+        subtotal += cents * qty;
+      }
+      // convert back to dollars
+      subtotal = subtotal / 100;
+
+      // shipping
+      const shipping = Number(shippingSelect.value || 0);
+      // gift wrap
+      const gift = giftWrapCheckbox.checked ? 5.00 : 0.00;
+
+      // discount (managed by applyPromo)
+      const discount = Number(currentDiscount) || 0;
+
+      // tax on (subtotal + shipping + gift - discount)
+      const taxRate = Number(taxSelect.value || 0);
+      const taxable = Math.max(0, subtotal + shipping + gift - discount);
+      const tax = +(taxRate * taxable);
+
+      const total = +(subtotal + shipping + gift + tax - discount);
+
+      return {
+        subtotal: +(subtotal.toFixed(2)),
+        shipping: +(shipping.toFixed(2)),
+        gift: +(gift.toFixed(2)),
+        tax: +(tax.toFixed(2)),
+        discount: +(discount.toFixed(2)),
+        total: +(total.toFixed(2))
+      };
+    }
+
+    // ======= Promo logic (demo codes) =======
+    let currentDiscount = 0;
+    const promoCatalog = {
+      'WELCOME10': { type: 'percent', value: 0.10, desc: '10% off' },
+      'FIVEOFF': { type: 'flat', value: 5.00, desc: '$5 off' },
+      'FREESHIP': { type: 'freeship', value: 5.00, desc: 'Free standard shipping' }
+    };
+
+    document.getElementById('apply-promo').addEventListener('click', applyPromo);
+    function applyPromo(){
+      const code = (promoInput.value || '').trim().toUpperCase();
+      if(!code){ promoFeedback.textContent = 'Enter a promo code.'; return; }
+      const hit = promoCatalog[code];
+      if(!hit){ promoFeedback.textContent = 'Invalid promo code.'; currentDiscount = 0; updateSummary(); return; }
+
+      if(hit.type === 'percent'){
+        // percent of subtotal
+        const totals = calculateTotals();
+        currentDiscount = +(totals.subtotal * hit.value).toFixed(2);
+      } else if(hit.type === 'flat') {
+        currentDiscount = hit.value;
+      } else if(hit.type === 'freeship') {
+        // remove shipping cost if shipping is standard
+        if(Number(shippingSelect.value) === 5) {
+          currentDiscount = 5.00;
+        } else {
+          currentDiscount = 0;
+        }
+      }
+      promoFeedback.textContent = `Promo applied: ${hit.desc}`;
+      updateSummary();
+    }
+
+    // ======= Render cart UI =======
+    function renderCart(){
+      // update badges
+      cartBadge.textContent = cart.length;
+      cartSubBadge.textContent = `${cart.length} item${cart.length!==1 ? 's' : ''}`;
+
+      if(!cart.length){
+        document.getElementById('cart-empty').style.display = 'block';
+        cartList.innerHTML = '';
+        updateSummary();
+        return;
+      } else {
+        document.getElementById('cart-empty').style.display = 'none';
+      }
+
+      cartList.innerHTML = cart.map((item, i) => {
+        const qty = item.quantity || 1;
+        const image = item.image || 'https://via.placeholder.com/300x200?text=Product';
+        const colors = item.colors || ['Red','Blue','Black'];
+        const sizes = item.sizes || ['S','M','L'];
+        const colorOptions = colors.map(c => `<option ${item.color===c ? 'selected' : ''}>${c}</option>`).join('');
+        const sizeOptions = sizes.map(s => `<option ${item.size===s ? 'selected' : ''}>${s}</option>`).join('');
+        return `
+          <div class="cart-item fade-in" data-idx="${i}">
+            <img src="${image}" alt="${item.title}">
+            <div class="cart-meta">
+              <h3>${item.title}</h3>
+              <div class="muted small">${item.description || ''}</div>
+              <div class="specs" style="margin-top:8px">
+                <label>Color:
+                  <select data-spec="color" data-idx="${i}">
+                    ${colorOptions}
+                  </select>
+                </label>
+                <label>Size:
+                  <select data-spec="size" data-idx="${i}">
+                    ${sizeOptions}
+                  </select>
+                </label>
+              </div>
+              <div class="qty-control" style="margin-top:8px;">
+                <span>Qty:</span>
+                <input type="number" min="1" value="${qty}" data-qty="${i}" />
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="muted small">Unit: ${fmt(item.price)}</div>
+              <div class="total-line">${fmt((item.price * qty).toFixed(2))}</div>
+              <div style="margin-top:8px">
+                <button class="delete-btn" data-del="${i}" title="Remove item">🗑️</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // attach listeners
+      cartList.querySelectorAll('[data-qty]').forEach(inp => {
+        inp.addEventListener('change', e => {
+          const i = +inp.getAttribute('data-qty');
+          cart[i].quantity = Math.max(1, parseInt(inp.value) || 1);
+          saveCart();
+        });
+      });
+      cartList.querySelectorAll('[data-del]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = +btn.getAttribute('data-del');
+          cart.splice(i,1);
+          saveCart();
+          showToast('Item removed');
+        });
+      });
+      cartList.querySelectorAll('[data-spec]').forEach(sel => {
+        sel.addEventListener('change', e => {
+          const i = +sel.getAttribute('data-idx');
+          const spec = sel.getAttribute('data-spec');
+          cart[i][spec] = sel.value;
+          saveCart();
+        });
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary(){
+      const totals = calculateTotals();
+      subtotalAmount.textContent = fmt(totals.subtotal);
+      shippingAmount.textContent = fmt(totals.shipping + totals.gift);
+      taxAmount.textContent = fmt(totals.tax);
+      discountAmount.textContent = '-'+fmt(totals.discount);
+      totalAmount.textContent = fmt(totals.total);
+    }
+
+    // Shipping / tax / gift changes update instantly
+    shippingSelect.addEventListener('change', updateSummary);
+    taxSelect.addEventListener('change', updateSummary);
+    giftWrapCheckbox.addEventListener('change', updateSummary);
+
+    // ======= Recommendations / Bundles (demo static data) =======
+    const related = [
+      { id:'hoodie', title: "Modern Hoodie", price: 29.99, image: "https://via.placeholder.com/300x200?text=Hoodie" },
+      { id:'cap', title: "Stylish Cap", price: 15.49, image: "https://via.placeholder.com/300x200?text=Cap" },
+      { id:'shoes', title: "Running Shoes", price: 59.99, image: "https://via.placeholder.com/300x200?text=Shoes" },
+      { id:'watch', title: "Smart Watch", price: 99.99, image: "https://via.placeholder.com/300x200?text=Watch" },
+      { id:'earbuds', title: "Wireless Earbuds", price: 49.99, image: "https://via.placeholder.com/300x200?text=Earbuds" }
+    ];
+    function renderRelated(){
+      recommendationsEl.innerHTML = related.map(p => `
+        <div class="related-item">
+          <img src="${p.image}" alt="${p.title}" />
+          <div class="related-content">
+            <h4>${p.title}</h4>
+            <p class="price">${fmt(p.price)}</p>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="btn add-related" data-add='${JSON.stringify(p)}'>Add</button>
+              <button class="btn-ghost buy-now" data-buy='${encodeURIComponent(p.title)}'>Buy</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      document.querySelectorAll('.add-related').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = JSON.parse(btn.getAttribute('data-add'));
+          item.quantity = 1;
+          cart.push(item);
+          saveCart();
+          showToast(`${item.title} added to cart`);
+        });
+      });
+      document.querySelectorAll('.buy-now').forEach(btn => btn.addEventListener('click', e => {
+        window.location.href = 'index.html#' + decodeURIComponent(btn.getAttribute('data-buy'));
+      }));
+    }
+    renderRelated();
+
+    // Bundles demo
+    const bundles = [
+      { title: 'Starter Pack', items: ['Cap','Tee'], price: 34.99 },
+      { title: 'Runner Pack', items: ['Shoes','Socks'], price: 69.99 }
+    ];
+    function renderBundles(){
+      bundlesEl.innerHTML = bundles.map(b => `
+        <div class="bundle-item">
+          <div style="font-weight:700">${b.title}</div>
+          <div class="small muted">${b.items.join(', ')}</div>
+          <div class="price">${fmt(b.price)}</div>
+          <div style="margin-top:6px"><button class="btn add-bundle" data-b='${JSON.stringify(b)}'>Add bundle</button></div>
+        </div>
+      `).join('');
+      document.querySelectorAll('.add-bundle').forEach(btn => {
+        btn.addEventListener('click', ()=> {
+          const b = JSON.parse(btn.getAttribute('data-b'));
+          cart.push({ title: b.title, price: b.price, quantity: 1, description: 'Bundle offer' });
+          saveCart();
+          showToast('Bundle added');
+        });
+      });
+    }
+    renderBundles();
+
+    // Reviews demo
+    const demoReviews = [
+      { name:'Alice', text:'Great quality and fast shipping.' },
+      { name:'Sam', text:'Loved the hoodie — comfy!' },
+      { name:'Priya', text:'Customer support was helpful.' }
+    ];
+    reviewsArea.innerHTML = demoReviews.map(r => `<div style="padding:8px;border-radius:8px;background:linear-gradient(180deg,transparent, rgba(0,0,0,0.02))"><strong>${r.name}</strong><div class="small muted">${r.text}</div></div>`).join('');
+
+    // ======= Address book (client-only demo) =======
+    let addresses = JSON.parse(localStorage.getItem('ss_addresses') || '[]');
+    function renderAddresses(){
+      if(!addresses.length){
+        addressBook.innerHTML = `<div class="small muted">No addresses. Add one.</div>`;
+        return;
+      }
+      addressBook.innerHTML = addresses.map((a, idx) => `
+        <div class="address-item">
+          <div>
+            <div style="font-weight:700">${a.name} ${a.isDefault ? '<span class="badge">Default</span>' : ''}</div>
+            <div class="small muted">${a.street}, ${a.city}, ${a.country}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="btn-ghost select-addr" data-idx="${idx}">Select</button>
+            <button class="btn-ghost del-addr" data-idx="${idx}">Delete</button>
+          </div>
+        </div>
+      `).join('');
+      document.querySelectorAll('.select-addr').forEach(btn => btn.addEventListener('click', e => {
+        const i = +btn.getAttribute('data-idx');
+        addresses = addresses.map((a, idx) => ({...a, isDefault: idx===i}));
+        localStorage.setItem('ss_addresses', JSON.stringify(addresses));
+        renderAddresses();
+        showToast('Address selected');
+      }));
+      document.querySelectorAll('.del-addr').forEach(btn => btn.addEventListener('click', e => {
+        const i = +btn.getAttribute('data-idx');
+        addresses.splice(i,1);
+        localStorage.setItem('ss_addresses', JSON.stringify(addresses));
+        renderAddresses();
+        showToast('Address deleted');
+      }));
+    }
+    renderAddresses();
+
+    // Add address button (simple prompt demo)
+    document.getElementById('add-address-btn').addEventListener('click', ()=>{
+      const name = prompt('Name (e.g., John Doe)');
+      if(!name) return;
+      const street = prompt('Street / line 1');
+      const city = prompt('City');
+      const country = prompt('Country');
+      addresses.push({ name, street, city, country, isDefault: addresses.length===0 });
+      localStorage.setItem('ss_addresses', JSON.stringify(addresses));
+      renderAddresses();
+      showToast('Address added');
+    });
+
+    // Edit selected: opens prompt to edit default address
+    document.getElementById('edit-address-btn').addEventListener('click', ()=>{
+      const idx = addresses.findIndex(a => a.isDefault);
+      if(idx === -1){ alert('Select an address first.'); return; }
+      const a = addresses[idx];
+      const name = prompt('Name', a.name) || a.name;
+      const street = prompt('Street', a.street) || a.street;
+      const city = prompt('City', a.city) || a.city;
+      const country = prompt('Country', a.country) || a.country;
+      addresses[idx] = { name, street, city, country, isDefault:true };
+      localStorage.setItem('ss_addresses', JSON.stringify(addresses));
+      renderAddresses();
+      showToast('Address updated');
+    });
+
+    // Save wishlist button (demo)
+    document.getElementById('save-wish-btn').addEventListener('click', ()=>{
+      localStorage.setItem('ss_wishlist', JSON.stringify(cart));
+      showToast('Cart saved to wishlist');
+    });
+
+    // AR placeholder
+    document.getElementById('open-ar-btn').addEventListener('click', ()=>{
+      showToast('AR viewer placeholder — implement <model-viewer> or WebXR on product pages.');
+    });
+
+    // Lightbox
+    function closeLightbox(e){
+      if(e.target.id === 'lightbox' || e.target.id === 'lightbox-img') {
+        document.getElementById('lightbox').style.display = 'none';
+      }
+    }
+    window.closeLightbox = closeLightbox;
+
+    // ======= Checkout and Payment integration =======
+
+    // Payment selection UI
+    function setPayMethod(id){
+      selectedPay = id;
+      document.querySelectorAll('.pay-method').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+    }
+    payMpesaBtn.addEventListener('click', ()=> setPayMethod('mpesa'));
+    payAirtelBtn.addEventListener('click', ()=> setPayMethod('airtel'));
+    payCardBtn.addEventListener('click', ()=> setPayMethod('card'));
+    setPayMethod('card');
+
+    // Proceed to checkout click handler
+    document.getElementById('checkout-button').addEventListener('click', async () => {
+      if(!cart.length){ alert('Your cart is empty.'); return; }
+      // save cart into session storage so checkout page can fetch it
+      sessionStorage.setItem('checkoutCart', JSON.stringify(cart));
+      sessionStorage.setItem('checkoutNotes', orderNotes.value || '');
+      // Depending on selected payment, either call server to create a payment or go to checkout page
+      if(selectedPay === 'card'){
+        // For Stripe Checkout: create session on server, then redirect
+        try{
+          showToast('Contacting payment gateway...');
+          const resp = await fetch('/api/create-checkout-session', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({
+              cart,
+              shippingMethod: shippingSelect.value,
+              taxRate: taxSelect.value,
+              discount: currentDiscount,
+              notes: orderNotes.value,
+              addresses
+            })
+          });
+          const data = await resp.json();
+          if(data && data.sessionId){
+            // redirect to Stripe checkout
+            await stripe.redirectToCheckout({ sessionId: data.sessionId });
+          } else {
+            throw new Error(data && data.error ? data.error : 'Invalid server response');
+          }
+        } catch(err){
+          console.error(err);
+          alert('Checkout failed: ' + err.message);
+        }
+      } else if(selectedPay === 'mpesa'){
+        // Trigger MPESA STK push via server
+        try{
+          const phone = prompt('Enter Mpesa phone number (e.g., 2547........):');
+          if(!phone) return;
+          showToast('Requesting STK push...');
+          const resp = await fetch('/api/mpesa/pay', {
+            method:'POST', headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ cart, phone, shippingMethod: shippingSelect.value, discount: currentDiscount })
+          });
+          const data = await resp.json();
+          if(data.success){
+            alert('STK push sent. Complete the payment on your phone.');
+            // Optionally poll /api/mpesa/status
+          } else {
+            alert('Mpesa payment failed: ' + (data.message || 'unknown'));
+          }
+        } catch(e){
+          console.error(e); alert('Mpesa request failed');
+        }
+      } else if(selectedPay === 'airtel'){
+        // Trigger Airtel payment (server integration)
+        try{
+          const phone = prompt('Enter Airtel phone number:');
+          if(!phone) return;
+          showToast('Requesting Airtel payment...');
+          const resp = await fetch('/api/airtel/pay', {
+            method:'POST', headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ cart, phone, shippingMethod: shippingSelect.value, discount: currentDiscount })
+          });
+          const data = await resp.json();
+          if(data.success){
+            alert('Airtel payment initiated. Follow prompts on your phone.');
+          } else {
+            alert('Airtel payment failed: ' + (data.message || 'unknown'));
+          }
+        } catch(e){
+          console.error(e); alert('Airtel request failed');
+        }
+      } else {
+        // default fallback: go to checkout page
+        window.location.href = 'checkout.html';
+      }
+    });
+
+    // ======= Server-side integration guidance (comments) =======
+    /*
+      Stripe (server sample - Node/Express):
+        const stripe = require('stripe')(process.env.STRIPE_SECRET);
+        app.post('/api/create-checkout-session', async (req, res) => {
+          const { cart, shippingMethod, discount } = req.body;
+          const line_items = cart.map(item => ({
+            price_data: {
+              currency: 'usd',
+              product_data: { name: item.title, images: [item.image] },
+              unit_amount: Math.round(item.price * 100)
+            },
+            quantity: item.quantity || 1
+          }));
+          // Add shipping as line item or pass shipping_amount, tax etc. You can also use metadata.
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items,
+            mode: 'payment',
+            success_url: 'https://your-site.com/success?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'https://your-site.com/cancel'
+          });
+          res.json({ sessionId: session.id });
+        });
+
+      Mpesa (server sample notes):
+        - Use Safaricom OAuth to get access token.
+        - Call STK push endpoint with Lipa Na Mpesa credentials (BusinessShortCode, Timestamp, Password).
+        - Save the CheckoutRequestID returned and listen to callbacks from Safaricom to confirm payment.
+
+      Airtel Money:
+        - Similar flow: server authenticates, sends payment request to Airtel API, and listens for response.
+
+      IMPORTANT:
+        - Always validate amounts and cart server-side (do not rely on client totals).
+        - Implement idempotency and verify callbacks signatures where provided.
+    */
+
+    // ======= Theme (dark mode) =======
+    const userTheme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+    if(userTheme === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    updateThemeUI();
+
+    themeSwitch.addEventListener('click', toggleTheme);
+    themeSwitch.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') toggleTheme(); });
+
+    function toggleTheme(){
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      updateThemeUI();
+    }
+    function updateThemeUI(){
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      themeSwitch.setAttribute('aria-checked', String(isDark));
+      document.querySelector('.dot').style.left = isDark ? '21px' : '3px';
+    }
+
+    // ======= Init render =======
+    renderCart();
+
+    // When cart storage changed elsewhere (other tab), update
+    window.addEventListener('storage', e => {
+      if(e.key === 'ss_cart') {
+        cart = JSON.parse(localStorage.getItem('ss_cart') || '[]');
+        renderCart();
+      }
+    });
+
+    // ======= Quick dev helpers (expose) =======
+    window.cartApp = {
+      cart,
+      saveCart,
+      renderCart,
+      calculateTotals
+    };
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wishlist - Shop</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="wishlist.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--bg-color, #f9f9f9);
+      color: var(--text-color, #333);
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #222;
+    }
+    .wishlist-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .wishlist-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      font-weight: 600;
+      color: #555;
+    }
+    .wishlist-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+    }
+    .wishlist-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .product-name {
+      font-weight: 500;
+    }
+    .stock.in {
+      color: green;
+    }
+    .stock.out {
+      color: red;
+    }
+    button {
+      border: none;
+      background: #007bff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .remove-btn {
+      background: #dc3545;
+    }
+    .remove-btn:hover {
+      background: #a71d2a;
+    }
+    .recommendations {
+      margin-top: 2rem;
+    }
+    .recommendations h2 {
+      margin-bottom: 1rem;
+    }
+    .recommendation-list {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+    }
+    .recommendation-item {
+      flex: 0 0 auto;
+      background: #fff;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      text-align: center;
+      width: 180px;
+    }
+    .recommendation-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Wishlist</h1>
+    <button id="toggleDarkMode">🌙</button>
+  </header>  <section class="wishlist-container">
+    <div class="wishlist-header">
+      <div>Items</div>
+      <div>Unit Price</div>
+      <div>Stock Status</div>
+      <div>Actions</div>
+    </div>
+    <div id="wishlistItems"></div>
+  </section>  <section class="recommendations">
+    <h2>Recommended for You</h2>
+    <div class="recommendation-list" id="recommendationList">
+      <div class="recommendation-item">
+        <img src="https://via.placeholder.com/150" alt="Rec Item">
+        <p>Modern Sneakers</p>
+        <button onclick="addToWishlist('Modern Sneakers')">♡ Add to Wishlist</button>
+      </div>
+      <div class="recommendation-item">
+        <img src="https://via.placeholder.com/150" alt="Rec Item">
+        <p>Wireless Earbuds</p>
+        <button onclick="addToWishlist('Wireless Earbuds')">♡ Add to Wishlist</button>
+      </div>
+    </div>
+  </section>  <script>
+    const wishlistContainer = document.getElementById('wishlistItems');
+
+    function loadWishlist() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlistContainer.innerHTML = '';
+
+      wishlist.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'wishlist-item';
+        div.innerHTML = `
+          <div class="product-info">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="product-name">${item.name}</div>
+          </div>
+          <div>$${item.price.toFixed(2)}</div>
+          <div class="stock ${item.inStock ? 'in' : 'out'}">${item.inStock ? 'In Stock' : 'Out of Stock'}</div>
+          <div>
+            <button onclick="moveToCart('${item.name}')">Add to Cart</button>
+            <button class="remove-btn" onclick="removeWishlistItem('${item.name}')">Remove</button>
+          </div>
+        `;
+        wishlistContainer.appendChild(div);
+      });
+    }
+
+    function addToWishlist(name) {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      if (!wishlist.find(item => item.name === name)) {
+        wishlist.push({ name, price: Math.random() * 100 + 10, inStock: Math.random() > 0.3, image: 'https://via.placeholder.com/100' });
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        loadWishlist();
+      }
+    }
+
+    function removeWishlistItem(name) {
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlist = wishlist.filter(item => item.name !== name);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      loadWishlist();
+    }
+
+    function moveToCart(name) {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const item = wishlist.find(i => i.name === name);
+      if (item) {
+        cart.push(item);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        removeWishlistItem(name);
+      }
+    }
+
+    document.getElementById('toggleDarkMode').onclick = () => {
+      const dark = document.body.classList.toggle('dark-mode');
+      document.body.style.setProperty('--bg-color', dark ? '#121212' : '#f9f9f9');
+      document.body.style.setProperty('--text-color', dark ? '#f1f1f1' : '#333');
+    };
+
+    window.onload = loadWishlist;
+  </script></body>
+</html>

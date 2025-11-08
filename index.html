@@ -1,0 +1,3064 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" >
+  <title>ShopSphere – Modern E‑commerce Demo</title>
+  <meta name="description" content="Accessible, responsive e‑commerce demo with product modal, search autocomplete, wishlist, cart, reviews, analytics filters, and more.">
+  <meta name="keywords" content="ecommerce, demo, shop, cart, wishlist, product modal, search, accessibility, responsive">
+  <meta name="theme-color" content="#111827">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- React + ReactDOM -->
+<script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+
+<!-- AngularJS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+
+<!-- Vue.js -->
+<script src="https://unpkg.com/vue@3.4.21/dist/vue.global.prod.js"></script>
+
+<!-- Deployment hints -->
+<!--
+  ✅ Deployment Notes:
+  • For Netlify/Vercel: ensure index.html is in root folder.
+  • Add <meta name="robots" content="index,follow"> for SEO.
+  • Serve via HTTPS with HTTP/2 for faster CDN delivery.
+  • Use caching: Cache-Control: public, max-age=31536000 for static assets.
+-->
+      <script src="cart.js"></script>
+          <script src="dynamicproduct.js"></script>  
+          <script src="script.js"></script>
+          <script src="app.js"></script>
+<script src="product-bridge.js"></script>
+ <link rel="stylesheet" href="product2.css">
+<script src="indexproductmodal.js"></script>
+<script src="product-carousel.js"></script>
+ <script src="product-view1.js"></script>
+  <script src="button.js"></script>
+    <script src="scrip.js"></script>
+     <script src="product-vie.js"></script>
+      <script src="product-view0.js"></script>
+       <script src="products-vie.js"></script>
+        <script src="inde0.js"></script>
+         <script src="index.js"></script>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1600px;
+    }
+    * {
+  font-size: 1.5rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
+}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f14,#0b0f14 60%,#0e141c);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 16px}
+    header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.05)}
+    .topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
+    .brand .logo svg{filter:drop-shadow(0 1px 4px rgba(0,0,0,.25))}
+    .search{position:relative;flex:1;max-width:560px}
+    .search input{width:100%;padding:12px 44px 12px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0f1623;color:var(--text)}
+    .search input::placeholder{color:#94a3b8}
+    .search .icon{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:.7}
+    .autocomplete{position:absolute;top:44px;left:0;right:0;background:#0f1623;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:none}
+    .autocomplete button{display:flex;width:100%;padding:10px 12px;gap:8px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer}
+    .autocomplete button:hover{background:#121b2b}.actions{display:flex;align-items:center;gap:10px}
+.icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0f1623;cursor:pointer}
+.pill{font-size:15px;background:var(--brand);color:#00140a;border-radius:999px;padding:2px 8px;font-weight:700}
+
+nav{display:flex;gap:16px;overflow:auto;padding:10px 0 12px}
+nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06);white-space:nowrap;background:#0f1623}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr;gap:16px;padding:18px 0}
+.hero-left{position:relative;border-radius:var(--radius-lg);overflow:hidden}
+.hero-left img{aspect-ratio:16/9;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.55));display:flex;align-items:flex-end;padding:18px}
+.hero-ctas{display:flex;gap:10px;margin-top:8px}
+.btn{width:180px;padding:10px 19px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
+.btn-primary{background:linear-gradient(135deg,var(--brand),#16a34a);color:#04120b}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text)}
+
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mini-card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:14px;display:grid;grid-template-rows:auto 1fr auto;gap:10px}
+.mini-card img{border-radius:12px;aspect-ratio:4/3;object-fit:cover}
+.mini-card .foot{display:flex;align-items:center;justify-content:space-between}
+
+/* Men/Women sections */
+.section{margin:24px 0}
+.section h2{margin:0 0 12px}
+.grid{display:grid;gap:16px}
+.grid.mw{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+.grid .big{grid-row:span 2;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
+.grid .big img{height:100%;width:100%;object-fit:cover}
+.grid .card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
+.grid .card img{aspect-ratio:1/1;object-fit:cover}
+.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:15px}
+.card:hover,.big:hover{transform:translateY(-2px);transition:transform .2s ease}
+
+/* carousels */
+.row{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.row .p-card{width:100%;max-width:350px;margin:0 auto;flex:0 0 350px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+.row .p-card img{height:250px; width:100%;aspect-ratio:1/1;object-fit:cover; display:block;max-width:100%}
+.row .p-card .p-meta{padding:10px;font-size:15px}
+.carousel-ctl{display:flex;gap:10px}
+
+/* badges & trust */
+.trust{display:flex;flex-wrap:wrap;gap:10px}
+.trust .badge{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:#0f1623;border:1px solid rgba(255,255,255,.06)}
+
+/* footer */
+footer{margin-top:40px;border-top:1px solid rgba(255,255,255,.06);background:#0f1623}
+footer .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:24px 0}
+footer a{color:#cbd5e1}
+
+/* product modal */
+.product-modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:9999}
+.modal-content{background:#0b111b;border:1px solid rgba(255,255,255,.06);border-radius:16px;max-width:1100px;width:100%;max-height:90vh;overflow:auto;display:grid;grid-template-columns:1.1fr 1fr}
+.close-btn{position:sticky;top:8px;margin:8px;border:0;background:#0f1623;border:1px solid rgba(255,255,255,.08);color:var(--text);width:36px;height:36px;border-radius:10px;cursor:pointer}
+.modal-left{padding:14px;border-right:1px solid rgba(255,255,255,.06)}
+.viewer{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden}
+.viewer img{width:100%;height:420px;object-fit:cover}
+.related-carousel{margin-top:10px;display:flex;gap:10px;overflow:auto}
+.related-carousel img{width:90px;height:90px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.08);cursor:pointer}
+.modal-right{padding:14px;display:grid;gap:10px}
+.price{font-size:16px;font-weight:800}
+.stars{display:flex;gap:2px}
+.qty{display:flex;gap:8px;align-items:center}
+.options{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);cursor:pointer}
+
+.tabs{display:flex;gap:8px;margin-top:8px}
+.tabs button{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0f1623;color:var(--text);cursor:pointer}
+.panel{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px;margin-top:8px}
+.reviews textarea{background:#0b111b;color:var(--text);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px}
+
+/* auth + misc modals */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:90}
+.modal .box{background:#0b111b;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px;max-width:520px;width:100%}
+.field{display:grid;gap:6px;margin:8px 0}
+.field input, .field select, .field textarea{background:#0f1623;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px}
+.helper{font-size:12px;color:#9aa4b2}
+
+/* responsive */
+@media (max-width: 1024px){
+  .grid.mw {
+    grid-template-columns: 1.5fr 1fr 1fr; 
+    grid-auto-rows: 260px;
+  }
+  .modal-content {
+    grid-template-columns: 1fr;
+  }
+  .viewer img {
+    height: 300px;
+  }
+}
+
+@media (max-width: 640px){
+  nav { display: none; }
+  .hero-right { grid-template-columns: 1fr; }
+
+  /* fix syntax + make 2 per row */
+  .grid.mw {
+    grid-template-columns: repeat(2, 1fr); 
+    grid-auto-rows: 260px;
+  }
+
+  footer .cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* Product price */
+.price {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Card text */
+.p-meta h2 {
+  margin: 0 0 4px;
+  font-size: 8px;
+}
+
+.p-meta p {
+  margin: 0;
+}
+
+.btn {
+  font-size: 15px;
+  padding: 6px 19px;
+  border-radius: 8px;
+}
+
+/* Wishlist & cart buttons */
+.btn-outline-secondary {
+  color: #ff6b81;
+  border-color: #ff6b81;
+}
+.btn-outline-secondary:hover {
+  background: #ff6b81;
+  color: #fff;
+}
+/* Product price */
+.price {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+/* Card text */
+.p-meta h5 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.p-meta p {
+  margin: 0;
+}
+
+.btn {
+  font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Wishlist & cart buttons */
+.btn-outline-secondary {
+  color: #ff6b81;
+  border-color: #ff6b81;
+}
+.btn-outline-secondary:hover {
+  background: #ff6b81;
+  color: #fff;
+}
+    /* Blog teasers */
+    .grid.blog{grid-template-columns:repeat(3,1fr);gap:16px}
+    
+    /* Product title inside modal */
+#mTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Product price */
+#mPrice {
+  font-size: 1.3rem;
+  color: #ffce54;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+/* Specs list – auto wrap lines */
+#mSpecs li {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  word-wrap: break-word;  /* ensure long text breaks */
+  overflow-wrap: break-word;
+}
+
+/* Description – readable block */
+#mDescLong {
+  font-size: 1.55rem;
+  line-height: 1.7;
+  margin-top: 12px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: justify;
+}
+/********************
+ * Product modal enhancements
+ ********************/
+
+/* Bigger font-size for product information */
+#productModal,
+#productModal .modal-content,
+#productModal .modal-right,
+#productModal .panel,
+#productModal .tabs,
+#productModal .reviews {
+  font-size: 2.2rem;   /* ongeza size ya maandishi */
+  line-height: 1.5;    /* spacing safi */
+}
+
+/* Prevent page scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Modal autofits device screen */
+#productModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal content responsive */
+#productModal .modal-content.glassy {
+  max-width: 100%;
+  width: 95%;
+  height: 95%;         /* hifathi ndani ya screen */
+  overflow-y: auto;    /* scroll ndani ya modal pekee */
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* Center product image properly */
+#productModal .viewer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0; /* usiongeze margin-left */
+}
+#productModal .viewer img {
+  margin-left:800px;
+  max-width: 100%;
+  width:900px;
+  height: 700px;
+  margin: 0 auto;
+  display: block;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
+/* Details start immediately after image */
+#productModal .modal-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  text-align: left;
+}
+
+/* Product specs auto-wrap to next line depending on screen */
+#productModal #mSpecs li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  margin-bottom: 6px;
+}
+
+/* Responsive grid: 4 products per row on desktop, auto-wrap on small screens */
+#similarRow, #recentRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 4 cards kwa screen kubwa */
+  gap: 16px;
+}
+
+/* Product cards inside modal */
+#similarRow .p-card,
+#recentRow .p-card {
+  background: #0f1623;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#similarRow .p-card:hover,
+#recentRow .p-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Product meta text */
+#similarRow .p-card .p-meta,
+#recentRow .p-card .p-meta {
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 10px;
+  color: #fff;
+}
+  </style>
+</head>
+<body>
+  <header aria-label="Site header with navigation, search, cart, and wishlist">
+    <div class="container">
+      <div class="topbar">
+        <a class="brand" href="#" aria-label="ShopSphere home">
+          <span class="logo" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
+              <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="3" fill="white">
+            </svg>
+          </span>
+          <span>ShopSphere</span>
+        </a>
+        <div class="search" role="search">
+          <label class="sr-only" for="searchInput">Search products</label>
+          <input id="searchInput" type="search" placeholder="Search products... (⌘/Ctrl + K)" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="acList">
+          <div class="icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="white"><path d="M20 20l-3.5-3.5" stroke="white"></svg>
+          </div>
+          <div id="autocomplete" class="autocomplete" role="listbox" aria-label="Search suggestions"></div>
+        </div>
+        <div class="actions">
+          <button class="icon-btn" id="openWishlist" aria-label="Open wishlist"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-7-10a4 4 0 018-1 4 4 0 018 1c0 5.65-7 10-7 10z" stroke="white"></svg></button>
+      <a href="cart.html" aria-label="Go to cart">
+  <button class="icon-btn" id="openCart" aria-label="Open cart">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="20" r="1" fill="white"></circle>
+      <circle cx="17" cy="20" r="1" fill="white"></circle>
+      <path d="M3 4h2l2.4 12.5A2 2 0 009.37 18H18a2 2 0 001.96-1.6L22 8H6"
+        stroke="white"></path>
+    </svg>
+    <span id="cartCount" class="pill" aria-live="polite" aria-label="Items in cart">0</span>
+  </button>
+</a>
+<script>
+  document.getElementById("openCart").addEventListener("click", function () {
+    window.location.href = "cart.html";
+  });
+</script>
+<!-- ACCOUNT ICON MENU -->
+<div class="account-menu">
+  <!-- Account Icon / Hamburger -->
+  <button id="accountIcon" class="icon-btn" aria-label="Account Menu">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"></circle>
+      <path d="M12 6a3 3 0 110 6 3 3 0 010-6zm0 8c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" fill="white"></path>
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div id="accountDropdown" class="dropdown hidden">
+    <div id="userProfile" class="user-profile hidden">
+      <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar" />
+      <p id="userName">Guest</p>
+      <p id="userEmail" class="email"></p>
+    </div>
+
+    <!-- Login Button -->
+    <button id="openAuth" class="login-btn" onclick="redirectToAuth()">Login</button>
+
+    <!-- My Account Section (visible only when logged in) -->
+    <div id="accountLinks" class="account-links hidden">
+      <a href="orders.html"><i>📦</i> My Orders</a>
+      <a href="profile.html"><i>👤</i> Personal Info</a>
+      <a href="addresses.html"><i>🏠</i> Address Book</a>
+      <a href="payments.html"><i>💳</i> Payment Methods</a>
+      <a href="wishlist.html"><i>💖</i> Wishlist</a>
+      <a href="help.html"><i>❓</i> Help & Support</a>
+    </div>
+
+    <!-- Contacts -->
+    <div class="contact-info">
+      <p>Email: support@calebstore.com</p>
+      <p>Phone: +254 700 000 000</p>
+    </div>
+
+    <!-- Logout Button -->
+    <button id="logoutBtn" class="logout-btn hidden">Logout</button>
+  </div>
+</div>
+
+<!-- STYLES -->
+<style>
+.account-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: rgba(25, 25, 25, 0.95);
+  border-radius: 18px;
+  padding: 15px;
+  min-width: 240px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  animation: fadeSlide 0.4s ease;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+.avatar {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.avatar:hover {
+  transform: rotate(6deg) scale(1.05);
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.user-profile {
+  text-align: center;
+  color: white;
+  margin-bottom: 12px;
+  animation: fadeIn 0.5s ease;
+}
+
+.user-profile p {
+  margin: 4px 0;
+}
+
+.email {
+  font-size: 0.85em;
+  color: #bbb;
+}
+
+/* Account Links */
+.account-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.account-links a {
+  color: #f5f5f5;
+  text-decoration: none;
+  font-size: 0.95em;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-links a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(5px);
+}
+
+.contact-info {
+  color: white;
+  font-size: 0.9em;
+  margin-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 10px;
+}
+
+.login-btn, .logout-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.login-btn:hover {
+  background-color: #0062cc;
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  background-color: crimson;
+}
+
+.logout-btn:hover {
+  background-color: darkred;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<!-- JAVASCRIPT -->
+<script>
+// Elements
+const accountIcon = document.getElementById("accountIcon");
+const dropdown = document.getElementById("accountDropdown");
+const userProfile = document.getElementById("userProfile");
+const userImage = document.getElementById("userImage");
+const userName = document.getElementById("userName");
+const userEmail = document.getElementById("userEmail");
+const loginBtn = document.getElementById("openAuth");
+const logoutBtn = document.getElementById("logoutBtn");
+const accountLinks = document.getElementById("accountLinks");
+
+// Toggle dropdown
+accountIcon.addEventListener("click", () => {
+  dropdown.classList.toggle("hidden");
+});
+
+// Redirect to login/register
+function redirectToAuth() {
+  window.location.href = "authentication.html";
+}
+
+// Load user data
+function loadUserData() {
+  const userData = JSON.parse(localStorage.getItem("userData")) || null;
+
+  if (userData) {
+    // Display user info
+    userProfile.classList.remove("hidden");
+    userName.textContent = userData.name;
+    userEmail.textContent = userData.email || "";
+    userImage.src = userData.avatar
+      ? userData.avatar
+      : userData.gender === "female"
+      ? "default-female.png"
+      : "default-male.png";
+
+    loginBtn.classList.add("hidden");
+    logoutBtn.classList.remove("hidden");
+    accountLinks.classList.remove("hidden");
+  } else {
+    // Default guest view
+    userProfile.classList.remove("hidden");
+    userName.textContent = "Guest";
+    userEmail.textContent = "";
+    userImage.src = "default-avatar.png";
+
+    loginBtn.classList.remove("hidden");
+    logoutBtn.classList.add("hidden");
+    accountLinks.classList.add("hidden");
+  }
+}
+
+// Secure logout
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("userData");
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("wishlist");
+  localStorage.removeItem("orders");
+  alert("You have been securely logged out.");
+  loadUserData();
+  dropdown.classList.add("hidden");
+});
+
+// Detect click outside to close dropdown
+document.addEventListener("click", (e) => {
+  if (!accountIcon.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.add("hidden");
+  }
+});
+
+// Initialize on load
+loadUserData();
+</script>
+          <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"><path d="M4 21a8 8 0 0116 0" stroke="white"></svg></button>
+        </div>
+      </div>
+  </ul>
+</nav>
+
+  <header class="main-header glassy-header">
+  <div class="nav-container">
+    <nav aria-label="Primary categories" class="primary-nav">
+      <a href="#rowNew" id="openRow" class="nav-link active">New Arrivals</a>
+      <a href="#rowBest" class="nav-link">Best Sellers</a>
+      <a href="#menHeading" class="nav-link">Men</a>
+      <a href="#womenHeading" class="nav-link">Women</a>
+      <a href="#" class="nav-link">Accessories</a>
+      <a href="#" class="nav-link">Limited</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="#helpModal" id="openHelp" class="nav-link">Help Center</a>
+ 
+
+      <a href="chats1.html?modal=chat">Chat Support</a>
+      <button id="modeToggle" class="btn btn-ghost" style="position:fixed;bottom:20px;right:20px;z-index:1000;">
+  🌙 Dark Mode
+</button>
+
+<script>
+  const modeToggle = document.getElementById('modeToggle');
+  modeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+      modeToggle.textContent = '☀️ Light Mode';
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      modeToggle.textContent = '🌙 Dark Mode';
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  });
+</script>
+
+      <!-- Location Button + Map -->
+<div id="locationWrapper">
+  <a href="#" id="locationBtn" class="btn btn-ghost">Location</a>
+  <div id="mapPreview"></div>
+</div>
+
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha512-sA+e2Bz6Tfxy7jsFvdcGaOQdArxWv3Kp8VfGh2oS2sG6ZrM8dD9h9Jt1nRtbAQh5Jd6xS6P6QZp+8uxv2FA0A=="
+  crossorigin=""
+/>
+
+<script>
+<!-- Leaflet JS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha512-JmpptMCcCgSa1Y0OtCk1JX0e5ufzQ0J/0HX8PqXbWawAMHoIYLBz0qYpMEv9ETufQeY5E3Gum9YQFcf0V2THQ=="
+  crossorigin="">
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const locationBtn = document.getElementById("locationBtn");
+  const mapPreview = document.getElementById("mapPreview");
+
+  let map, marker;
+
+  // Reverse geocode to get readable location
+  async function getAddress(lat, lon) {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+      const data = await res.json();
+      return (
+        data.address.city ||
+        data.address.town ||
+        data.address.village ||
+        data.display_name ||
+        "Unknown Area"
+      );
+    } catch {
+      return "Unknown Location";
+    }
+  }
+
+  // Display map with marker
+  function showMap(lat, lon, address) {
+    mapPreview.classList.add("show");
+
+    if (!map) {
+      map = L.map("mapPreview").setView([lat, lon], 14);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+      marker = L.marker([lat, lon]).addTo(map);
+    } else {
+      map.setView([lat, lon], 14);
+      marker.setLatLng([lat, lon]);
+    }
+
+    marker.bindPopup(`📍 You’re near ${address}<br>(${lat.toFixed(5)}, ${lon.toFixed(5)})`).openPopup();
+  }
+
+  // Save location data
+  function saveLocation(lat, lon, address) {
+    localStorage.setItem(
+      "userLocation",
+      JSON.stringify({ lat, lon, address, timestamp: new Date().toISOString() })
+    );
+  }
+
+  // Display info on button
+  function updateButton(lat, lon, address) {
+    locationBtn.textContent = `📍 ${address} (${lat.toFixed(3)}, ${lon.toFixed(3)})`;
+    locationBtn.style.background = "linear-gradient(135deg, #16a34a, #15803d)";
+  }
+
+  // Detect location
+  async function detectLocation() {
+    if (!navigator.geolocation) {
+      locationBtn.textContent = "❌ Geolocation not supported";
+      return;
+    }
+
+    locationBtn.textContent = "📡 Getting your location...";
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const address = await getAddress(latitude, longitude);
+        saveLocation(latitude, longitude, address);
+        updateButton(latitude, longitude, address);
+        showMap(latitude, longitude, address);
+      },
+      (err) => {
+        console.error("Error getting location:", err);
+        locationBtn.textContent = "⚠️ Unable to fetch location";
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+    );
+  }
+
+  // Auto-detect on page load
+  detectLocation();
+
+  // Allow re-detect on click
+  locationBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    detectLocation();
+  });
+});
+</script>
+
+
+    <!-- Mobile Menu Button -->
+    <button id="menuToggle" aria-label="Toggle Menu" class="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+/* Sticky Header Scroll Effect */
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.glassy-header');
+  if (window.scrollY > 60) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+/* Active Link Highlighter */
+const navLinks = document.querySelectorAll('.primary-nav .nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+/* Mobile Menu Toggle */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.querySelector('.primary-nav');
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navMenu.classList.toggle('open');
+});
+</script> <section class="hero" aria-label="Hero and featured">
+  <div class="hero-left" id="heroSlider" aria-roledescription="carousel" aria-label="Promotions" tabindex="0">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" alt="Summer collection banner" loading="eager">
+    <div class="hero-overlay">
+      <div>
+        <h1>Feel Good. Look Great.</h1>
+        <p class="helper">Soft essentials, bold statements. Up to <strong>40% off</strong>.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" id="shopNow">Shop Now</button>
+          <button class="btn btn-ghost" id="learnMore">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- mini-cards remain same -->
+    <!-- Eco Tees, City Sneakers, Athleisure, Accessories -->
+   <article class="mini-card" aria-label="Card 1">  
+          <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop" alt="Eco tees" loading="lazy">  
+          <div>  
+            <h3 style="margin:6px 0">Eco Tees</h3>  
+            <p class="helper">Breathable, organic, everyday staples.</p>  
+          </div>  
+          <div class="foot"><span class="pill">New</span><button class="btn btn-ghost" data-cat="tees">Explore</button></div>  
+        </article>  
+        <article class="mini-card" aria-label="Card 2">  
+          <img src="https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=800&auto=format&fit=crop" alt="City sneakers" loading="lazy">  
+          <div>  
+            <h3 style="margin:6px 0">City Sneakers</h3>  
+            <p class="helper">Comfort meets performance.</p>  
+          </div>  
+          <div class="foot"><span class="pill" style="background:var(--accent);color:#1f1300">Deal</span><button class="btn btn-ghost" data-cat="sneakers">Shop</button></div>  
+        </article>  
+        <article class="mini-card" aria-label="Card 3">  
+          <img src="https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=800&auto=format&fit=crop" alt="Athleisure sets" loading="lazy">  
+          <div>  
+            <h3 style="margin:6px 0">Athleisure Sets</h3>  
+            <p class="helper">Mix, match, move.</p>  
+          </div>  
+          <div class="foot"><span class="pill" style="background:#60a5fa;color:#001229">Popular</span><button class="btn btn-ghost" data-cat="athleisure">Browse</button></div>  
+        </article>  
+        <article class="mini-card" aria-label="Card 4">  
+          <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy">  
+          <div>  
+            <h3 style="margin:6px 0">Accessories</h3>  
+            <p class="helper">Finish the look.</p>  
+          </div>  
+          <div class="foot"><span class="pill" style="background:#f472b6;color:#240013">Hot</span><button class="btn btn-ghost" data-cat="accessories">See More</button></div>  
+        </article>  
+      </div>  
+  </div>
+</section>
+<style>
+/* === HERO SECTION === */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+  perspective: 1000px;
+}
+
+/* Hero Left: Image + Overlay */
+.hero-left {
+  position: relative;
+  flex: 1 1 50%;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+.hero-left:hover {
+  transform: rotateY(2deg) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+.hero-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+.hero-left:hover img {
+  transform: scale(1.05);
+}
+
+/* Overlay Text */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  animation: fadeIn 1s ease;
+}
+.hero-overlay h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin: 0 0 10px;
+}
+.hero-overlay p {
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+}
+
+/* CTA Buttons */
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+}
+.hero-ctas .btn {
+  font-size: 1rem;
+  padding: 10px 22px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-ctas .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Hero Right: mini-cards */
+.hero-right {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  flex: 1 1 50%;
+}
+.mini-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+.mini-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+.mini-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.mini-card .foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero { flex-direction: column; }
+  .hero-left, .hero-right { flex: 1 1 100%; }
+  .hero-overlay { padding: 20px; }
+}
+</style>
+<script>
+// SHOP NOW → scrolls to product section
+document.getElementById('shopNow').addEventListener('click', () => {
+  const rowNew = document.querySelector('#rowNew') || document.querySelector('#main');
+  if (rowNew) {
+    rowNew.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    alert('Explore our latest arrivals below!');
+  }
+});
+
+// LEARN MORE → opens a demo modal or shows info
+document.getElementById('learnMore').addEventListener('click', () => {
+  alert('Discover our sustainable mission and timeless designs in the About section!');
+});
+</script><!-- MEN FEATURED -->
+<section class="section" aria-labelledby="menHeading">
+  <h2 id="menHeading">Men • Featured</h2>
+  <div class="grid mw" id="menGrid" aria-label="Men product grid">
+    
+    <!-- Product Card -->
+    <div class="product-card">
+      <img src="shirt1.jpg" alt="Classic White Shirt" class="product-img">
+      <div class="product-info">
+        <h3 class="product-title">Classic White Shirt</h3>
+        <p class="product-price">$45.00</p>
+        <div class="product-rating" aria-label="4 out of 5 stars">
+          ★★★★☆
+        </div>
+        <div class="product-actions">
+          <button class="btn add-cart" onclick="addToCart('Classic White Shirt')">Add to Cart</button>
+          <button class="btn wishlist" onclick="addToWishlist('Classic White Shirt')">♡</button>
+          <button class="btn quickview" onclick="quickView('Classic White Shirt')">👁 Quick View</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="shoes1.jpg" alt="Leather Sneakers" class="product-img">
+      <div class="product-info">
+        <h3 class="product-title">Leather Sneakers</h3>
+        <p class="product-price">$89.99</p>
+        <div class="product-rating">★★★★★</div>
+        <div class="product-actions">
+          <button class="btn add-cart" onclick="addToCart('Leather Sneakers')">Add to Cart</button>
+          <button class="btn wishlist" onclick="addToWishlist('Leather Sneakers')">♡</button>
+          <button class="btn quickview" onclick="quickView('Leather Sneakers')">👁 Quick View</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more product cards dynamically via JS if needed -->
+  </div>
+</section>
+
+<!-- CSS -->
+<style>
+  .grid.mw {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+  }
+
+  .product-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-10px) scale(1.05) rotateX(3deg);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  .product-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: transform 0.5s ease;
+  }
+
+  .product-card:hover .product-img {
+    transform: scale(1.1);
+  }
+
+  .product-title {
+    font-size: 1.0rem;
+    margin: 6px 0;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .product-price {
+    font-size: 0.8rem;
+    color: #ffce54;
+    margin-bottom: 6px;
+  }
+
+  .product-rating {
+    color: gold;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 8px 27px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1.2rem;
+  }
+
+  .add-cart {
+    background: linear-gradient(135deg, rgba(248,240,240,0.8), rgba(37,186,0,0.8));
+    color: #fff;
+  }
+
+  .wishlist {
+    background: rgba(255,255,255,0.1);
+    color: red;
+  }
+
+  .quickview {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  .btn:hover {
+    filter: brightness(1.2);
+  }
+</style>
+
+<!-- JS -->
+<script>
+  function addToCart(product) {
+    alert(product + " added to cart!");
+    // integrate with cart system
+  }
+
+  function addToWishlist(product) {
+    alert(product + " added to wishlist!");
+    // integrate with wishlist system
+  }
+
+  function quickView(product) {
+    alert("Quick view of " + product);
+    // open product modal
+  }
+</script>
+
+<section class="section" aria-labelledby="womenHeading">
+  <h2 id="womenHeading">Women • Featured</h2>
+  <div class="grid mw" id="womenGrid" aria-label="Women grid with one big and four small cards">
+    <!-- populated via JS -->
+  </div>
+</section>
+
+<!-- Dynamic sections: New Arrivals, Best Sellers, Special Offers, Most Liked -->
+<section class="section" aria-label="Dynamic product rows">
+  <div style="display:grid;gap:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>New Arrivals</h2>
+      <div class="carousel-ctl"><button class="btn btn-ghost" data-scroll="prev" data-target="#rowNew">◀</button><button class="btn btn-ghost" data-scroll="next" data-target="#rowNew">▶</button></div>
+    </div>
+    <div id="rowNew" class="row" aria-label="New Arrivals carousel"></div>
+  </div>
+
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Best Sellers</h2>
+      <div class="carousel-ctl"><button class="btn btn-ghost" data-scroll="prev" data-target="#rowBest">◀</button><button class="btn btn-ghost" data-scroll="next" data-target="#rowBest">▶</button></div>
+    </div>
+    <div id="rowBest" class="row" aria-label="Best Sellers carousel"></div>
+  </div>
+
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Special Offers</h2>
+      <div class="carousel-ctl"><button class="btn btn-ghost" data-scroll="prev" data-target="#rowDeals">◀</button><button class="btn btn-ghost" data-scroll="next" data-target="#rowDeals">▶</button></div>
+    </div>
+    <div id="rowDeals" class="row" aria-label="Special Offers carousel"></div>
+  </div>
+
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Most Liked</h2>
+      <div class="carousel-ctl"><button class="btn btn-ghost" data-scroll="prev" data-target="#rowLiked">◀</button><button class="btn btn-ghost" data-scroll="next" data-target="#rowLiked">▶</button></div>
+    </div>
+    <div id="rowLiked" class="row" aria-label="Most Liked carousel"></div>
+  </div>
+</section>
+<section class="section" aria-label="Dynamic product rows for categories">
+  <!-- HOME -->
+  <div style="display:grid;gap:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Home</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowHome">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowHome">▶</button>
+      </div>
+    </div>
+    <div id="rowHome" class="row" aria-label="Home carousel"></div>
+  </div>
+
+  <!-- FURNITURE -->
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Furniture</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowFurniture">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowFurniture">▶</button>
+      </div>
+    </div>
+    <div id="rowFurniture" class="row" aria-label="Furniture carousel"></div>
+  </div>
+
+  <!-- BEVERAGES -->
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Beverages</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowBeverages">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowBeverages">▶</button>
+      </div>
+    </div>
+    <div id="rowBeverages" class="row" aria-label="Beverages carousel"></div>
+  </div>
+
+  <!-- BALE -->
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Bale</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowBale">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowBale">▶</button>
+      </div>
+    </div>
+    <div id="rowBale" class="row" aria-label="Bale carousel"></div>
+  </div>
+
+  <!-- GROCERY -->
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Grocery</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowGrocery">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowGrocery">▶</button>
+      </div>
+    </div>
+    <div id="rowGrocery" class="row" aria-label="Grocery carousel"></div>
+  </div>
+
+  <!-- VEHICLES -->
+  <div style="display:grid;gap:8px;margin-top:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2>Vehicles</h2>
+      <div class="carousel-ctl">
+        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowVehicles">◀</button>
+        <button class="btn btn-ghost" data-scroll="next" data-target="#rowVehicles">▶</button>
+      </div>
+    </div>
+    <div id="rowVehicles" class="row" aria-label="Vehicles carousel"></div>
+  </div>
+</section>
+
+<script>
+const categories = {
+  home: [
+    {id:'h1', title:'Wall Clock', price:15.00, rating:4.5, img:'https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?q=80&w=800&auto=format&fit=crop'},
+    {id:'h2', title:'Cotton Bedsheet', price:28.00, rating:4.3, img:'https://images.unsplash.com/photo-1600488995806-3c9d1d5a4b09?q=80&w=800&auto=format&fit=crop'},
+    {id:'h3', title:'Wall Mirror', price:49.00, rating:4.7, img:'https://images.unsplash.com/photo-1621609777003-16a777b74843?q=80&w=800&auto=format&fit=crop'},
+    {id:'h4', title:'LED Lamp', price:19.00, rating:4.6, img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'},
+    {id:'h5', title:'Curtain Set', price:38.00, rating:4.4, img:'https://images.unsplash.com/photo-1589654318141-219c04370b1b?q=80&w=800&auto=format&fit=crop'},
+    {id:'h6', title:'Wall Art', price:22.00, rating:4.2, img:'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=800&auto=format&fit=crop'},
+    {id:'h7', title:'Table Vase', price:14.00, rating:4.0, img:'https://images.unsplash.com/photo-1567016523656-bc0c43fd8b18?q=80&w=800&auto=format&fit=crop'},
+    {id:'h8', title:'Carpet Rug', price:59.00, rating:4.5, img:'https://images.unsplash.com/photo-1520178858619-ec0f5a6c0f6f?q=80&w=800&auto=format&fit=crop'},
+    {id:'h9', title:'Decor Candles', price:18.00, rating:4.3, img:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=800&auto=format&fit=crop'},
+    {id:'h10', title:'Laundry Basket', price:25.00, rating:4.1, img:'https://images.unsplash.com/photo-1598300056889-f4f2f85a9b43?q=80&w=800&auto=format&fit=crop'},
+  ],
+  furniture: [
+    {id:'f1', title:'Wooden Chair', price:45.00, rating:4.6, img:'https://images.unsplash.com/photo-1616627983853-387b985dfd3b?q=80&w=800&auto=format&fit=crop'},
+    {id:'f2', title:'Modern Sofa', price:250.00, rating:4.9, img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=800&auto=format&fit=crop'},
+    {id:'f3', title:'Dining Table', price:180.00, rating:4.8, img:'https://images.unsplash.com/photo-1598300057129-6533e2d84f4a?q=80&w=800&auto=format&fit=crop'},
+    {id:'f4', title:'Office Desk', price:110.00, rating:4.5, img:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=800&auto=format&fit=crop'},
+    {id:'f5', title:'Bookshelf', price:85.00, rating:4.3, img:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=800&auto=format&fit=crop'},
+    {id:'f6', title:'Wardrobe', price:200.00, rating:4.4, img:'https://images.unsplash.com/photo-1600488995806-3c9d1d5a4b09?q=80&w=800&auto=format&fit=crop'},
+    {id:'f7', title:'Coffee Table', price:70.00, rating:4.2, img:'https://images.unsplash.com/photo-1588854337111-2d1fbbfd1b40?q=80&w=800&auto=format&fit=crop'},
+    {id:'f8', title:'TV Stand', price:95.00, rating:4.6, img:'https://images.unsplash.com/photo-1605281983989-53aa3c4df1dc?q=80&w=800&auto=format&fit=crop'},
+    {id:'f9', title:'Recliner', price:150.00, rating:4.7, img:'https://images.unsplash.com/photo-1616627561330-263fc7b43f0e?q=80&w=800&auto=format&fit=crop'},
+    {id:'f10', title:'Side Stool', price:35.00, rating:4.0, img:'https://images.unsplash.com/photo-1598300056848-9e6bb6a03f8c?q=80&w=800&auto=format&fit=crop'}
+  ],
+  beverages: [
+    {id:'b1', title:'Orange Juice', price:3.00, rating:4.4, img:'https://images.unsplash.com/photo-1613470201977-9a21f14d27b4?q=80&w=800&auto=format&fit=crop'},
+    {id:'b2', title:'Coca Cola 1L', price:2.50, rating:4.7, img:'https://images.unsplash.com/photo-1600103567519-9f6a65b8b6b2?q=80&w=800&auto=format&fit=crop'},
+    {id:'b3', title:'Energy Drink', price:3.50, rating:4.3, img:'https://images.unsplash.com/photo-1621848062431-f7cfc14c53cd?q=80&w=800&auto=format&fit=crop'},
+    {id:'b4', title:'Mineral Water', price:1.20, rating:4.1, img:'https://images.unsplash.com/photo-1561047029-3000e92aefeb?q=80&w=800&auto=format&fit=crop'},
+    {id:'b5', title:'Milk 1L', price:2.00, rating:4.5, img:'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=800&auto=format&fit=crop'},
+    {id:'b6', title:'Coffee Pack', price:8.00, rating:4.8, img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop'},
+    {id:'b7', title:'Green Tea', price:5.00, rating:4.6, img:'https://images.unsplash.com/photo-1551022372-0bdcb6e7fa2e?q=80&w=800&auto=format&fit=crop'},
+    {id:'b8', title:'Wine Bottle', price:15.00, rating:4.9, img:'https://images.unsplash.com/photo-1510626176961-4b37d0f0b17b?q=80&w=800&auto=format&fit=crop'},
+    {id:'b9', title:'Beer 500ml', price:2.80, rating:4.3, img:'https://images.unsplash.com/photo-1598133894009-1bb7d5a7f3d5?q=80&w=800&auto=format&fit=crop'},
+    {id:'b10', title:'Smoothie Mix', price:6.50, rating:4.4, img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop'}
+  ]
+};
+
+// Generic function to create stars
+function stars(rating){
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.5;
+  let html = '';
+  for(let i=0;i<5;i++){
+    if(i<full) html += '★'; else if(i===full && half) html += '☆'; else html += '✩';
+  }
+  return `<span>${html}</span> <small>${rating.toFixed(1)}</small>`;
+}
+
+// Render each product card
+function makeCard(p){
+  return `
+  <article class="p-card" data-id="${p.id}">
+    <img src="${p.img}" alt="${p.title}" loading="lazy" />
+    <div class="p-meta">
+      <h3>${p.title}</h3>
+      <div>${stars(p.rating)}</div>
+      <div class="price"><strong>$${p.price.toFixed(2)}</strong></div>
+      <div style="display:flex;gap:6px;margin-top:6px">
+        <button class="btn btn-primary" onclick="addToCart('${p.id}')">Add</button>
+        <button class="btn btn-ghost" onclick="viewProduct('${p.id}')">View</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function fillSection(sectionId, products){
+  document.querySelector(sectionId).innerHTML = products.map(makeCard).join('');
+}
+
+// Fill data
+fillSection('#rowHome', categories.home);
+fillSection('#rowFurniture', categories.furniture);
+fillSection('#rowBeverages', categories.beverages);
+
+// Add to Cart
+function addToCart(id){
+  window.location.href = 'cart.html';
+}
+
+// View product modal
+function viewProduct(id){
+  alert('Open product modal for product ID: '+id);
+  // You can replace alert() with your modal logic
+}
+</script>
+
+<style>
+.section .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 12px;
+}
+.p-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  padding: 10px;
+  text-align: center;
+}
+.p-card img {
+  width: 100%;
+  height: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.p-meta h3 {
+  font-size: 0.8rem;
+  margin: 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.price {
+  font-weight: bold;
+  margin: 4px 0;
+}
+.btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-primary {
+  background: #007bff;
+  color: #fff;
+}
+.btn-ghost {
+  background: #f1f1f1;
+}
+</style>
+<!-- ================= PRODUCTS SECTION ================= -->
+<section id="shop" class="section">
+  <div class="container">
+    <h2 class="text-center">Shop Our Collection</h2>
+    <div id="productSections"></div>
+  </div>
+</section>
+<div id="productSections"></div>
+<script src="script.js"></script>
+<script src="index00 (1).js"></script>
+
+<section class="section" aria-label="Promos, testimonials, blog">
+  <div class="grid" style="grid-template-columns:2fr 1fr 1fr;gap:16px">
+    
+    <!-- Subscriber Perks -->
+    <div class="card" style="padding:18px">
+      <h3>Subscriber Perks</h3>
+      <p class="helper">Join the list for early access drops and members-only deals.</p>
+      <form id="newsletterForm" aria-label="Newsletter signup">
+        <div class="field">
+          <label for="newsEmail">Email</label>
+          <input id="newsEmail" type="email" placeholder="you@domain.com" required aria-required="true" aria-label="Email address">
+        </div>
+        <div class="field">
+          <label><input type="checkbox" required aria-required="true"> I agree to receive emails.</label>
+        </div>
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+      </form>
+
+      <!-- Promo Reveal -->
+      <button id="revealPromo" class="btn btn-secondary" style="margin-top:12px">Reveal Promo Code 🎁</button>
+      <div id="promoCode" style="display:none; margin-top:10px; font-weight:bold;">WELCOME10 — 10% OFF</div>
+
+      <!-- Trust Badges -->
+      <div class="trust" style="margin-top:14px" aria-label="Trust badges">
+        <div class="badge" title="Secure checkout" onclick="showBadgeInfo('Secure checkout with SSL & PCI compliance.')">
+          🔒 <span>Secure Checkout</span>
+        </div>
+        <div class="badge" title="Free returns" onclick="showBadgeInfo('Free 30-day returns, no questions asked.')">
+          ↩️ <span>Free Returns</span>
+        </div>
+        <div class="badge" title="24/7 support" onclick="showBadgeInfo('Reach us anytime via chat or email.')">
+          💬 <span>24/7 Support</span>
+        </div>
+        <div class="badge" title="Privacy first" onclick="showBadgeInfo('We never sell or share your data.')">
+          🛡️ <span>Privacy First</span>
+        </div>
+      </div>
+
+      <div class="helper" style="margin-top:8px">
+        We respect accessibility: ARIA labels, semantic HTML, and keyboard support are built-in.
+      </div>
+    </div>
+    
+    <!-- Testimonials -->
+    <div class="card" style="padding:18px">
+      <h3>What Customers Say</h3>
+      <blockquote class="helper" id="testimonial">“Quality is stellar and delivery was fast. My go-to store now.” — <strong>Ada</strong></blockquote>
+      <div style="margin-top:8px;">
+        <button onclick="prevTestimonial()">◀ Prev</button>
+        <button onclick="nextTestimonial()">Next ▶</button>
+      </div>
+    </div>
+
+    <!-- Blog Previews -->
+    <div class="card" style="padding:18px">
+      <h3>From Our Blog</h3>
+      <div class="blog-preview">
+        <a href="blog.html" class="helper">🌱 5 Ways Eco-Fabrics Save the Planet</a>
+      </div>
+      <div class="blog-preview">
+        <a href="blog.html" class="helper">👕 Behind the Scenes: How We Design Comfort</a>
+      </div>
+      <div class="blog-preview">
+        <a href="blog.html" class="helper">🚀 Why Fast Shipping Matters to Us</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Newsletter Success Modal -->
+<div id="newsletterModal" class="modal">
+  <h3>🎉 Welcome!</h3>
+  <p>Thanks for signing up. Check your inbox for your exclusive offer.</p>
+  <button onclick="closeModal('newsletterModal')">Close</button>
+</div>
+
+<script>
+  // Newsletter Form
+  document.getElementById("newsletterForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("newsletterModal").style.display = "block";
+    this.reset();
+  });
+
+  // Promo Reveal
+  document.getElementById("revealPromo").onclick = () => {
+    const promo = document.getElementById("promoCode");
+    promo.style.display = promo.style.display === "none" ? "block" : "none";
+  };
+
+  // Badge Info
+  function showBadgeInfo(msg) {
+    alert(msg);
+  }
+
+  // Testimonials Carousel
+  const testimonials = [
+    "“Quality is stellar and delivery was fast. My go-to store now.” — Ada",
+    "“Love the eco materials and the fit.” — Sam",
+    "“Checkout was easy, support was helpful.” — Kim",
+    "“The promos and discounts are unbeatable!” — Leo"
+  ];
+  let currentTestimonial = 0;
+
+  function showTestimonial() {
+    document.getElementById("testimonial").textContent = testimonials[currentTestimonial];
+  }
+  function prevTestimonial() {
+    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+    showTestimonial();
+  }
+  function nextTestimonial() {
+    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+    showTestimonial();
+  }
+
+  // Modal Close
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+</script>
+
+<style>
+  .modal { display:none; background:#fff; padding:20px; border-radius:8px; position:fixed; top:30%; left:50%; transform:translateX(-50%); box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; }
+  .badge { cursor:pointer; padding:6px 10px; background:#222; color:#fff; border-radius:6px; font-size:14px; display:inline-flex; align-items:center; gap:6px; }
+  .badge:hover { background:#444; }
+  .blog-preview a { display:block; margin-bottom:6px; color:#0073e6; text-decoration:none; }
+  .blog-preview a:hover { text-decoration:underline; }
+</style>
+
+<!-- Blog teasers -->
+<section id="blog" class="section" aria-labelledby="blogTitle">
+  <h2 id="blogTitle" class="blog-heading">From the Blog</h2>
+  <p class="blog-subtitle">Latest insights, guides, and stories from our creative world.</p>
+
+  <div class="grid blog enhanced-blog">
+    <article class="card blog-card" data-aos="fade-up">
+      <div class="card-img">
+        <img src="https://picsum.photos/800/500?random=41" alt="Sustainability practices" loading="lazy">
+        <span class="tag">Sustainability</span>
+      </div>
+      <div class="card-body">
+        <h3>5 Ways We’re Going Greener</h3>
+        <p class="sub">Sustainable packaging, renewable energy, and more.</p>
+        <div class="meta">
+          <span>🗓 Oct 8, 2025</span>
+          <span>💬 12 Comments</span>
+        </div>
+        <a class="btn ghost readmore" href="blog.html">Read more</a>
+      </div>
+    </article>
+
+    <article class="card blog-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="card-img">
+        <img src="https://picsum.photos/800/500?random=42" alt="Size guide" loading="lazy">
+        <span class="tag">Fashion</span>
+      </div>
+      <div class="card-body">
+        <h3>Ultimate Size & Fit Guide</h3>
+        <p class="sub">Nail your fit with our quick sizing tips.</p>
+        <div class="meta">
+          <span>🗓 Sep 29, 2025</span>
+          <span>💬 8 Comments</span>
+        </div>
+        <a class="btn ghost readmore" href="blog.html">Read more</a>
+      </div>
+    </article>
+
+    <article class="card blog-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="card-img">
+        <img src="https://picsum.photos/800/500?random=43" alt="Care tips" loading="lazy">
+        <span class="tag">Lifestyle</span>
+      </div>
+      <div class="card-body">
+        <h3>Care Tips to Make Gear Last</h3>
+        <p class="sub">Easy wins to extend product life cycles.</p>
+        <div class="meta">
+          <span>🗓 Sep 20, 2025</span>
+          <span>💬 5 Comments</span>
+        </div>
+        <a class="btn ghost readmore" href="blog.html">Read more</a>
+      </div>
+    </article>
+  </div>
+</section>
+<style>
+/* Blog Section Enhancements */
+.blog-heading {
+  font-size: 2.8rem;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.blog-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 40px;
+}
+
+/* Grid layout - stays same but more modern look */
+.enhanced-blog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+/* Blog cards */
+.blog-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.blog-card:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+/* Image section */
+.blog-card .card-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card .card-img img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+.blog-card:hover .card-img img {
+  transform: scale(1.1);
+}
+
+.blog-card .tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Text content */
+.blog-card .card-body {
+  padding: 20px;
+}
+
+.blog-card h3 {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.blog-card .sub {
+  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.blog-card .meta {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.blog-card .btn.ghost {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.blog-card .btn.ghost:hover {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  transform: translateY(-2px);
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll(".blog-card").forEach(card => {
+    observer.observe(card);
+  });
+});
+</script>
+
+<style>
+.blog-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.blog-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+<!-- Payment & Trust Section -->
+<section class="section" aria-label="Payment and Trust">  
+  <h2>Pay Your Way</h2>  
+
+  <!-- Payment Badges -->
+  <div class="trust">  
+    <button class="badge" title="Visa" onclick="showPaymentInfo('Visa')">VISA</button>  
+    <button class="badge" title="Mastercard" onclick="showPaymentInfo('Mastercard')">Mastercard</button>  
+    <button class="badge" title="Amex" onclick="showPaymentInfo('Amex')">Amex</button>  
+    <button class="badge" title="Apple Pay" onclick="showPaymentInfo('Apple Pay')">Apple&nbsp;Pay</button>  
+    <button class="badge" title="Google Pay" onclick="showPaymentInfo('Google Pay')">Google&nbsp;Pay</button>  
+    <button class="badge" title="PayPal" onclick="showPaymentInfo('PayPal')">PayPal</button>  
+  </div>  
+
+  <!-- Info Display -->
+  <div id="paymentInfo" class="helper" style="margin-top:10px; display:none;"></div>  
+
+  <!-- Security Accordion -->
+  <div class="faq">  
+    <h3>Security & Guarantee</h3>  
+    <button onclick="toggleSecurity()">+ How is my payment protected?</button>  
+    <div id="securityInfo" style="display:none;">  
+      <p>We use PCI-compliant gateways, tokenization, and 256-bit SSL encryption. Your data is never stored on our servers.</p>  
+    </div>  
+  </div>  
+
+  <!-- Currency Switcher -->
+  <div class="currency">  
+    <label for="currencySelect">Choose Currency:</label>  
+    <select id="currencySelect">  
+      <option value="USD">$ USD</option>  
+      <option value="EUR">€ EUR</option>  
+      <option value="GBP">£ GBP</option>  
+      <option value="KES">KSh KES</option>  
+    </select>  
+  </div>  
+
+  <!-- Store Locator -->
+  <button id="openStoreLocator">Find a Store Near You</button>  
+  <div id="storeLocator" class="modal">  
+    <h3>Store Locator</h3>  
+    <p>Use our <a href="store-locator.html">store locator</a> to find physical outlets near you.</p>  
+    <button onclick="closeModal('storeLocator')">Close</button>  
+  </div>  
+
+  <!-- Trust Badges -->
+  <div class="guarantees">  
+    <div class="badge" title="30-Day Returns">30-Day Returns</div>  
+    <div class="badge" title="Free Shipping Over $50">Free Shipping $50+</div>  
+    <div class="badge" title="Secure Checkout">Secure Checkout</div>  
+    <div class="badge" title="Customer Support 24/7">24/7 Support</div>  
+  </div>  
+
+  <!-- Live Chat Button -->
+  <button id="chatBtn">💬 Chat With Us</button>  
+
+  <p class="helper">Secure checkout placeholder: PCI-aware gateways, tokenization, and HTTPS are expected in production.</p>  
+</section>  
+
+<script>
+  // Show payment info onclick
+  function showPaymentInfo(method) {
+    const infoBox = document.getElementById("paymentInfo");
+    infoBox.style.display = "block";
+    infoBox.textContent = method + " selected. You’ll be redirected to a secure gateway at checkout.";
+  }
+
+  // Security FAQ toggle
+  function toggleSecurity() {
+    const sec = document.getElementById("securityInfo");
+    sec.style.display = sec.style.display === "none" ? "block" : "none";
+  }
+
+  // Store Locator Modal
+  document.getElementById("openStoreLocator").onclick = () => {
+    document.getElementById("storeLocator").style.display = "block";
+  };
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  // Currency switcher (demo)
+  document.getElementById("currencySelect").addEventListener("change", (e) => {
+    alert("Currency switched to: " + e.target.value);
+  });
+
+  // Live Chat button (demo)
+  document.getElementById("chatBtn").onclick = () => {
+    alert("Opening Live Chat... (Integrate with WhatsApp, Messenger, or Tawk.to here)");
+  };
+</script>  
+
+<style>
+  .trust, .guarantees { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0; }
+  .badge { padding:8px 12px; background:#eee; border-radius:6px; cursor:pointer; font-size:14px; }
+  .badge:hover { background:#ddd; }
+  .faq button { background:none; border:none; color:#0073e6; cursor:pointer; font-size:14px; margin-top:8px; }
+  .currency { margin:12px 0; }
+  #chatBtn { position:fixed; bottom:20px; right:20px; background:#0073e6; color:#fff; padding:12px 18px; border:none; border-radius:50px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.2); }
+  #chatBtn:hover { background:#005bb5; }
+  .modal { display:none; background:#fff; padding:20px; border-radius:8px; position:fixed; top:30%; left:50%; transform:translateX(-50%); box-shadow:0 4px 10px rgba(0,0,0,0.3); }
+</style>
+
+  </main>  <!-- PRODUCT MODAL -->
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details">
+  <div class="modal-content glassy">
+    
+    <!-- Close -->
+    <button class="close-btn" id="modalClose" aria-label="Close product dialog">&times;</button>
+
+    <!-- LEFT: Image viewer -->
+    <div class="modal-left">
+      <div class="viewer">
+        <img src="" alt="Product image" id="viewerImg">
+      </div>
+      <div class="related-carousel" id="relatedCarousel" aria-label="Related products thumbnails"></div>
+    </div>
+
+    <!-- RIGHT: Product details -->
+    <div class="modal-right">
+      <h2 id="mTitle">Product Title</h2>
+      <div class="stars" id="mStars" aria-label="Rating">★★★★★</div>
+      <div class="price" id="mPrice">$0.00</div>
+      <div class="helper" id="mSku">SKU: —</div>
+
+      <!-- Color/Variant Grid -->
+      <div class="options" id="mVariants" aria-label="Variants">
+        <h4>Available Colors</h4>
+        <div class="variant-grid">
+          <div class="variant" style="background:#000" title="Black" onclick="selectVariant('Black')"></div>
+          <div class="variant" style="background:#fff;border:1px solid #ccc" title="White" onclick="selectVariant('White')"></div>
+          <div class="variant" style="background:#ff0000" title="Red" onclick="selectVariant('Red')"></div>
+          <div class="variant" style="background:#0072ff" title="Blue" onclick="selectVariant('Blue')"></div>
+        </div>
+      </div>
+
+      <!-- Qty + Buttons -->
+      <div class="qty">
+        <label for="mQty">Qty</label>
+        <input id="mQty" type="number" min="1" value="1">
+      </div>
+      <div class="action-row">
+        <button class="btn btn-primary" id="mAddCart">Add to Cart</button>
+        <button class="btn btn-ghost" id="mBuyNow">Buy Now</button>
+        <button class="btn btn-ghost" id="mWishlist">♡ Wishlist</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="desc">Description</button>
+        <button role="tab" aria-selected="false" data-tab="specs">Specs</button>
+        <button role="tab" aria-selected="false" data-tab="shipping">Shipping & Returns</button>
+        <button role="tab" aria-selected="false" data-tab="faq">FAQs</button>
+      </div>
+      <div class="panel" id="panel-desc">
+        <p id="mDesc"></p>
+        <p id="mDescLong" class="helper"></p>
+      </div>
+      <div class="panel" id="panel-specs" hidden>
+        <ul id="mSpecs"></ul>
+      </div>
+      <div class="panel" id="panel-shipping" hidden>
+        <p>We ship worldwide with real-time rates, accurate ETAs, and paperless returns. Free 30-day returns on unworn items. Refunds back to original payment method.</p>
+      </div>
+      <div class="panel" id="panel-faq" hidden>
+        <details><summary>What sizes should I choose?</summary><p>Use the size guide in variants. We match standard US/EU sizing.</p></details>
+        <details><summary>How do returns work?</summary><p>Start in your account or the Returns modal. Print-free QR drop-off options available.</p></details>
+      </div>
+
+      <!-- Recently Viewed -->
+      <div class="panel">
+        <h3>Recently Viewed</h3>
+        <div id="recentRow" class="row"></div>
+      </div>
+
+      <!-- Similar Products -->
+      <div class="panel">
+        <h3>Customers Also Bought</h3>
+        <div id="similarRow" class="row"></div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="reviews panel">
+        <h3>Reviews</h3>
+        <div id="reviewList"></div>
+        <textarea id="reviewInput" placeholder="Write a review..."></textarea>
+        <button id="submitReview" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+* {
+  font-size: 1.5rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
+}
+.product-modal {
+  display:none; position:fixed; top:0px; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+  justify-content:center; align-items:center; z-index:999;
+}
+.product-modal.active { display:flex; }
+
+.modal-content.glassy {
+  display:flex; flex-wrap:wrap;
+  background:rgba(255,255,255,0.08);
+  border-radius:20px; padding:24px;
+  max-width:1600px; width:99%;
+  color:#fff; gap:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+  animation: fadeInUp 0.5s ease;
+}
+@keyframes fadeInUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+.modal-right { flex:1; min-width:480px; text-align:center; }
+.viewer img {
+  max-width:100%; border-radius:16px;
+  transition:transform 0.4s ease;
+}
+.viewer img:hover { transform:scale(1.08) rotate(2deg); }
+
+.modal-right { flex:1; min-width:300px; }
+
+.stars { color:gold; font-size:1.5rem; margin:6px 0; }
+.price { font-size:1.5rem; color:#ffce54; margin-bottom:10px; }
+
+.variant-grid { display:flex; gap:8px; margin:8px 0; }
+.variant {
+  width:30px; height:30px; border-radius:50%;
+  cursor:pointer; transition:transform 0.3s;
+}
+.variant:hover { transform:scale(1.2); box-shadow:0 0 8px rgba(255,255,255,0.6); }
+
+.qty { margin:10px 0; }
+.qty input { padding:12px; border-radius:8px; border:none; text-align:center; }
+
+.action-row { display:flex; gap:10px; margin:12px 0; flex-wrap:wrap; }
+.btn {
+  padding:10px 26px; border-radius:12px;
+  border:none; cursor:pointer;
+  transition:transform 0.2s, background 0.3s;
+}
+.btn-primary { background:linear-gradient(135deg,#00c6ff,#0072ff); color:#fff; }
+.btn-ghost { background:rgba(255,255,255,0.1); color:#fff; }
+.btn:hover { transform:translateY(-2px); filter:brightness(1.2); }
+
+.tabs { margin:16px 0; display:flex; gap:8px; }
+.tabs button { background:rgba(255,255,255,0.08); border:none; padding:8px 12px; border-radius:8px; color:#fff; cursor:pointer; }
+.tabs button[aria-selected="true"] { background:#0072ff; }
+
+.panel { margin-top:12px; }
+.reviews textarea { border-radius:10px; padding:10px; }
+</style>
+
+<!-- JS -->
+<script>
+function selectVariant(color) {
+  alert("Selected color: " + color);
+}
+
+document.getElementById("mAddCart").onclick = () => alert("Added to Cart!");
+document.getElementById("mBuyNow").onclick = () => alert("Proceed to Checkout");
+document.getElementById("mWishlist").onclick = () => alert("Added to Wishlist");
+document.getElementById("submitReview").onclick = () => {
+  const txt = document.getElementById("reviewInput").value;
+  if(txt.trim()){ 
+    const div=document.createElement("div");
+    div.textContent=txt;
+    document.getElementById("reviewList").appendChild(div);
+    document.getElementById("reviewInput").value="";
+  }
+};
+</script>
+
+
+<div class="modal" id="wishlistModal" role="dialog" aria-label="Wishlist" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3>Your Wishlist</h3><button class="btn btn-ghost" data-close="#wishlistModal">Close</button></div>
+      <div id="wishlistItems" class="panel"></div>
+    </div>
+  </div>  <div class="modal" id="authModal" role="dialog" aria-label="Account" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" data-auth-tab="login">Login</button>
+        <button class="btn btn-ghost" data-auth-tab="register">Register</button>
+        <button class="btn btn-ghost" data-auth-tab="reset">Reset</button>
+      </div>
+      <div id="authPanels">
+        <form id="loginForm" aria-label="Login" class="panel" style="margin-top:10px">
+          <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" required ></div>
+          <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" required ></div>
+          <div class="field"><label for="l2fa">2FA Code (optional)</label><input id="l2fa" inputmode="numeric" pattern="[0-9]*" placeholder="123456" ></div>
+          <div class="field"><label for="lCaptcha">Captcha: <span id="lCaptchaQ"></span></label><input id="lCaptcha" required aria-describedby="lHelp"><div id="lHelp" class="helper">Prove you’re human</div></div>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form><form id="regForm" aria-label="Register" class="panel" hidden>
+      <div class="field"><label for="rName">Name</label><input id="rName" required></div>
+      <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" required></div>
+      <div class="field"><label for="rPass">Password</label><input id="rPass" type="password" required></div>
+      <div class="field"><label for="rCaptcha">Captcha: <span id="rCaptchaQ"></span></label><input id="rCaptcha" required></div>
+      <button class="btn btn-primary" type="submit">Create account</button>
+    </form>
+
+    <form id="resetForm" aria-label="Reset password" class="panel" hidden>
+      <div class="field"><label for="xEmail">Email</label><input id="xEmail" type="email" required></div>
+      <div class="field"><label for="xCaptcha">Captcha: <span id="xCaptchaQ"></span></label><input id="xCaptcha" required></div>
+      <button class="btn btn-primary" type="submit">Send reset link</button>
+    </form>
+  </div>
+</div>
+<style>
+/* Auth modal enhanced styles - paste into style.css or inside <head> */
+#authModal .box {
+  width: 100%;
+  max-width: 820px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 30px 80px rgba(2,8,20,0.6);
+  color: #eaf2ff;
+  border: 1px solid rgba(255,255,255,0.04);
+  animation: authPop .28s cubic-bezier(.2,.9,.3,1);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+@keyframes authPop { from { transform: translateY(10px) scale(.995); opacity:0 } to { transform:none; opacity:1 } }
+
+#authModal .box > div:first-child { display:flex; gap:10px; align-items:center; margin-bottom:12px; }
+#authModal .btn { padding:8px 12px; border-radius:10px; font-weight:600; cursor:pointer; border:1px solid rgba(255,255,255,0.06); background:transparent; color:inherit; }
+#authModal .btn-primary { background: linear-gradient(90deg,#00c6ff,#0072ff); color:#041022; border:none; }
+#authModal .btn-ghost { background:transparent; color:inherit; border:1px solid rgba(255,255,255,0.04); }
+
+#authModal .panel { margin-top:10px; display:block; transition: opacity .22s ease, transform .22s ease; }
+#authModal .panel[hidden] { display:none; opacity:0; transform: translateY(8px); }
+
+.field { margin-bottom:10px; display:flex; flex-direction:column; gap:6px; }
+.field label { font-size:0.92rem; color:rgba(255,255,255,0.9); }
+.field input, .field textarea {
+  padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.36); color:#fff; font-size:0.95rem;
+}
+.field input::placeholder { color: rgba(255,255,255,0.45); }
+
+/* helper text */
+.helper { font-size:0.82rem; color:rgba(255,255,255,0.6); margin-top:6px; }
+
+/* captcha inline */
+.captcha-row { display:flex; gap:8px; align-items:center; }
+
+/* password strength */
+.pw-strength { height:8px; width:100%; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden; margin-top:6px; }
+.pw-strength > i { display:block; height:100%; width:0%; background:linear-gradient(90deg,#ff416c,#6a11cb); transition:width .28s ease; }
+
+/* small inline controls */
+.controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+.small { font-size:0.88rem; padding:6px 8px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); color:#fff }
+
+/* messages (alerts) */
+.auth-msg { padding:10px 12px; border-radius:10px; margin-bottom:10px; display:none; }
+.auth-msg.show { display:block; animation:fadeIn .2s ease; }
+.auth-msg.error { background: linear-gradient(90deg,#ff6b6b,#ff8a80); color:#140000; }
+.auth-msg.success { background: linear-gradient(90deg,#b8ffcf,#6ef1b4); color:#03210a; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px) } to { opacity:1; transform:none } }
+
+/* subtle focus */
+.field input:focus, .field textarea:focus { outline: none; box-shadow: 0 6px 20px rgba(10,50,120,0.12); border-color: rgba(0,198,255,0.6); }
+
+/* small screen tweaks */
+@media (max-width:600px) {
+  #authModal .box { padding:14px; border-radius:12px; }
+  .field input, .field textarea { font-size:0.95rem; }
+}
+
+/* visually hidden for accessibility */
+.vh { position:absolute !important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+</style>
+<script>
+/*
+  Enhanced Auth Modal JS
+  - Uses existing DOM structure / IDs.
+  - Demo-only client-side persistence via localStorage.
+  - Replace commented sections with server calls (fetch/axios) for production.
+*/
+
+(function(){
+  // utilities
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+  const el = id => document.getElementById(id);
+
+  // keep references to panels and buttons (preserving your IDs)
+  const authModal = el('authModal');
+  const authPanels = el('authPanels');
+
+  const loginForm = el('loginForm');
+  const regForm = el('regForm');
+  const resetForm = el('resetForm');
+
+  // message area
+  function showMsg(type, text, targetForm) {
+    // create ephemeral message element inside target form
+    const wrap = targetForm || authPanels;
+    let box = wrap.querySelector('.auth-msg');
+    if(!box) {
+      box = document.createElement('div');
+      box.className = 'auth-msg';
+      wrap.insertBefore(box, wrap.firstChild);
+    }
+    box.className = 'auth-msg show ' + (type==='error' ? 'error' : 'success');
+    box.textContent = text;
+    setTimeout(() => { box.classList.remove('show'); }, 5000);
+  }
+
+  // generate simple math captcha
+  function genCaptcha() {
+    const a = Math.floor(Math.random()*8)+2;
+    const b = Math.floor(Math.random()*9)+1;
+    return { q: `${a} + ${b} = ?`, a, b, answer: a + b };
+  }
+
+  // set captchas into forms
+  const lCaptchaQ = el('lCaptchaQ'), rCaptchaQ = el('rCaptchaQ'), xCaptchaQ = el('xCaptchaQ');
+  let lCaptcha = genCaptcha(), rCaptcha = genCaptcha(), xCaptcha = genCaptcha();
+  if (lCaptchaQ) lCaptchaQ.textContent = lCaptcha.q;
+  if (rCaptchaQ) rCaptchaQ.textContent = rCaptcha.q;
+  if (xCaptchaQ) xCaptchaQ.textContent = xCaptcha.q;
+
+  // tab switching (preserve data-auth-tab)
+  qsa('[data-auth-tab]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const tab = btn.dataset.authTab;
+      // hide all panels, show the requested
+      ['login','register','reset'].forEach(name=>{
+        const panel = el(name + 'Form');
+        if(!panel) return;
+        if(name === tab) {
+          panel.hidden = false;
+          panel.style.opacity = 1;
+          panel.style.transform = 'none';
+        } else {
+          panel.hidden = true;
+        }
+      });
+    });
+  });
+
+  // password strength meter for registration
+  const rPass = el('rPass');
+  function pwStrengthScore(pw) {
+    let score = 0;
+    if(!pw) return 0;
+    if(pw.length >= 8) score++;
+    if(/[a-z]/.test(pw)) score++;
+    if(/[A-Z]/.test(pw)) score++;
+    if(/\d/.test(pw)) score++;
+    if(/[^A-Za-z0-9]/.test(pw)) score++;
+    return score; // 0..5
+  }
+  // attach strength bar
+  const pwBar = document.createElement('div');
+  pwBar.className = 'pw-strength';
+  pwBar.innerHTML = '<i></i>';
+  if (rPass && rPass.parentNode) rPass.parentNode.appendChild(pwBar);
+
+  rPass && rPass.addEventListener('input', ()=>{
+    const s = pwStrengthScore(rPass.value);
+    const pct = Math.min(100, Math.round((s/5)*100));
+    pwBar.querySelector('i').style.width = pct + '%';
+  });
+
+  // show/hide password toggle - for all password inputs in modal
+  qsa('#authModal input[type="password"]').forEach(input=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'small';
+    btn.style.marginLeft = '6px';
+    btn.textContent = 'Show';
+    btn.addEventListener('click', ()=> {
+      if(input.type === 'password') { input.type = 'text'; btn.textContent = 'Hide'; }
+      else { input.type = 'password'; btn.textContent = 'Show'; }
+    });
+    input.parentNode.appendChild(btn);
+  });
+
+  // utility: get users from localStorage
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('demo_users') || '[]'); } catch { return []; }
+  }
+  function saveUsers(users) {
+    localStorage.setItem('demo_users', JSON.stringify(users));
+  }
+
+  // helper to find user
+  function findUserByEmail(email) {
+    const users = getUsers();
+    return users.find(u => u.email.toLowerCase() === (email||'').toLowerCase());
+  }
+
+  // REGISTER: handle form submission
+  regForm && regForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = (el('rName')?.value || '').trim();
+    const email = (el('rEmail')?.value || '').trim();
+    const password = (el('rPass')?.value || '').trim();
+    const captcha = (el('rCaptcha')?.value || '').trim();
+    if(!name || !email || !password) return showMsg('error','Please complete all required fields', regForm);
+    if(parseInt(captcha,10) !== rCaptcha.answer) {
+      rCaptcha = genCaptcha(); if(rCaptchaQ) rCaptchaQ.textContent = rCaptcha.q;
+      return showMsg('error','Captcha is incorrect', regForm);
+    }
+    if(findUserByEmail(email)) return showMsg('error','Account already exists with that email', regForm);
+
+    // demo 2FA option checkbox? (not in original HTML) - simulate disabled by default
+    const newUser = {
+      id: 'u' + Date.now(),
+      name, email,
+      // WARNING: storing plain passwords is insecure — in production call a server and store hashes.
+      password: btoa(password), // demo simple obfuscation; replace with secure hashing on server
+      twoFactor: false,
+      createdAt: new Date().toISOString()
+    };
+
+    // Save user (demo)
+    const users = getUsers(); users.push(newUser); saveUsers(users);
+    showMsg('success','Account created. You can now login.', regForm);
+    // auto-switch to login
+    qsa('[data-auth-tab]').find?.(b => b.dataset.authTab === 'login')?.click?.();
+  });
+
+  // LOGIN: handle form submit (with optional 2FA)
+  loginForm && loginForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = (el('lEmail')?.value || '').trim();
+    const password = (el('lPass')?.value || '').trim();
+    const twofaInput = (el('l2fa')?.value || '').trim();
+    const captchaAns = (el('lCaptcha')?.value || '').trim();
+
+    if(!email || !password) return showMsg('error','Enter email and password', loginForm);
+    if(parseInt(captchaAns,10) !== lCaptcha.answer) {
+      lCaptcha = genCaptcha(); if(lCaptchaQ) lCaptchaQ.textContent = lCaptcha.q;
+      return showMsg('error','Captcha incorrect', loginForm);
+    }
+
+    const user = findUserByEmail(email);
+    if(!user) return showMsg('error', 'No account with that email', loginForm);
+
+    // verify password (demo uses btoa)
+    if(user.password !== btoa(password)) return showMsg('error','Incorrect password', loginForm);
+
+    // 2FA flow: if user.twoFactor true, generate OTP and require it
+    if(user.twoFactor) {
+      // generate OTP (demo)
+      const otp = Math.floor(100000 + Math.random()*900000).toString();
+      // store otp temporarily (production: send to user via SMS/Email/TOTP)
+      sessionStorage.setItem('auth_otp', otp);
+      sessionStorage.setItem('auth_user', user.email);
+
+      // "send" OTP - demo: show friendly modal/toast (replace with real SMS/email)
+      showMsg('success', `A one-time code has been sent to your phone/email (demo): ${otp}`, loginForm);
+
+      // show 2FA input UI focus
+      el('l2fa')?.focus();
+      return;
+    }
+
+    // success: set user session (demo)
+    localStorage.setItem('auth_current', JSON.stringify({ email: user.email, name: user.name, id: user.id }));
+    showMsg('success','Logged in successfully!', loginForm);
+
+    // run any post-login hooks (e.g., close modal) - replace with your own logic
+    setTimeout(()=>{ authModal.style.display='none'; }, 700);
+
+    // TODO: Replace above with server-side authentication flow:
+    // fetch('/api/login', { method:'POST', body: JSON.stringify({email, password}) })
+    //  .then(...)...
+  });
+
+  // If 2FA code is entered in l2fa field and matches OTP, finalize login
+  el('l2fa') && el('l2fa').addEventListener('change', (e)=>{
+    const code = (e.target.value || '').trim();
+    const expected = sessionStorage.getItem('auth_otp');
+    const email = sessionStorage.getItem('auth_user');
+    if(!expected || !email) return;
+    if(code === expected) {
+      const user = findUserByEmail(email);
+      localStorage.setItem('auth_current', JSON.stringify({ email: user.email, name: user.name, id: user.id }));
+      sessionStorage.removeItem('auth_otp'); sessionStorage.removeItem('auth_user');
+      showMsg('success','2FA verified — logged in!', loginForm);
+      setTimeout(()=>{ authModal.style.display='none'; }, 800);
+    } else {
+      showMsg('error','Invalid 2FA code', loginForm);
+    }
+  });
+
+  // RESET: handle reset request (send reset token demo)
+  resetForm && resetForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const email = (el('xEmail')?.value || '').trim();
+    const captchaAns = (el('xCaptcha')?.value || '').trim();
+    if(!email) return showMsg('error','Enter email', resetForm);
+    if(parseInt(captchaAns,10) !== xCaptcha.answer) {
+      xCaptcha = genCaptcha(); if(xCaptchaQ) xCaptchaQ.textContent = xCaptcha.q;
+      return showMsg('error','Captcha incorrect', resetForm);
+    }
+    const user = findUserByEmail(email);
+    if(!user) return showMsg('error','No account with that email', resetForm);
+
+    // generate reset token (demo)
+    const token = Math.random().toString(36).slice(2,10);
+    // store token - production: send link via email with token
+    const resetStore = JSON.parse(localStorage.getItem('demo_resets') || '{}');
+    resetStore[token] = { email: user.email, createdAt: Date.now() };
+    localStorage.setItem('demo_resets', JSON.stringify(resetStore));
+
+    showMsg('success', `A reset link has been sent (demo). Token: ${token}`, resetForm);
+    // In production: send email with link such as /reset-password?token=${token}
+  });
+
+  // Optional: check URL for reset token and allow set new password (demo)
+  (function handleResetTokenInUrl(){
+    const params = new URLSearchParams(location.search);
+    const token = params.get('reset_token');
+    if(!token) return;
+    const resets = JSON.parse(localStorage.getItem('demo_resets') || '{}');
+    if(!resets[token]) return;
+    const { email } = resets[token];
+
+    // Prompt user to set a new password (simple flow)
+    const newPw = prompt(`Reset password for ${email}. Enter new password:`);
+    if(newPw) {
+      const users = getUsers();
+      const u = users.find(x => x.email === email);
+      if(u){ u.password = btoa(newPw); saveUsers(users); delete resets[token]; localStorage.setItem('demo_resets', JSON.stringify(resets)); alert('Password reset successful. You can now login.'); }
+    }
+  })();
+
+  // small helper: if auth_current exists, optionally show user info in UI
+  (function showSignedInUser() {
+    const cur = JSON.parse(localStorage.getItem('auth_current') || 'null');
+    if(cur) {
+      // you can show name / logout UI here; for demo we just console log
+      console.info('Authenticated:', cur.name, cur.email);
+    }
+  })();
+
+  // Accessibility: allow Esc to close modal
+  document.addEventListener('keydown', (e)=> {
+    if(e.key === 'Escape') authModal && (authModal.style.display = 'none');
+  });
+
+  // End of IIFE
+})();
+</script>
+  </div>  <div class="modal" id="helpModal" role="dialog" aria-label="Help center" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" data-help-tab="contact">Contact</button>
+        <button class="btn btn-ghost" data-help-tab="returns">Returns/Refunds</button>
+        <button class="btn btn-ghost" data-help-tab="tracking">Order Tracking</button>
+      </div>
+      <div id="helpPanels" style="margin-top:10px">
+        <form id="contactForm" class="panel" aria-label="Contact us">
+          <div class="field"><label for="cName">Name</label><input id="cName" required></div>
+          <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required></div>
+          <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" rows="4" required></textarea></div>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+        <form id="returnsForm" class="panel" hidden aria-label="Returns">
+          <div class="field"><label for="rOrder">Order #</label><input id="rOrder" required></div>
+          <div class="field"><label for="rReason">Reason</label><select id="rReason"><option>Too large</option><option>Too small</option><option>Damaged</option><option>Changed mind</option></select></div>
+          <button class="btn btn-primary" type="submit">Start Return</button>
+        </form>
+        <form id="trackForm" class="panel" hidden aria-label="Order tracking">
+          <div class="field"><label for="tOrder">Order #</label><input id="tOrder" required></div>
+          <button class="btn btn-primary" type="submit">Track</button>
+          <div id="trackResult" class="helper" style="margin-top:8px"></div>
+        </form>
+      </div>
+    </div>
+  </div>  <footer>  
+  <div class="container">  
+    <div class="cols">  
+
+      <!-- About Section -->
+      <div>  
+        <h4>About</h4>  
+        <p class="helper">Ethically made apparel & gear. Built for comfort, designed for impact.</p>  
+      </div>  
+
+      <!-- Help Section -->
+      <div>  
+        <h4>Help</h4>  
+        <ul>  
+          <li><a href="#helpModal" id="openHelp2">Contact & FAQ</a></li>  
+          <li><a href="#">Shipping & Returns</a></li>  
+          <li><a href="#">Privacy</a></li>  
+          <li><a href="#">Terms</a></li>  
+          <li><a href="#trackOrder" id="openTrack">Track My Order</a></li>  
+        </ul>  
+      </div>  
+
+      <!-- Account Section -->
+      <div>  
+        <h4>Account</h4>  
+        <ul>  
+          <li><a href="#authModal" id="openAuth2">Login</a></li>  
+          <li><a href="order.html">Orders</a></li>  
+          <li><a href="#wishlistModal" id="openWishlist">Wishlist</a></li>  
+          <li><a href="#cartModal" id="openCart">My Cart</a></li>  
+        </ul>  
+      </div>  
+
+      <!-- Newsletter Signup -->
+      <div>  
+        <h4>Stay Updated</h4>  
+        <form id="newsletterForm">  
+          <input type="email" id="newsletterEmail" placeholder="Enter your email" required>  
+          <button type="submit">Subscribe</button>  
+        </form>  
+        <p class="helper">Get exclusive offers & new arrivals straight to your inbox.</p>  
+      </div>  
+
+      <!-- Social Section -->
+      <div>  
+        <h4>Follow</h4>  
+        <ul class="social">  
+          <li><a href="https://instagram.com" target="_blank">Instagram</a></li>  
+          <li><a href="https://tiktok.com" target="_blank">TikTok</a></li>  
+          <li><a href="https://twitter.com" target="_blank">Twitter</a></li>  
+          <li><a href="https://youtube.com" target="_blank">  
+            <img src="yt.png" alt="YouTube Icon" width="20"> YouTube</a></li>  
+        </ul>  
+      </div>  
+
+      <!-- Payment Methods -->
+      <div>  
+        <h4>We Accept</h4>  
+        <img src="visa.png" alt="Visa" width="40">  
+        <img src="mastercard.png" alt="Mastercard" width="40">  
+        <img src="paypal.png" alt="PayPal" width="40">  
+      </div>  
+
+    </div>  
+
+    <div class="helper" style="padding:0 0 16px">© <span id="year"></span> ShopSphere</div>  
+  </div>  
+</footer>  
+
+<!-- Example Modals -->
+<div id="helpModal" class="modal">Help & FAQ Content</div>  
+<div id="authModal" class="modal">Login/Register Content</div>  
+<div id="wishlistModal" class="modal">Wishlist Content</div>  
+<div id="cartModal" class="modal">Cart Content</div>  
+<div id="trackOrder" class="modal">Order Tracking Content</div>  
+
+<script>
+  // Dynamic Year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Newsletter Submit
+  document.getElementById("newsletterForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    let email = document.getElementById("newsletterEmail").value;
+    alert("Thank you for subscribing, " + email + "!");
+    this.reset();
+  });
+
+  // Modal Functionality
+  const modals = document.querySelectorAll(".modal");
+  function openModal(id) {
+    modals.forEach(m => m.style.display = "none");
+    document.querySelector(id).style.display = "block";
+  }
+
+  document.getElementById("openHelp2").onclick = () => openModal("#helpModal");
+  document.getElementById("openAuth2").onclick = () => openModal("#authModal");
+  document.getElementById("openWishlist").onclick = () => openModal("#wishlistModal");
+  document.getElementById("openCart").onclick = () => openModal("#cartModal");
+  document.getElementById("openTrack").onclick = () => openModal("#trackOrder");
+</script>
+
+<style>
+  footer { background:#111; color:#fff; padding:40px 20px; }
+  footer h4 { margin-bottom: 10px; }
+  footer ul { list-style:none; padding:0; }
+  footer ul li { margin-bottom:6px; }
+  footer a { color:#fff; text-decoration:none; }
+  footer a:hover { text-decoration:underline; }
+  .modal { display:none; background:#fff; color:#000; padding:20px; position:fixed; top:20%; left:50%; transform:translateX(-50%); border-radius:8px; }
+  #newsletterForm { display:flex; gap:5px; }
+  #newsletterForm input { flex:1; padding:6px; border-radius:4px; border:none; }
+  #newsletterForm button { padding:6px 12px; background:#ff6600; border:none; color:#fff; border-radius:4px; cursor:pointer; }
+  #newsletterForm button:hover { background:#e65c00; }
+</style> 
+
+<script>
+/* ----------------------------
+   🔄 ACME30 LOCAL SYNC HELPER
+   Automatically syncs products
+   with Admin Dashboard updates
+----------------------------- */
+
+(function() {
+  console.log("%c[ACME SYNC] Checking for synced products...", "color:#007bff;font-weight:bold;");
+
+  // Try load from localStorage
+  const synced = localStorage.getItem("acme_products");
+  if (synced) {
+    try {
+      const parsed = JSON.parse(synced);
+      if (Array.isArray(parsed) && parsed.length) {
+        // Replace products array dynamically
+        window.products.length = 0;
+        window.products.push(...parsed);
+        console.log("%c[ACME SYNC] Products updated from localStorage ✓", "color:green;font-weight:bold;");
+      } else {
+        console.warn("[ACME SYNC] No valid product data found in localStorage.");
+      }
+    } catch (err) {
+      console.error("[ACME SYNC] Failed to parse product data:", err);
+    }
+  } else {
+    console.warn("[ACME SYNC] No synced data yet.");
+  }
+
+  // Auto-render when synced (if Acme30 has a product section)
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof rowFill === "function" && document.querySelector("#productGrid")) {
+      rowFill("#productGrid", window.products.slice(0, 20)); // refresh visible grid
+      console.log("%c[ACME SYNC] Products rendered on Acme30.html ✓", "color:orange;font-weight:bold;");
+    }
+  });
+
+  // Optional: live visual pulse animation (for UX feedback)
+  const pulse = document.createElement("div");
+  pulse.textContent = "🌀 Sync Active";
+  pulse.style = `
+    position:fixed;bottom:10px;right:10px;
+    background:#007bff;color:#fff;
+    font-size:13px;padding:6px 10px;
+    border-radius:20px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    opacity:0.8;z-index:9999;
+    animation:pulse 2s infinite;
+  `;
+  document.body.appendChild(pulse);
+  const css = document.createElement("style");
+  css.textContent = `
+    @keyframes pulse {
+      0%{transform:scale(1);}
+      50%{transform:scale(1.1);}
+      100%{transform:scale(1);}
+    }
+  `;
+  document.head.appendChild(css);
+})();
+</script>
+
+<script>
+    /************************************
+     * Demo Data + Utilities (mock backend)
+     ************************************/
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    const fmt = (n) => `$${n.toFixed(2)}`;
+    const uid = () => Math.random().toString(36).slice(2,9);
+
+    // Mock "DB" with products (id, gender, category, likes, sales, addedAt, discount, rating)
+    const products = (() => {
+      const now = Date.now();
+      const data = [
+        {id:'p1', title:'Eco Tee', price:24.00, gender:'men', category:'tees', likes:180, sales:520, addedAt: now-3*86400000, discount:0.10, rating:4.6, images:['https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L','XL'], color:['Black','Olive','White']}, sku:'TEE-ECO-001', specs:['100% organic cotton','Pre‑shrunk','Fair trade'], tags:['new','organic','eco']},
+        {id:'p2', title:'City Sneakers', price:89.00, gender:'men', category:'sneakers', likes:320, sales:980, addedAt: now-12*86400000, discount:0.20, rating:4.8, images:['https://images.unsplash.com/photo-1528702748617-0316a9e42c1e?q=80&w=900&auto=format&fit=crop'], variants:{size:['7','8','9','10','11'], color:['White','Gray']}, sku:'SNK-CITY-002', specs:['Cushioned midsole','Breathable mesh','Durarubber outsole'], tags:['deal','best']},
+        {id:'p3', title:'Athleisure Set', price:64.00, gender:'women', category:'athleisure', likes:210, sales:610, addedAt: now-1*86400000, discount:0.0, rating:4.5, images:['https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=900&auto=format&fit=crop'], variants:{size:['XS','S','M','L'], color:['Charcoal','Sage']}, sku:'SET-ATH-003', specs:['4‑way stretch','Moisture wicking','Flatlock seams'], tags:['new']},
+        {id:'p4', title:'Minimal Backpack', price:72.00, gender:'unisex', category:'accessories', likes:155, sales:410, addedAt: now-20*86400000, discount:0.15, rating:4.3, images:['https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=900&auto=format&fit=crop'], variants:{size:['One'], color:['Black','Sand']}, sku:'BAG-MIN-004', specs:['Water‑resistant','Laptop sleeve','Recycled nylon'], tags:['popular']},
+        {id:'p5', title:'Cozy Hoodie', price:58.00, gender:'women', category:'hoodies', likes:400, sales:1200, addedAt: now-30*86400000, discount:0.25, rating:4.9, images:['https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L'], color:['Oat','Black']}, sku:'HDY-COZY-005', specs:['Brushed fleece','Kangaroo pocket','Raglan sleeves'], tags:['best','liked']},
+        {id:'p6', title:'Ribbed Tank', price:19.00, gender:'women', category:'tops', likes:130, sales:210, addedAt: now-6*86400000, discount:0, rating:4.2, images:['https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=900&auto=format&fit=crop'], variants:{size:['XS','S','M','L'], color:['White','Black']}, sku:'TNK-RIB-006', specs:['Breathable','Body‑skimming fit','Soft rib'], tags:['new']},
+        {id:'p7', title:'Performance Joggers', price:54.00, gender:'men', category:'pants', likes:95, sales:300, addedAt: now-10*86400000, discount:0.05, rating:4.1, images:['https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L','XL'], color:['Navy','Coal']}, sku:'JOG-PERF-007', specs:['Secure pockets','Tapered fit','Quick dry'], tags:['offer']},
+        {id:'p8', title:'Cashmere Beanie', price:36.00, gender:'unisex', category:'accessories', likes:220, sales:160, addedAt: now-2*86400000, discount:0, rating:4.7, images:['https://images.unsplash.com/photo-1520975935791-50f2492a67f0?q=80&w=900&auto=format&fit=crop'], variants:{size:['One'], color:['Gray','Brown']}, sku:'BN-CASH-008', specs:['Grade‑A cashmere','Double knit','Ultra soft'], tags:['liked','new']},
+        {id:'p9', title:'Trail Runners', price:92.00, gender:'women', category:'sneakers', likes:180, sales:500, addedAt: now-14*86400000, discount:0.18, rating:4.4, images:['https is://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop'], variants:{size:['6','7','8','9'], color:['Teal','Black']}, sku:'RUN-TRL-009', specs:['Aggressive lugs','Rock plate','Reflective'], tags:['deal']},
+            {id:'p1', title:'Eco Tee', 
+            price:24.00, gender:'men', category:'tees', likes:180, sales:520, addedAt: now-3*86400000, discount:0.10, rating:4.6, images:['https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L','XL'], color:['Black','Olive','White']}, sku:'TEE-ECO-001', specs:['100% organic cotton','Pre-shrunk','Fair trade'], tags:['new','organic','eco']},    
+    {id:'p2', title:'City Sneakers', price:89.00, gender:'men', category:'sneakers', likes:320, sales:980, addedAt: now-12*86400000, discount:0.20, rating:4.8, images:['https://images.unsplash.com/photo-1528702748617-0316a9e42c1e?q=80&w=900&auto=format&fit=crop'], variants:{size:['7','8','9','10','11'], color:['White','Gray']}, sku:'SNK-CITY-002', specs:['Cushioned midsole','Breathable mesh','Durarubber outsole'], tags:['deal','best']},    
+    {id:'p3', title:'Athleisure Set', price:64.00, gender:'women', category:'athleisure', likes:210, sales:610, addedAt: now-1*86400000, discount:0.0, rating:4.5, images:['https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=900&auto=format&fit=crop'], variants:{size:['XS','S','M','L'], color:['Charcoal','Sage']}, sku:'SET-ATH-003', specs:['4-way stretch','Moisture wicking','Flatlock seams'], tags:['new']},    
+    {id:'p4', title:'Minimal Backpack', price:72.00, gender:'unisex', category:'accessories', likes:155, sales:410, addedAt: now-20*86400000, discount:0.15, rating:4.3, images:['https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=900&auto=format&fit=crop'], variants:{size:['One'], color:['Black','Sand']}, sku:'BAG-MIN-004', specs:['Water-resistant','Laptop sleeve','Recycled nylon'], tags:['popular']},    
+    {id:'p5', title:'Cozy Hoodie', price:58.00, gender:'women', category:'hoodies', likes:400, sales:1200, addedAt: now-30*86400000, discount:0.25, rating:4.9, images:['https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L'], color:['Oat','Black']}, sku:'HDY-COZY-005', specs:['Brushed fleece','Kangaroo pocket','Raglan sleeves'], tags:['best','liked']},    
+    {id:'p6', title:'Ribbed Tank', price:19.00, gender:'women', category:'tops', likes:130, sales:210, addedAt: now-6*86400000, discount:0, rating:4.2, images:['https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=900&auto=format&fit=crop'], variants:{size:['XS','S','M','L'], color:['White','Black']}, sku:'TNK-RIB-006', specs:['Breathable','Body-skimming fit','Soft rib'], tags:['new']},    
+    {id:'p7', title:'Performance Joggers', price:54.00, gender:'men', category:'pants', likes:95, sales:300, addedAt: now-10*86400000, discount:0.05, rating:4.1, images:['https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=900&auto=format&fit=crop'], variants:{size:['S','M','L','XL'], color:['Navy','Coal']}, sku:'JOG-PERF-007', specs:['Secure pockets','Tapered fit','Quick dry'], tags:['offer']},    
+    {id:'p8', title:'Cashmere Beanie', price:36.00, gender:'unisex', category:'accessories', likes:220, sales:160, addedAt: now-2*86400000, discount:0, rating:4.7, images:['https://images.unsplash.com/photo-1520975935791-50f2492a67f0?q=80&w=900&auto=format&fit=crop'], variants:{size:['One'], color:['Gray','Brown']}, sku:'BN-CASH-008', specs:['Grade-A cashmere','Double knit','Ultra soft'], tags:['liked','new']},    
+    {id:'p9', title:'Trail Runners', price:92.00, gender:'women', category:'sneakers', likes:180, sales:500, addedAt: now-14*86400000, discount:0.18, rating:4.4, images:['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop'], variants:{size:['6','7','8','9'], color:['Teal','Black']}, sku:'RUN-TRL-009', specs:['Aggressive lugs','Rock plate','Reflective'], tags:['deal']},    
+    
+    // ELECTRONICS    
+    {id:'e1', title:'Smartphone Pro Max', price:999.00, gender:'unisex', category:'electronics', likes:600, sales:2000, addedAt: now-5*86400000, discount:0.15, rating:4.9, images:['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=900&auto=format&fit=crop'], variants:{storage:['128GB','256GB','512GB'], color:['Black','Silver','Blue']}, sku:'ELEC-PHONE-001', specs:['OLED Display','5G Ready','Triple Camera'], tags:['deal','best']},    
+    {id:'e2', title:'Wireless Earbuds', price:120.00, gender:'unisex', category:'electronics', likes:420, sales:950, addedAt: now-8*86400000, discount:0.10, rating:4.6, images:['https://images.unsplash.com/photo-1585386959984-a4155224a1a0?q=80&w=900&auto=format&fit=crop'], variants:{color:['White','Black']}, sku:'ELEC-EARB-002', specs:['Noise Cancelling','Water Resistant','24h Battery'], tags:['popular','new']},    
+    
+    // FURNITURES    
+    {id:'f1', title:'Modern Sofa', price:720.00, gender:'unisex', category:'furnitures', likes:300, sales:480, addedAt: now-15*86400000, discount:0.20, rating:4.4, images:['https://images.unsplash.com/photo-1616627566580-ef6c7a3a8682?q=80&w=900&auto=format&fit=crop'], variants:{size:['2-Seater','3-Seater'], color:['Gray','Beige']}, sku:'FURN-SOFA-001', specs:['Solid Wood Frame','Removable Covers','Soft Cushions'], tags:['deal']},    
+    {id:'f2', title:'Dining Table Set', price:540.00, gender:'unisex', category:'furnitures', likes:210, sales:320, addedAt: now-18*86400000, discount:0.05, rating:4.3, images:['https://images.unsplash.com/photo-1582582494700-9d08c9fa64b3?q=80&w=900&auto=format&fit=crop'], variants:{size:['4-Seater','6-Seater']}, sku:'FURN-TBL-002', specs:['Oak Wood','Scratch Resistant','Polished Finish'], tags:['best']},    
+    
+    // KITCHEN    
+    {id:'k1', title:'Stainless Steel Cookware Set', price:250.00, gender:'unisex', category:'kitchen', likes:190, sales:460, addedAt: now-11*86400000, discount:0.10, rating:4.7, images:['https://images.unsplash.com/photo-1616628187507-6e46a6e5f3de?q=80&w=900&auto=format&fit=crop'], variants:{size:['5 pcs','10 pcs']}, sku:'KIT-COOK-001', specs:['Non-stick','Dishwasher Safe','Heat Resistant'], tags:['deal','liked']},    
+    {id:'k2', title:'Blender Pro 900W', price:130.00, gender:'unisex', category:'kitchen', likes:250, sales:780, addedAt: now-7*86400000, discount:0.12, rating:4.5, images:['https://images.unsplash.com/photo-1606851094013-57e6a6e8e94b?q=80&w=900&auto=format&fit=crop'], variants:{color:['Black','Red']}, sku:'KIT-BLEND-002', specs:['900W Power','Multi-speed','Easy Clean'], tags:['new']},    
+    
+    // HOME APPLIANCES    
+    {id:'ha1', title:'Smart Washing Machine', price:680.00, gender:'unisex', category:'home appliances', likes:310, sales:510, addedAt: now-25*86400000, discount:0.22, rating:4.8, images:['https://images.unsplash.com/photo-1581578731548-df1f8d4f7f30?q=80&w=900&auto=format&fit=crop'], variants:{size:['7kg','10kg']}, sku:'HOME-WASH-001', specs:['AI Wash','Quick Dry','Eco Mode'], tags:['deal','best']},    
+    {id:'ha2', title:'Air Conditioner 1.5HP', price:450.00, gender:'unisex', category:'home appliances', likes:280, sales:630, addedAt: now-4*86400000, discount:0.18, rating:4.6, images:['https://images.unsplash.com/photo-1581276879432-bdfecf07e593?q=80&w=900&auto=format&fit=crop'], variants:{size:['1HP','1.5HP','2HP']}, sku:'HOME-AC-002', specs:['Energy Saving','Low Noise','Remote Control'], tags:['popular']},    
+      ];
+      return data;
+    })();
+
+    // LocalStorage namespaces
+    const LS = {
+      cart: 'ss_cart',
+      wishlist: 'ss_wishlist',
+      user: 'ss_user',
+      views: 'ss_recent_views',
+      reviews: 'ss_reviews',
+    };
+
+    const store = {
+      get(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback }catch(_){ return fallback } },
+      set(key, val){ localStorage.setItem(key, JSON.stringify(val)); },
+      push(key, item){ const arr = store.get(key, []); arr.push(item); store.set(key, arr); return arr; }
+    };
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("[data-close]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const target = document.querySelector(this.getAttribute("data-close"));
+      if (target) {
+        target.style.display = "none"; // hides the modal
+      }
+    });
+  });
+});
+
+    /************************************
+     * Rendering helpers
+     ************************************/
+    function starIcons(r){
+      const full = Math.floor(r), half = r - full >= .5;
+      let s='';
+      for(let i=0;i<5;i++){
+        if(i<full) s+= '★'; else if(i===full && half) s+='☆'; else s+='✩';
+      }
+      return `<span aria-hidden="true">${s}</span> <span class="sr-only">${r.toFixed(1)} out of 5</span>`
+    }
+
+    function productCard(p){
+      return `<article class="p-card" data-id="${p.id}">
+        <img src="${p.images[0]}" alt="${p.title}" loading="lazy" />
+        <div class="p-meta">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+            <h2 style="margin:0;font-size:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${p.title}">${p.title}</h2>
+            <button class="icon-btn add-wish" title="Add to wishlist" aria-label="Add ${p.title} to wishlist">♡</button>
+          </div>
+          <div class="helper">${starIcons(p.rating)}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+            <strong>${fmt(p.price * (1-p.discount))}</strong>
+            ${p.discount?`<span class="pill" title="${(p.discount*100)|0}% off">-${(p.discount*100)|0}%</span>`:''}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn btn-primary add-cart" aria-label="Add ${p.title} to cart">Add</button>
+            <button class="btn btn-ghost view-product" aria-label="View ${p.title}">View</button>
+          </div>
+        </div>
+      </article>`
+    }
+
+    function rowFill(targetSel, list){
+      const el = document.querySelector(targetSel);
+      el.innerHTML = list.map(productCard).join('');
+    }
+
+    // Men/Women big + four small
+    function fillMW(gridSel, items){
+      const grid = $(gridSel);
+      grid.style.gridAutoRows = '220px';
+      grid.innerHTML = '';
+      const big = items[0];
+      grid.insertAdjacentHTML('beforeend', `<a class="big" href="#" data-id="${big.id}" aria-label="View ${big.title}"><img src="${big.images[0]}" alt="${big.title}" loading="lazy" /><div class="meta">${big.title} — ${fmt(big.price)}</div></a>`);
+      items.slice(1,5).forEach(p => grid.insertAdjacentHTML('beforeend', `<a class="card" href="#" data-id="${p.id}" aria-label="View ${p.title}"><img src="${p.images[0]}" alt="${p.title}" loading="lazy" /><div class="meta">${p.title} — ${fmt(p.price)}</div></a>`));
+    }
+
+    /************************************
+     * Filters -> Sections (hooks)
+     ************************************/
+    const byNew = [...products].sort((a,b)=>b.addedAt - a.addedAt);
+    const byBest = [...products].sort((a,b)=>b.sales - a.sales);
+    const byDeals = products.filter(p=>p.discount>0).sort((a,b)=>b.discount-a.discount);
+    const byLiked = [...products].sort((a,b)=>b.likes - a.likes);
+
+    // Initial render
+    rowFill('#rowNew', byNew);
+    rowFill('#rowBest', byBest);
+    rowFill('#rowDeals', byDeals);
+    rowFill('#rowLiked', byLiked);
+    fillMW('#menGrid', products.filter(p=>p.gender!=='women').slice(0,5));
+    fillMW('#womenGrid', products.filter(p=>p.gender!=='men').slice(0,5));
+
+    // Carousel controls
+    $$('#main [data-scroll]').forEach(btn=>btn.addEventListener('click', e=>{
+      const t = document.querySelector(btn.dataset.target);
+      t.scrollBy({left: btn.dataset.scroll==='next'? 300 : -300, behavior:'smooth'});
+    }));
+
+    /************************************
+     * Search + autocomplete
+     ************************************/
+    const ac = $('#autocomplete');
+    const sinput = $('#searchInput');
+
+    function updateAutocomplete(q){
+      const m = q.trim().toLowerCase();
+      if(!m){ ac.style.display='none'; return; }
+      const hits = products.filter(p=>[p.title, p.category, p.tags.join(' ')].join(' ').toLowerCase().includes(m)).slice(0,6);
+      ac.innerHTML = hits.map(h=>`<button role="option" data-id="${h.id}">${h.title} • <span class="helper">${h.category}</span></button>`).join('');
+      ac.style.display = hits.length? 'block' : 'none';
+      sinput.setAttribute('aria-expanded','true');
+      ac.id = 'acList';
+    }
+
+    sinput.addEventListener('input', e=> updateAutocomplete(e.target.value));
+    sinput.addEventListener('keydown', e=>{ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); sinput.focus(); } });
+    ac.addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; openProduct(b.dataset.id) });
+
+    /************************************
+     * Wishlist + Cart (localStorage)
+     ************************************/
+    function getCart(){ return store.get(LS.cart, []) }
+    function setCart(c){ store.set(LS.cart, c); $('#cartCount').textContent = c.reduce((n,i)=>n+i.qty,0) }
+    function getWishlist(){ return store.get(LS.wishlist, []) }
+
+    setCart(getCart());
+
+    document.addEventListener('click', e=>{
+      const card = e.target.closest('.p-card');
+      if(card){
+        const id = card.dataset.id; const p = products.find(x=>x.id===id);
+        if(e.target.closest('.add-cart')){ addToCart(p,1); }
+        if(e.target.closest('.view-product')){ openProduct(id); }
+        if(e.target.closest('.add-wish')){ toggleWishlist(p); }
+      }
+      const mw = e.target.closest('.card, .big'); if(mw){ openProduct(mw.dataset.id); }
+    });
+
+    function addToCart(p, qty){
+      const c = getCart();
+      const idx = c.findIndex(i=>i.id===p.id);
+      if(idx>-1) c[idx].qty += qty; else c.push({id:p.id, title:p.title, price:p.price*(1-p.discount), img:p.images[0], qty});
+      setCart(c); renderCart();
+    }
+
+    function removeFromCart(id){
+      const c = getCart().filter(i=>i.id!==id); setCart(c); renderCart();
+    }
+
+    function renderCart(){
+      const box = $('#cartItems');
+      const c = getCart();
+      if(!c.length){ box.innerHTML = '<p class="helper">Your cart is empty.</p>'; return; }
+      const total = c.reduce((n,i)=>n + i.price*i.qty, 0);
+      box.innerHTML = c.map(i=>`<div style="display:flex;gap:10px;align-items:center;margin:6px 0">
+        <img src="${i.img}" alt="${i.title}" width="64" height="64" style="border-radius:10px;object-fit:cover"/>
+        <div style="flex:1">
+          <div>${i.title}</div>
+          <div class="helper">${fmt(i.price)} × ${i.qty}</div>
+        </div>
+        <button class="btn btn-ghost" data-remove="${i.id}">Remove</button>
+      </div>`).join('') + `<div style="display:flex;justify-content:space-between;margin-top:10px"><strong>Total</strong><strong>${fmt(total)}</strong></div>`;
+      box.querySelectorAll('[data-remove]').forEach(b=> b.addEventListener('click', ()=> removeFromCart(b.dataset.remove)));
+    }
+
+    function toggleWishlist(p){
+      let w = getWishlist();
+      if(w.find(x=>x.id===p.id)) w = w.filter(x=>x.id!==p.id); else w.push({id:p.id, title:p.title, price:p.price, img:p.images[0]});
+      store.set(LS.wishlist, w); renderWishlist();
+    }
+
+    function renderWishlist(){
+      const w = getWishlist();
+      $('#wishlistItems').innerHTML = w.length? w.map(i=>`<div style="display:flex;gap:10px;align-items:center;margin:6px 0">
+        <img src="${i.img}" alt="${i.title}" width="64" height="64" style="border-radius:10px;object-fit:cover"/>
+        <div style="flex:1">
+          <div>${i.title}</div>
+          <div class="helper">${fmt(i.price)}</div>
+        </div>
+        <button class="btn btn-primary" data-add="${i.id}">Add</button>
+      </div>`).join('') : '<p class="helper">Nothing saved yet.</p>';
+      $$('#wishlistItems [data-add]').forEach(b=> b.addEventListener('click', ()=>{
+        const p = products.find(x=>x.id===b.dataset.add); addToCart(p,1);
+      }));
+    }
+
+    $('#openCart').addEventListener('click', ()=> openModal('#cartModal', renderCart));
+    $('#openWishlist').addEventListener('click', ()=> openModal('#wishlistModal', renderWishlist));
+
+    /************************************
+     * Product modal with related, similar, reviews, recently viewed
+     ************************************/
+    let currentProduct = null;
+    function openProduct(id){
+      const p = products.find(x=>x.id===id); if(!p) return;
+      currentProduct = p.id;
+      // track viewed
+      const views = store.get(LS.views, []);
+      const v = views.filter(x=>x!==p.id); v.unshift(p.id); store.set(LS.views, v.slice(0,12));
+
+      // header
+      $('#viewerImg').src = p.images[0]; $('#viewerImg').alt = p.title;
+      $('#mTitle').textContent = p.title; $('#mPrice').textContent = fmt(p.price * (1-p.discount));
+      $('#mSku').textContent = 'SKU: ' + p.sku; $('#mStars').innerHTML = starIcons(p.rating);
+      // variants
+      const opts = [];
+      for(const [k,vals] of Object.entries(p.variants)){
+        opts.push(`<div class="chip" role="button" tabindex="0" aria-pressed="false" data-variant="${k}">${k}: ${vals.join(', ')}</div>`);
+      }
+      $('#mVariants').innerHTML = opts.join('');
+
+      // description (500+ words realistic marketing copy)
+      const long = `Meet the ${p.title}, designed to be the piece you reach for without thinking and the one you remember the moment you put it on. We started with premium materials selected for comfort, longevity, and low impact, then tuned the fit so it drapes naturally and moves with you all day. Whether you’re commuting, traveling, lifting, or lounging, the ${p.title} balances softness with structure so you always feel put together.\n\nEvery detail is purposeful. Stitch lines are placed to follow the body and reduce bulk. Seams are reinforced in high‑wear zones for years of reliable use. Fabrics are pre‑washed to hold their size and feel from day one, and colorfast dyes keep your look fresh after repeat wear. Breathability prevents overheating while subtle stretch supports unrestricted motion. Nothing flashy—just quality you can feel.\n\nWe also optimized care. Most days, a quick refresh on a hanger is all it needs. When it’s time for a wash, toss it in cold with similar colors and lay flat or tumble low. Because the fiber content is responsibly sourced, you’ll spend less time babying and more time living.\n\nYour purchase does more. A portion of profits supports community initiatives and supply‑chain programs that elevate workers’ voices and advance fair‑trade practices. Packaging is curbside recyclable and we minimize transport emissions by consolidating shipments.\n\nChoose your perfect setup with easy size and color options, then personalize with our bundle recommendations below. Pair the ${p.title} with our performance joggers for the gym, with a crisp overshirt for the office, or with trail runners for a weekend city escape. Our customers tell us it’s the piece they buy in multiples and recommend to friends. Try it for 30 days—if it doesn’t become a favorite, returns are on us.`;
+      $('#mDesc').textContent = `${p.title} — ${p.specs[0]} · ${p.specs[1]} · ${p.specs[2]}`;
+      $('#mDescLong').textContent = long;
+      $('#mSpecs').innerHTML = p.specs.map(s=>`<li>${s}</li>`).join('');
+
+      // related (same category) + similar (same tags/category)
+      const related = products.filter(x=>x.category===p.category && x.id!==p.id).slice(0,8);
+      const similar = products.filter(x=> x.id!==p.id && (x.category===p.category || x.tags.some(t=>p.tags.includes(t)))).slice(0,12);
+      $('#relatedCarousel').innerHTML = related.map(r=>`<img src="${r.images[0]}" alt="${r.title}" data-id="${r.id}"/>`).join('');
+      $('#recentRow').innerHTML = store.get(LS.views, []).map(id=> products.find(pp=>pp.id===id)).filter(Boolean).map(rv=>`<div class="p-card" style="flex:0 0 150px"><img src="${rv.images[0]}" alt="${rv.title}" width="150" height="150"/><div class="p-meta"><div style="font-size:13px">${rv.title}</div><div>${fmt(rv.price)}</div></div></div>`).join('');
+      $('#similarRow').innerHTML = similar.map(s=> productCard(s)).join('');
+
+      // reviews
+      renderReviews(p.id);
+
+      // CTA handlers
+      $('#mAddCart').onclick = ()=> addToCart(p, parseInt($('#mQty').value||'1',10));
+      $('#mBuyNow').onclick = ()=>{ addToCart(p, parseInt($('#mQty').value||'1',10)); openModal('#cartModal', renderCart) };
+      $('#mWishlist').onclick = ()=> toggleWishlist(p);
+
+      // open modal + thumbnails
+      $('#productModal').style.display='flex';
+      $('#modalClose').focus();
+      $('#relatedCarousel').onclick = (e)=>{ const t=e.target.closest('img'); if(t) openProduct(t.dataset.id) };
+    }
+
+    function renderReviews(pid){
+      const all = store.get(LS.reviews, {});
+      const list = all[pid]||[];
+      const box = $('#reviewList');
+      if(!list.length){ box.innerHTML = '<p class="helper">No reviews yet. Be the first!</p>'; }
+      else{
+        box.innerHTML = list.map(r=>`<div style="border-bottom:1px solid rgba(255,255,255,.06);padding:8px 0"><strong>${r.name}</strong> <span class="helper">${new Date(r.at).toLocaleString()}</span><div>${'★'.repeat(r.stars)}${'✩'.repeat(5-r.stars)}</div><p style="margin:.25rem 0">${r.text}</p></div>`).join('');
+      }
+      $('#submitReview').onclick = ()=>{
+        const text = $('#reviewInput').value.trim(); if(!text) return;
+        const entry = {id:uid(), name:'Guest', text, stars:Math.floor(3+Math.random()*2), at:Date.now()};
+        all[pid] = [entry, ...(all[pid]||[])]; store.set(LS.reviews, all); $('#reviewInput').value=''; renderReviews(pid);
+      };
+    }
+
+    // Close modal on backdrop or button
+    $('#modalClose').addEventListener('click', ()=> $('#productModal').style.display='none');
+    $('#productModal').addEventListener('click', (e)=>{ if(e.target.id==='productModal') $('#productModal').style.display='none' });
+
+    /************************************
+     * AUTH + Captcha + 2FA field
+     ************************************/
+    function randCap(){ const a = 1+Math.floor(Math.random()*9), b = 1+Math.floor(Math.random()*9); return {q:`${a} + ${b} = ?`, a:a+b}; }
+    let capL = randCap(), capR = randCap(), capX = randCap();
+    $('#lCaptchaQ').textContent = capL.q; $('#rCaptchaQ').textContent = capR.q; $('#xCaptchaQ').textContent = capX.q;
+
+    $$('#authModal [data-auth-tab]').forEach(btn=> btn.addEventListener('click', ()=>{
+      const tab = btn.dataset.authTab;
+      $('#loginForm').hidden = tab!=='login';
+      $('#regForm').hidden = tab!=='register';
+      $('#resetForm').hidden = tab!=='reset';
+    }));
+
+    $('#loginForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const ok = parseInt($('#lCaptcha').value,10) === capL.a;
+      if(!ok) return alert('Captcha incorrect');
+      store.set(LS.user, {email: $('#lEmail').value, name: 'Member'});
+      alert('Logged in! (Demo)');
+      closeModal('#authModal');
+    });
+
+    $('#regForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const ok = parseInt($('#rCaptcha').value,10) === capR.a;
+      if(!ok) return alert('Captcha incorrect');
+      store.set(LS.user, {email: $('#rEmail').value, name: $('#rName').value});
+      alert('Account created! (Demo)');
+      closeModal('#authModal');
+    });
+
+    $('#resetForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const ok = parseInt($('#xCaptcha').value,10) === capX.a;
+      if(!ok) return alert('Captcha incorrect');
+      alert('Reset link sent! (Demo)');
+      closeModal('#authModal');
+    });
+
+    /************************************
+     * Help center: contact, returns, tracking
+     ************************************/
+    $$('#helpModal [data-help-tab]').forEach(btn=> btn.addEventListener('click', ()=>{
+      const tab = btn.dataset.helpTab;
+      $('#contactForm').hidden = tab!=='contact';
+      $('#returnsForm').hidden = tab!=='returns';
+      $('#trackForm').hidden = tab!=='tracking';
+    }));
+
+    $('#contactForm').addEventListener('submit', e=>{ e.preventDefault(); alert('Thanks! We will reply shortly. (Demo)'); closeModal('#helpModal') });
+    $('#returnsForm').addEventListener('submit', e=>{ e.preventDefault(); alert('Return started. Watch your inbox. (Demo)'); closeModal('#helpModal') });
+    $('#trackForm').addEventListener('submit', e=>{ e.preventDefault(); const n=$('#tOrder').value.trim(); $('#trackResult').textContent = n? `Order ${n} is in transit. ETA 3 days.` : 'Enter an order number.'; });
+
+    /************************************
+     * Newsletter + misc
+     ************************************/
+    $('#newsletterForm').addEventListener('submit', e=>{ e.preventDefault(); alert('Subscribed. Welcome aboard! (Demo)') });
+
+    /************************************
+     * Keyboard + Modal helpers
+     ************************************/
+    function openModal(sel, onOpen){ const m=$(sel); m.style.display='flex'; onOpen && onOpen(); }
+    function closeModal(sel){ const m=$(sel); m.style.display='none'; }
+
+    $('#openAuth').addEventListener('click', ()=> openModal('#authModal'));
+    $('#openAuth2').addEventListener('click', (e)=>{ e.preventDefault(); openModal('#authModal') });
+    $('#openHelp').addEventListener('click', (e)=>{ e.preventDefault(); openModal('#helpModal') });
+    $('#openHelp2').addEventListener('click', (e)=>{ e.preventDefault(); openModal('#helpModal') });
+
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ ['#productModal','#cartModal','#wishlistModal','#authModal','#helpModal'].forEach(closeModal) } });
+
+    /************************************
+     * Hero loop (accessible)
+     ************************************/
+    const heroImages = [
+      {src:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop', alt:'Elevated basics'},
+      {src:'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1400&auto=format&fit=crop', alt:'Weekend essentials'},
+      {src:'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400&auto=format&fit=crop', alt:'Trail ready footwear'}
+    ];
+    let hi = 0; setInterval(()=>{
+      hi = (hi+1)%heroImages.length; const img = heroImages[hi];
+      const el = $('#heroSlider img'); el.src = img.src; el.alt = img.alt;
+    }, 5000);
+
+    // global year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Open cart/wishlist via footer links hash (progressive enhancement)
+    window.addEventListener('hashchange', ()=>{
+      if(location.hash==='#cart') openModal('#cartModal', renderCart);
+    });
+    
+
+  </script></body>
+</html>

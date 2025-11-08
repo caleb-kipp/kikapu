@@ -1,0 +1,404 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ShopX Blog — Modern Astra-style (Local CMS)</title>
+  <meta name="description" content="ShopX Blog — modern clean blog with editor, drafts, media library, comments (localStorage demo)." />
+  <style>
+    :root{
+      --bg:#f7fafc; --panel:#ffffff; --muted:#64748b; --brand:#0b5cff; --accent:#7aa7ff;
+      --radius:12px; --card-shadow: 0 6px 24px rgba(7,12,34,0.06);
+      --text:#0b1220;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--text);background:linear-gradient(180deg,#f8fafc 0%, #eef2f7 100%);}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;display:block;height:auto}
+    button{font:inherit}
+    header.site-header{position:sticky;top:0;left:0;right:0;background:white;border-bottom:1px solid #eef2f7;display:flex;align-items:center;gap:1rem;padding:.75rem 1rem;z-index:1200}
+    .site-title{display:flex;gap:.6rem;align-items:center}
+    .site-badge{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));color:white;display:grid;place-items:center;font-weight:700}
+    .nav{margin-left:auto;display:flex;gap:.5rem;align-items:center}
+    .nav a{padding:.45rem .7rem;border-radius:8px;color:var(--muted);font-size:.95rem}
+        main{max-width:1180px;margin:1rem auto;padding:1rem;display:grid;gap:1rem}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:1rem}
+    .hero-left{background:linear-gradient(180deg, rgba(11,92,255,0.06), rgba(11,92,255,0.02));padding:1.6rem;border-radius:16px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+    .hero-left h1{margin:0;font-size:1.55rem;color:var(--text)}
+    .hero-left p{margin:.5rem 0 0;color:var(--muted)}
+    .cta-row{display:flex;gap:.6rem;margin-top:1rem;align-items:center}
+    .btn{background:var(--brand);color:white;padding:.6rem .9rem;border-radius:10px;border:none;cursor:pointer;font-weight:600;box-shadow:0 8px 20px rgba(11,92,255,0.08)}
+    .btn.ghost{background:transparent;border:1px solid #e6eefb;color:var(--brand)}
+    .hero-media{position:absolute;inset:0;opacity:.08;object-fit:cover}
+
+    .hero-right{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+    .hero-card{background:var(--panel);padding:.8rem;border-radius:12px;box-shadow:var(--card-shadow);display:flex;flex-direction:column;gap:.35rem;cursor:pointer}
+    .hero-card small{color:var(--muted)}
+
+    /* Carousel inside hero-left */
+    .hero-carousel{border-radius:12px;overflow:hidden;background:var(--panel);box-shadow:var(--card-shadow);position:relative}
+    .slides{display:flex;transition:transform .6s ease}
+    .slide{min-width:100%;display:flex;gap:1rem;align-items:center;padding:1rem}
+    .slide .content{flex:1}
+    .slide .media{width:320px;height:200px;overflow:hidden;border-radius:10px}
+    .carousel-dots{display:flex;gap:.4rem;justify-content:center;padding:.6rem}
+    .dot{width:8px;height:8px;border-radius:999px;background:#e6eefb;opacity:.6;cursor:pointer}
+    .dot.active{background:var(--brand);opacity:1}
+    /* Trending list: vertical 5 posts */
+    .trending-list{display:flex;flex-direction:column;gap:.5rem}
+    .trend-item{display:flex;gap:.6rem;align-items:center;padding:.6rem;border-radius:10px;background:#fff}
+    .trend-thumb{width:64px;height:48px;object-fit:cover;border-radius:6px}
+    /* Grid posts: 3 per row desktop, 1 per row mobile */
+    .posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+    .post-card{background:var(--panel);padding:1rem;border-radius:12px;box-shadow:var(--card-shadow)}
+    .post-card h3{margin:.4rem 0}
+    .post-meta{font-size:.9rem;color:var(--muted)}
+    .post-thumb{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .load-row{display:flex;gap:1rem;align-items:center;margin-top:1rem}
+    footer{padding:2rem;text-align:center;color:var(--muted)}
+    /* Editor & media */
+    .editor{background:var(--panel);padding:1rem;border-radius:12px;box-shadow:var(--card-shadow);margin-top:1rem}
+    .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
+    .editable{min-height:220px;padding:.9rem;border-radius:8px;border:1px dashed #eef2f7;background:white;outline:none;color:var(--text)}
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{flex-direction:column}
+      .hero-left{flex:1}
+      .hero-right{flex-direction:row;overflow:auto}
+      .posts-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-title"><div class="site-badge">SX</div><div><strong>ShopX Blog</strong><br><small class="muted">News, Guides & Reviews</small></div></div>
+    <nav class="nav"><a href="#">Home</a><a href="#posts">All Posts</a><a href="#about">About</a></nav>
+  </header>
+
+  <main>
+    <!-- HERO area: left 75% carousel, right 25% trending (5 posts vertical) -->
+    <section class="hero" aria-label="Hero and trending">
+      <div class="hero-left">
+        <div class="hero-carousel" id="heroCarousel">
+          <div class="slides" id="heroSlides"></div>
+          <div class="carousel-dots" id="heroDots"></div>
+        </div>
+        <div class="cta-row" style="margin-top:.8rem">
+          <button class="btn" id="openFeatured">Read Featured</button>
+          <button class="btn ghost" id="openEditor">Open Editor</button>
+          <button class="btn ghost" id="subscribeHero">Subscribe</button>
+        </div>
+      </div>
+      <aside class="hero-right" aria-label="Trending">
+        <div class="hero-card" style="font-weight:700">Trending</div>
+        <div class="trending-list" id="trendingList"></div>
+      </aside>
+    </section>
+
+    <!-- Posts list section: arranged in a row desktop 3 per row mobile 1 per row -->
+    <section aria-label="All posts">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 id="posts">All Posts</h2>
+        <div style="display:flex;gap:.6rem;align-items:center">
+          <label class="muted">Sort</label>
+          <select id="sort"><option value="new">Newest</option><option value="popular">Most popular</option><option value="reading">Shortest read</option></select>
+        </div>
+      </div>
+
+      <div class="posts-grid" id="postsGrid"></div>
+
+      <div class="load-row">
+        <button class="btn" id="loadMore">Load more</button>
+        <div style="flex:1"></div>
+        <div class="muted" id="postsCount"></div>
+      </div>
+    </section>
+
+    <!-- Editor -->
+    <section class="editor" id="editorWrap">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 style="margin:0">Editor</h3>
+        <div style="display:flex;gap:.6rem">
+          <button class="btn" id="saveBtn">Save</button>
+          <button class="btn" id="publishBtn">Publish</button>
+          <input id="uploadInput" type="file" accept="image/*" multiple style="display:none">
+          <button class="btn ghost" id="uploadBtn">Upload</button>
+        </div>
+      </div>
+      <div class="toolbar" style="margin-top:.6rem">
+        <button class="btn ghost" data-cmd="bold">B</button>
+        <button class="btn ghost" data-cmd="italic">I</button>
+        <button class="btn ghost" data-cmd="underline">U</button>
+      </div>
+      <input id="postTitle" placeholder="Post title" style="width:100%;padding:.6rem;border:1px solid #eef2f7;border-radius:8px;margin-top:.6rem">
+      <div id="editable" class="editable" contenteditable="true" placeholder="Write your post..."></div>
+      <div style="display:flex;gap:.6rem;margin-top:.6rem">
+        <input id="postTags" placeholder="tags, comma separated" style="padding:.5rem;border-radius:8px;border:1px solid #eef2f7">
+        <input id="postCategory" placeholder="Category" style="padding:.5rem;border-radius:8px;border:1px solid #eef2f7">
+        <input id="postFeatured" placeholder="Featured image URL" style="padding:.5rem;border-radius:8px;border:1px solid #eef2f7;flex:1">
+      </div>
+    </section>
+
+    <!-- Media library (small) -->
+    <section style="margin-top:1rem">
+      <h4>Media Library</h4>
+      <div id="mediaLibrary" style="display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© 2025 ShopX · Blog & Editorials</div>
+  </footer>
+
+<script>
+/* Single-file frontend blog with LocalStorage - hero auto-rotate every 5s, trending 5 posts vertical,
+   posts grid 3-per-row desktop, 1-per-row mobile, publish/save/upload working (LocalStorage). */
+
+// Utilities
+const $ = id => document.getElementById(id);
+const qsa = sel => Array.from(document.querySelectorAll(sel));
+const uid = (p='id') => p + '_' + Math.random().toString(36).slice(2,9);
+const nowIso = () => new Date().toISOString();
+const stripHtml = s => (s||'').replace(/<[^>]+>/g,'').slice(0,300);
+
+// Storage
+const KEY = 'shopx_blog_final_v1';
+let STATE = JSON.parse(localStorage.getItem(KEY) || 'null');
+if(!STATE){
+  STATE = {
+    posts: [
+      {id:'p1',title:'How to build a minimalist wardrobe',category:'Style',tags:['wardrobe','minimal'],author:'Caleb',date:'2025-08-15',featured:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop',content:'<p>Building a minimalist wardrobe starts with understanding your lifestyle and selecting versatile pieces...</p>',likes:54,views:230,reading_min:6,status:'published'},
+      {id:'p2',title:'Caring for organic cotton',category:'Care',tags:['care','organic'],author:'Clara',date:'2025-07-30',featured:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop',content:'<p>Organic cotton needs gentler handling...</p>',likes:23,views:150,reading_min:4,status:'published'},
+      {id:'p3',title:'Sneaker trends this fall',category:'Trends',tags:['sneakers','fall'],author:'Robin',date:'2025-09-01',featured:'https://images.unsplash.com/photo-1600180758890-3e6a9f1f5a9d?q=80&w=1200&auto=format&fit=crop',content:'<p>This season brings chunky soles and retro colorways back...</p>',likes:87,views:560,reading_min:5,status:'published'},
+      {id:'p4',title:'Best value winter coats 2025',category:'Guides',tags:['coats','winter'],author:'Maya',date:'2025-01-12',featured:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=1200&auto=format&fit=crop',content:'<p>We tested 20 coats across price tiers...</p>',likes:140,views:980,reading_min:8,status:'published'},
+      {id:'p5',title:'Kenyans React to Deputy President’s Impeachment',category:'Politics',tags:['kenya','politics'],author:'Caleb',date:'2025-09-11',featured:'https://via.placeholder.com/720x480?text=Kenya+News',content:'<p>Kenyans are talking about it...</p>',likes:87,views:560,reading_min:5,status:'published'}
+    ],
+    drafts: {},
+    media: [],
+    comments: {},
+    settings: { carouselInterval:5000, heroIndex:0 },
+    showAll: false
+  };
+  localStorage.setItem(KEY, JSON.stringify(STATE));
+}
+
+// Helpers to persist
+function persist(){ localStorage.setItem(KEY, JSON.stringify(STATE)); }
+
+// Render hero slides (left 75%)
+function renderHero(){
+  const slides = $('heroSlides');
+  slides.innerHTML = '';
+  const posts = STATE.posts.filter(p=>p.status==='published');
+  posts.slice(0,6).forEach(p=>{
+    const s = document.createElement('div'); s.className='slide';
+    s.innerHTML = `<div class="content"><h2>${p.title}</h2><div class="post-meta">${p.category} · ${p.reading_min} min read · ${p.author} · ${p.date}</div><p class="muted">${stripHtml(p.content)}</p><div style="margin-top:.6rem"><button class="btn open-post" data-id="${p.id}">Read</button></div></div><div class="media"><img src="${p.featured}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;border-radius:8px"></div>`;
+    slides.appendChild(s);
+  });
+  renderHeroDots();
+  goHeroSlide(STATE.settings.heroIndex || 0);
+}
+
+// Hero dots
+function renderHeroDots(){
+  const dots = $('heroDots');
+  dots.innerHTML = '';
+  const count = Math.max(1, STATE.posts.filter(p=>p.status==='published').length);
+  for(let i=0;i<count;i++){
+    const d = document.createElement('div'); d.className='dot'; if(i===STATE.settings.heroIndex) d.classList.add('active');
+    d.dataset.i = i;
+    d.addEventListener('click', ()=> { goHeroSlide(i); resetHeroTimer(); });
+    dots.appendChild(d);
+  }
+}
+
+function goHeroSlide(i){
+  const slides = $('heroSlides');
+  slides.style.transform = `translateX(-${i*100}%)`;
+  STATE.settings.heroIndex = i;
+  persist();
+  qsa('.dot').forEach((d,idx)=> d.classList.toggle('active', idx===i));
+}
+
+let heroTimer = null;
+function startHeroTimer(){
+  clearInterval(heroTimer);
+  heroTimer = setInterval(()=> {
+    const total = STATE.posts.filter(p=>p.status==='published').length;
+    const next = (STATE.settings.heroIndex + 1) % Math.max(1,total);
+    goHeroSlide(next);
+  }, STATE.settings.carouselInterval || 5000);
+}
+function resetHeroTimer(){ startHeroTimer(); }
+
+// Render trending list (right 25%)
+function renderTrending(){
+  const t = $('trendingList'); t.innerHTML = '';
+  const top = STATE.posts.slice().sort((a,b)=> (b.likes||0)-(a.likes||0)).slice(0,5);
+  top.forEach(p=>{
+    const div = document.createElement('div'); div.className='trend-item';
+    div.innerHTML = `<img class="trend-thumb" src="${p.featured}" alt=""><div style="flex:1"><strong>${p.title}</strong><div class="muted" style="font-size:.85rem">${p.category} · ${p.date}</div></div>`;
+    div.addEventListener('click', ()=> openPost(p.id));
+    t.appendChild(div);
+  });
+}
+
+// Render posts grid
+function renderPostsGrid(){
+  const grid = $('postsGrid'); grid.innerHTML = '';
+  let posts = STATE.posts.filter(p=>p.status==='published');
+  if(!STATE.showAll){ posts = posts.slice(0,9); } // show initial 9
+  posts.forEach(p=>{
+    const c = document.createElement('div'); c.className='post-card';
+    c.innerHTML = `<img class="post-thumb" src="${p.featured}" alt="${p.title}"><h3>${p.title}</h3><div class="post-meta">${p.category} · ${p.reading_min} min · ${p.author} · ${p.date}</div><p style="margin-top:.6rem">${stripHtml(p.content).slice(0,140)}...</p><div style="display:flex;gap:.5rem;margin-top:.6rem"><button class="btn open-post" data-id="${p.id}">Read</button><button class="btn ghost" data-edit="${p.id}">Edit</button><button class="btn ghost" data-delete="${p.id}">Delete</button></div>`;
+    grid.appendChild(c);
+  });
+  $('postsCount').textContent = `${STATE.posts.filter(p=>p.status==='published').length} posts`;
+}
+
+// Media library render
+function renderMedia(){
+  const lib = $('mediaLibrary'); lib.innerHTML = '';
+  STATE.media.slice().reverse().forEach(m=>{
+    const img = document.createElement('img'); img.src = m.data; img.alt = m.name; img.style.width='100%'; img.style.height='80px'; img.style.objectFit='cover'; img.style.borderRadius='6px';
+    lib.appendChild(img);
+  });
+}
+
+// Initial render
+function renderAll(){
+  renderHero();
+  renderTrending();
+  renderPostsGrid();
+  renderMedia();
+}
+renderAll();
+startHeroTimer();
+
+// Load more button
+$('loadMore').addEventListener('click', ()=> { STATE.showAll = true; persist(); renderPostsGrid(); $('loadMore').disabled = true; });
+
+// Open editor or load post into editor for editing
+function loadPostToEditor(post){
+  $('postTitle').value = post.title || '';
+  $('editable').innerHTML = post.content || '';
+  $('postTags').value = (post.tags || []).join(', ');
+  $('postCategory').value = post.category || '';
+  $('postFeatured').value = post.featured || '';
+  $('editable').dataset.editing = post.id;
+  window.scrollTo({top: document.querySelector('#editorWrap').offsetTop - 20, behavior:'smooth'});
+}
+$('openEditor').addEventListener('click', ()=> { $('postTitle').focus(); window.scrollTo({top: document.querySelector('#editorWrap').offsetTop - 20, behavior:'smooth'}); });
+
+// Publish button: create or update post and render immediately
+$('publishBtn').addEventListener('click', ()=> {
+  const editingId = $('editable').dataset.editing;
+  const post = {
+    id: editingId || uid('p'),
+    title: $('postTitle').value || 'Untitled',
+    content: $('editable').innerHTML || '',
+    tags: ($('postTags').value||'').split(',').map(t=>t.trim()).filter(Boolean),
+    category: $('postCategory').value || 'General',
+    featured: $('postFeatured').value || (STATE.media[STATE.media.length-1] ? STATE.media[STATE.media.length-1].data : ''),
+    date: new Date().toISOString().slice(0,10),
+    author: 'Caleb',
+    likes: 0, views:0, reading_min: Math.max(2, Math.round((stripHtml($('editable').innerHTML).split(/\s+/).length)/200)),
+    status: 'published'
+  };
+  if(editingId){
+    // if editing an existing published post, replace; if it was draft, remove from drafts
+    const idx = STATE.posts.findIndex(p=>p.id===editingId);
+    if(idx !== -1){
+      STATE.posts[idx] = post;
+    } else {
+      if(STATE.drafts[editingId]) delete STATE.drafts[editingId];
+      STATE.posts.unshift(post);
+    }
+  } else {
+    STATE.posts.unshift(post);
+  }
+  // clear editor
+  $('postTitle').value=''; $('editable').innerHTML=''; $('postTags').value=''; $('postCategory').value=''; $('postFeatured').value=''; delete $('editable').dataset.editing;
+  persist(); renderAll(); alert('Published! Post appears in the posts section.');
+});
+
+// Save draft: store as draft keyed by id
+$('saveBtn').addEventListener('click', ()=> {
+  const id = $('editable').dataset.editing || uid('d');
+  const draft = {
+    id,
+    title: $('postTitle').value || 'Untitled',
+    content: $('editable').innerHTML || '',
+    tags: ($('postTags').value || '').split(',').map(t=>t.trim()).filter(Boolean),
+    category: $('postCategory').value || 'Uncategorized',
+    featured: $('postFeatured').value || '',
+    createdAt: new Date().toISOString(),
+    status: 'draft'
+  };
+  STATE.drafts[id] = draft;
+  persist();
+  alert('Saved as draft. You can edit or publish later.');
+});
+
+// Upload images into media library and optionally insert into editor
+$('uploadBtn').addEventListener('click', ()=> $('uploadInput').click());
+$('uploadInput').addEventListener('change', (e)=> {
+  const files = Array.from(e.target.files || []);
+  files.forEach(file=>{
+    const r = new FileReader();
+    r.onload = ev => {
+      STATE.media.push({ id: uid('m'), name: file.name, data: ev.target.result, date: nowIso() });
+      persist(); renderMedia();
+    };
+    r.readAsDataURL(file);
+  });
+  e.target.value = '';
+});
+
+// Post actions: open, edit, delete
+document.addEventListener('click', (e)=>{
+  const open = e.target.closest('.open-post');
+  if(open){ const id = open.dataset.id; openPost(id); return; }
+  const edit = e.target.closest('[data-edit]');
+  if(edit){ const id = edit.dataset.edit; const post = STATE.posts.find(p=>p.id===id) || STATE.drafts[id]; if(post) loadPostToEditor(post); return; }
+  const del = e.target.closest('[data-delete]');
+  if(del){ const id = del.dataset.delete; if(confirm('Delete post?')){ STATE.posts = STATE.posts.filter(p=>p.id!==id); if(STATE.drafts[id]) delete STATE.drafts[id]; persist(); renderAll(); } return; }
+});
+
+// Open post modal (simple)
+let lastOpen = null;
+function openPost(id){
+  const post = STATE.posts.find(p=>p.id===id);
+  if(!post) return alert('Post not found');
+  lastOpen = id;
+  const modal = document.createElement('div'); modal.style.position='fixed'; modal.style.inset='0'; modal.style.background='rgba(0,0,0,0.6)'; modal.style.display='flex'; modal.style.alignItems='center'; modal.style.justifyContent='center'; modal.style.zIndex=9999;
+  const sheet = document.createElement('div'); sheet.style.background='white'; sheet.style.padding='1rem'; sheet.style.borderRadius='8px'; sheet.style.maxWidth='900px'; sheet.style.maxHeight='90vh'; sheet.style.overflow='auto';
+  sheet.innerHTML = `<div style="display:flex;justify-content:flex-end"><button class="btn ghost" id="closeModal">Close</button></div><h2>${post.title}</h2><div class="post-meta">${post.category} · ${post.date} · ${post.reading_min} min · by ${post.author}</div><img src="${post.featured}" style="width:100%;height:auto;margin-top:.6rem;border-radius:8px"><div style="margin-top:.8rem">${post.content}</div><div style="margin-top:.8rem;display:flex;gap:.6rem"><button class="btn" id="modalEdit">Edit</button><button class="btn ghost" id="modalClose">Close</button></div>`;
+  modal.appendChild(sheet); document.body.appendChild(modal);
+  modal.querySelector('#closeModal').addEventListener('click', ()=> modal.remove());
+  modal.querySelector('#modalClose').addEventListener('click', ()=> modal.remove());
+  modal.querySelector('#modalEdit').addEventListener('click', ()=> { modal.remove(); loadPostToEditor(post); });
+  // increment views
+  post.views = (post.views||0) + 1; persist(); renderAll();
+}
+
+// Initial event bindings and render
+$('sort').addEventListener('change', ()=> { const s = $('sort').value; if(s==='popular') STATE.posts.sort((a,b)=> (b.likes||0)-(a.likes||0)); if(s==='reading') STATE.posts.sort((a,b)=> (a.reading_min||0)-(b.reading_min||0)); if(s==='new') STATE.posts.sort((a,b)=> new Date(b.date)-new Date(a.date)); renderPostsGrid(); });
+renderAll();
+
+// minimal theme switcher placeholder (user asked earlier) - not changing layout style, but providing toggle
+(function themeToggle(){
+  const btn = document.createElement('button'); btn.textContent='Toggle theme'; btn.className='btn ghost'; btn.style.marginLeft='8px';
+  document.querySelector('.nav').appendChild(btn);
+  btn.addEventListener('click', ()=> {
+    document.documentElement.style.background = document.documentElement.style.background ? '' : 'linear-gradient(180deg,#0b1220 0%, #061021 100%)';
+    document.body.style.color = document.body.style.color === 'white' ? '' : '#e6eefb';
+    btn.textContent = btn.textContent === 'Toggle theme' ? 'Toggle theme' : 'Toggle theme';
+  });
+})();
+
+</script>
+</body>
+</html>

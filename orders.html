@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orders — Caleb's Store</title>
+  <meta name="description" content="View and track your orders at Caleb's Store." />
+          <script src="privacy.js"></script>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --danger:#ef4444;
+      --green:#16a34a;
+      --shadow:0 6px 18px rgba(20,30,50,0.08);
+      --radius:14px;
+      --text:#0f172a;
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --card:#081026;
+      --muted:#94a3b8;
+      --accent:#60a5fa;
+      --shadow:0 8px 30px rgba(0,0,0,0.6);
+      --text:#e6eef8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Roboto,"Segoe UI",sans-serif;
+      background:linear-gradient(180deg,var(--bg),#e9eef8 120%);
+      color:var(--text);
+      padding:24px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{
+      max-width:1400px;
+      width:100%;
+      display:grid;
+      gap:24px;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(11,15,20,.8);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      border-radius:var(--radius);
+      padding:14px 20px;
+      position:sticky;top:0;z-index:100;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .brand .logo{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),#7c3aed);
+      display:grid;place-items:center;color:white;font-weight:700;
+      box-shadow:var(--shadow)
+    }
+    nav{display:flex;gap:16px}
+    nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.06);
+      background:#0f1623;
+    }
+    .toggle{display:flex;align-items:center;gap:8px}
+    .switch{width:44px;height:26px;background:#111;border-radius:999px;position:relative;cursor:pointer}
+    .dot{position:absolute;width:20px;height:20px;border-radius:999px;top:3px;left:3px;background:white;transition:left .18s}
+    [data-theme="dark"] .switch{background:#23304a}
+    [data-theme="dark"] .dot{left:21px}
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    h2{margin:0 0 12px 0}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #e5e7eb}
+    th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:13px}
+    td img{width:80px;height:70px;border-radius:8px;object-fit:cover}
+    .status{font-weight:700}
+    .status.received{color:#3b82f6}
+    .status.packaged{color:#f59e0b}
+    .status.dispatched{color:#10b981}
+    .status.shipped{color:#6366f1}
+    .status.delivered{color:#16a34a}
+    .btn{background:var(--accent);color:white;padding:8px 14px;border:none;border-radius:10px;cursor:pointer;font-weight:600;box-shadow:var(--shadow)}
+    .btn:active{transform:translateY(1px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--muted)}
+    .track-card{margin-top:10px;padding:14px;background:var(--bg);border-radius:10px}
+    .track-steps{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .step{flex:1;text-align:center;position:relative}
+    .step-line{height:3px;background:#e5e7eb;position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);z-index:0}
+    .step-dot{width:18px;height:18px;border-radius:50%;background:#e5e7eb;margin:auto;position:relative;z-index:1}
+    .step.active .step-dot{background:var(--accent)}
+    .wallet-card{margin-top:14px}
+    .wallet-balance{font-size:22px;font-weight:700}
+    .toast{position:fixed;right:20px;bottom:20px;background:var(--card);padding:10px 14px;border-radius:10px;box-shadow:var(--shadow);display:none}
+    @media(max-width:900px){table td img{width:60px;height:60px}}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <div class="brand">
+        <a href="index.html" class="logo">CS</a>
+        <div>
+          <div>Caleb's Store</div>
+          <div class="small muted">Orders & Wallet</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="orders.html">Orders</a>
+      </nav>
+      <div class="toggle">
+        <div class="small muted">Dark</div>
+        <div class="switch" id="themeSwitch"><div class="dot"></div></div>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>My Orders</h2>
+      <table id="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orders-body"></tbody>
+      </table>
+    </div>
+
+    <div class="card wallet-card">
+      <h2>My Wallet</h2>
+      <div class="wallet-balance">Balance: $<span id="wallet-balance">200.00</span></div>
+      <button class="btn" id="topup-btn">Top Up</button>
+      <div style="margin-top:10px">
+        <h4>Transaction History</h4>
+        <ul id="wallet-history" style="padding-left:20px;margin-top:6px;color:var(--muted)">
+          <li>+ $50 added (11 Oct)</li>
+          <li>- $30 used on Order #1021</li>
+          <li>+ $100 refund (8 Oct)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const orders = [
+      {
+        id:"ORD1001",
+        items:[
+          {name:"Classic White Shirt",img:"https://via.placeholder.com/80x70",price:35},
+          {name:"Denim Jeans",img:"https://via.placeholder.com/80x70",price:55}
+        ],
+        total:90,
+        date:"2025-11-06",
+        status:"received"
+      },
+      {
+        id:"ORD1002",
+        items:[
+          {name:"Running Sneakers",img:"https://via.placeholder.com/80x70",price:75}
+        ],
+        total:75,
+        date:"2025-11-05",
+        status:"dispatched"
+      }
+    ];
+
+    const statusStages=["received","packaged","dispatched","shipped","delivered"];
+
+    function renderOrders(){
+      const tbody=document.getElementById("orders-body");
+      tbody.innerHTML="";
+      orders.forEach(order=>{
+        const row=document.createElement("tr");
+        const itemImgs=order.items.map(i=>`<img src="${i.img}" alt="${i.name}" title="${i.name}">`).join(" ");
+        row.innerHTML=`
+          <td>${order.id}</td>
+          <td>${itemImgs}</td>
+          <td>$${order.total.toFixed(2)}</td>
+          <td>${order.date}</td>
+          <td class="status ${order.status}">${order.status.toUpperCase()}</td>
+          <td><button class="btn-ghost" onclick="openTracker('${order.id}')">Track</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function openTracker(orderId){
+      const order=orders.find(o=>o.id===orderId);
+      const existing=document.getElementById(`track-${orderId}`);
+      if(existing){existing.remove();return;}
+      const track=document.createElement("tr");
+      track.id=`track-${orderId}`;
+      const col=document.createElement("td");
+      col.colSpan=6;
+      col.innerHTML=`
+        <div class="track-card">
+          <h4>Tracking Order ${order.id}</h4>
+          <div class="track-steps">
+            ${statusStages.map(s=>`
+              <div class="step ${statusStages.indexOf(s)<=statusStages.indexOf(order.status)?'active':''}">
+                <div class="step-line"></div>
+                <div class="step-dot"></div>
+                <div style="font-size:12px;margin-top:6px">${s}</div>
+              </div>`).join("")}
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            ${statusStages.map(s=>`
+              <button class="btn-ghost" onclick="markStatus('${order.id}','${s}')">${s}</button>`).join("")}
+          </div>
+        </div>
+      `;
+      track.appendChild(col);
+      const table=document.getElementById("orders-body");
+      const targetRow=[...table.children].find(r=>r.children[0].innerText===orderId);
+      targetRow.after(track);
+    }
+
+    function markStatus(orderId,status){
+      const order=orders.find(o=>o.id===orderId);
+      order.status=status;
+      renderOrders();
+      openTracker(orderId);
+      showToast(`Order ${orderId} marked as ${status.toUpperCase()}`);
+    }
+
+    function showToast(msg){
+      const t=document.getElementById("toast");
+      t.innerText=msg;
+      t.style.display="block";
+      setTimeout(()=>t.style.display="none",3000);
+    }
+
+    document.getElementById("topup-btn").addEventListener("click",()=>{
+      showToast("Top-up feature coming soon!");
+    });
+
+    const switchEl=document.getElementById("themeSwitch");
+    switchEl.addEventListener("click",()=>{
+      const theme=document.body.getAttribute("data-theme")==="dark"?"light":"dark";
+      document.body.setAttribute("data-theme",theme);
+    });
+
+    renderOrders();
+  </script>
+</body>
+</html>
