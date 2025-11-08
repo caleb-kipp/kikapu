@@ -1107,95 +1107,142 @@ document.getElementById('learnMore').addEventListener('click', () => {
 
 <!-- CSS -->
 <style>
+/* PRODUCT GRID STYLES */
+.grid.mw {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px; /* minimal spacing between cards */
+  justify-items: center;
+  padding: 10px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 220px;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* PRODUCT IMAGE */
+.product-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+/* TEXT DETAILS */
+.product-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 4px 0;
+  line-height: 1.2;
+}
+
+.product-price {
+  font-size: 0.85rem;
+  color: #ffce54;
+  margin: 4px 0;
+}
+
+.product-rating {
+  color: gold;
+  margin: 6px 0;
+  font-size: 0.8rem;
+}
+
+/* ACTION BUTTONS */
+.product-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 6px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.add-cart {
+  background: linear-gradient(135deg, rgba(0,180,0,0.8), rgba(37,186,0,0.8));
+  color: #fff;
+}
+
+.wishlist, .quickview {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.btn:hover {
+  filter: brightness(1.2);
+}
+
+/* RESPONSIVENESS */
+
+/* 🖥️ Desktop (≥1025px): 4–5 per row */
+@media (min-width: 1025px) {
   .grid.mw {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
   }
-
-  .product-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(6px);
-    border-radius: 18px;
-    padding: 16px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .product-card:hover {
-    transform: translateY(-10px) scale(1.05) rotateX(3deg);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  }
-
   .product-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 14px;
-    margin-bottom: 10px;
-    transition: transform 0.5s ease;
+    height: 180px;
   }
+}
 
-  .product-card:hover .product-img {
-    transform: scale(1.1);
+/* 💻 Tablet (641px–1024px): 3 per row */
+@media (max-width: 1024px) and (min-width: 641px) {
+  .grid.mw {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
-
-  .product-title {
-    font-size: 1.0rem;
-    margin: 6px 0;
-    font-weight: bold;
-    color: #fff;
+  .product-img {
+    height: 160px;
   }
+}
 
-  .product-price {
-    font-size: 0.8rem;
-    color: #ffce54;
-    margin-bottom: 6px;
-  }
-
-  .product-rating {
-    color: gold;
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-  }
-
-  .product-actions {
-    display: flex;
+/* 📱 Mobile (≤640px): 2 per row */
+@media (max-width: 640px) {
+  .grid.mw {
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
   }
-
+  .product-card {
+    max-width: none;
+    padding: 8px;
+  }
+  .product-img {
+    height: 140px;
+  }
   .btn {
-    padding: 8px 27px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    font-size: 1.2rem;
+    padding: 4px 10px;
+    font-size: 0.8rem;
   }
-
-  .add-cart {
-    background: linear-gradient(135deg, rgba(248,240,240,0.8), rgba(37,186,0,0.8));
-    color: #fff;
-  }
-
-  .wishlist {
-    background: rgba(255,255,255,0.1);
-    color: red;
-  }
-
-  .quickview {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-  }
-
-  .btn:hover {
-    filter: brightness(1.2);
-  }
+}
 </style>
 
 <!-- JS -->
