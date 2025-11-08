@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Authentication — Caleb’s Store</title>
+
+  <!-- Replace with your real reCAPTCHA site key where indicated in the script below -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <style>
+    :root{
+      --bg: #eef2f7;
+      --card: #ffffff;
+      --muted:#6b7280;
+      --accent:#5c7cfa;
+      --accent-2:#6a89cc;
+      --danger:#ff4d4f;
+      --success:#22c55e;
+      --glass: rgba(255,255,255,0.65);
+      --radius:18px;
+      --shadow: 0 6px 24px rgba(16,24,40,0.08);
+      --maxw:1100px;
+    }
+    [data-theme="dark"]{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 8px 30px rgba(2,6,23,0.75);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #e8eefb);
+      display:flex; align-items:center; justify-content:center; padding:28px;
+      transition:background .35s ease;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      width:95%; max-width:var(--maxw); display:flex; gap:18px; border-radius:var(--radius);
+      box-shadow:var(--shadow); overflow:hidden; background:linear-gradient(180deg,var(--card),var(--glass));
+      backdrop-filter: blur(6px);
+      min-height:520px;
+    }
+
+    /* Left panel */
+    .panel-left{
+      flex:1; padding:56px 40px; color:white; background: linear-gradient(135deg,var(--accent-2),var(--accent));
+      display:flex; flex-direction:column; justify-content:center; gap:18px; min-width:260px;
+    }
+    .panel-left h1{font-size:2.4rem; margin:0; letter-spacing:-0.5px}
+    .panel-left p{margin:0; opacity:.95}
+    .panel-left button{
+      margin-top:8px; cursor:pointer; border:none; padding:12px 20px; border-radius:12px; font-weight:600;
+      background:rgba(255,255,255,0.95); color:var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      transition:transform .18s ease;
+    }
+    .panel-left button:hover{transform:translateY(-3px)}
+
+    /* Divider */
+    .divider{width:70px; display:flex; align-items:center; justify-content:center; background:transparent}
+    .divider button{width:52px;height:52px;border-radius:999px;border:none;background:var(--card); cursor:pointer; box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+
+    /* Right panel (forms) */
+    .panel-right{flex:2; padding:26px 34px; display:flex; align-items:center; justify-content:center; position:relative}
+    .card{width:100%; max-width:480px; background:var(--card); padding:28px; border-radius:16px; box-shadow:0 12px 30px rgba(2,6,23,0.06); transition:transform .28s}
+    .card h2{margin:0 0 12px 0; color:var(--accent); font-size:1.35rem}
+    .tabs{display:flex; gap:12px; margin-bottom:18px}
+    .tab{padding:8px 14px; border-radius:10px; cursor:pointer; color:var(--muted); font-weight:600}
+    .tab.active{background:linear-gradient(90deg,rgba(92,124,250,0.12),rgba(106,137,204,0.08)); color:var(--accent)}
+
+    form{display:flex; flex-direction:column; gap:10px}
+    label{font-size:13px; color:var(--muted)}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="password"],select{
+      padding:12px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.06); outline:none;
+      font-size:14px; background:transparent; transition:box-shadow .18s, transform .12s;
+      color:inherit;
+    }
+    [data-theme="dark"] input{border:1px solid rgba(255,255,255,0.06)}
+    input:focus{box-shadow:0 8px 24px rgba(92,124,250,0.06); transform:translateY(-1px)}
+    .input-row{display:flex; gap:10px}
+    .input-row .col{flex:1}
+
+    .form-actions{display:flex; align-items:center; justify-content:space-between; margin-top:8px}
+    .form-actions .left{display:flex; gap:10px; align-items:center}
+    .btn{padding:10px 14px; border-radius:12px; border:none; cursor:pointer; font-weight:700}
+    .btn.primary{background:var(--accent); color:white}
+    .btn.ghost{background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.04)}
+
+    .small{font-size:13px; color:var(--muted)}
+    .error{color:var(--danger); font-size:13px}
+    .success{color:var(--success); font-size:13px}
+
+    /* password toggle */
+    .pw-wrap{position:relative}
+    .pw-toggle{position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; user-select:none}
+
+    /* avatar preview */
+    .avatar-preview{width:72px;height:72px;border-radius:999px; object-fit:cover; border:3px solid rgba(0,0,0,0.06);}
+
+    /* responsive */
+    @media (max-width:900px){
+      .container{flex-direction:column; padding:16px}
+      .divider{display:none}
+      .panel-left{padding:28px;text-align:center}
+      .panel-right{padding:18px}
+      .card{margin-top:-20px}
+    }
+
+    /* subtle animations */
+    .fade-in{animation:fadeIn .5s ease both}
+    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+
+    /* lockout overlay */
+    .overlay{position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.14)); display:flex; align-items:center; justify-content:center; border-radius:16px}
+  </style>
+</head>
+<body>
+  <div class="container" id="authContainer" data-theme="">
+    <!-- Left -->
+    <div class="panel-left">
+      <h1>Caleb’s Store</h1>
+      <p>Secure, private shopping. Sign in to keep your cart, wishlist and orders tied to your account — and safe.</p>
+      <div style="display:flex;gap:12px;align-items:center">
+        <button onclick="document.getElementById('learn').click()">Learn more</button>
+        <button id="themeToggle" style="background:transparent;border:1px solid rgba(255,255,255,0.12);padding:10px;border-radius:10px;color:white">Toggle Theme</button>
+      </div>
+      <p style="font-size:13px; margin-top:10px; opacity:.95">Your personal data is cleared on logout to protect your privacy.</p>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider" aria-hidden="true">
+      <button aria-hidden="true">&gt;</button>
+    </div>
+
+    <!-- Right -->
+    <div class="panel-right">
+      <div class="card fade-in" role="main" aria-describedby="login-desc">
+        <div style="display:flex; align-items:center; justify-content:space-between">
+          <div>
+            <h2 id="login-desc">Sign in to your account</h2>
+            <div class="tabs" role="tablist" aria-label="Authentication tabs">
+              <div class="tab active" role="tab" id="tab-signin" tabindex="0" aria-selected="true">Sign In</div>
+              <div class="tab" role="tab" id="tab-register" tabindex="0" aria-selected="false">Create Account</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="small">Need help? <a href="#" id="learn">Support</a></div>
+            <div style="height:10px"></div>
+            <div class="small">Secure connection: <strong style="font-weight:700">HTTPS</strong></div>
+          </div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" novalidate autocomplete="on" method="POST" action="/login" style="margin-top:12px">
+          <!-- CSRF token (generated client-side for demo; server must validate) -->
+          <input type="hidden" id="csrfToken" name="csrfToken" value="">
+
+          <label for="loginIdentifier">Email, Username or Phone</label>
+          <input id="loginIdentifier" name="identifier" type="text" placeholder="you@example.com — or username / phone" aria-label="Email, username or phone" autocomplete="username" required autofocus>
+          
+          <label for="loginPassword">Password</label>
+          <div class="pw-wrap">
+            <input id="loginPassword" name="password" type="password" placeholder="Enter your password" aria-label="Password" autocomplete="current-password" required>
+            <span class="pw-toggle" id="loginPwToggle" aria-hidden="true" title="Show / hide password">👁️</span>
+          </div>
+
+          <div id="capsLockNotice" class="small" style="display:none; color:var(--danger)">Caps Lock is ON</div>
+
+          <div class="form-actions" style="margin-bottom:6px">
+            <div class="left">
+              <label style="display:flex;align-items:center;gap:8px" aria-hidden="false">
+                <input type="checkbox" id="rememberMe" name="remember" style="width:16px;height:16px" aria-label="Remember me"> <span class="small">Remember me</span>
+              </label>
+            </div>
+            <div><a href="#" id="forgotLink" class="small">Forgot password?</a></div>
+          </div>
+
+          <!-- reCAPTCHA placeholder (v2 checkbox) -->
+          <div style="margin:8px 0">
+            <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" id="recaptchaWidget" aria-hidden="false"></div>
+          </div>
+
+          <div id="loginError" class="error" role="alert" aria-live="assertive" style="min-height:18px"></div>
+
+          <div style="display:flex;gap:10px; margin-top:8px">
+            <button type="submit" class="btn primary" id="signinBtn" aria-label="Sign In">Sign In</button>
+            <button type="button" class="btn ghost" id="demoFill" title="Fill demo account">Demo</button>
+          </div>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="registerForm" novalidate style="display:none; margin-top:12px" autocomplete="on">
+          <input type="hidden" id="csrfTokenReg" name="csrfTokenReg" value="">
+          <div class="input-row">
+            <div class="col">
+              <label for="regName">Full name</label>
+              <input id="regName" name="name" type="text" placeholder="Jane Doe" autocomplete="name" required>
+            </div>
+            <div class="col">
+              <label for="regUsername">Username</label>
+              <input id="regUsername" name="username" type="text" placeholder="janedoe" autocomplete="username" required>
+            </div>
+          </div>
+
+          <label for="regEmail">Email address</label>
+          <input id="regEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+
+          <label for="regPhone">Mobile number</label>
+          <input id="regPhone" name="phone" type="tel" placeholder="+254700000000" autocomplete="tel" required>
+
+          <div class="input-row">
+            <div class="col">
+              <label for="regPassword">Password</label>
+              <div class="pw-wrap">
+                <input id="regPassword" name="password" type="password" placeholder="Create password" autocomplete="new-password" required>
+                <span class="pw-toggle" id="regPwToggle">👁️</span>
+              </div>
+            </div>
+            <div class="col">
+              <label for="regConfirm">Confirm password</label>
+              <input id="regConfirm" name="confirm" type="password" placeholder="Confirm password" autocomplete="new-password" required>
+            </div>
+          </div>
+
+          <label for="regGender">Gender (optional)</label>
+          <select id="regGender" name="gender" autocomplete="sex">
+            <option value="">Prefer not to say</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
+          <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+            <div>
+              <label for="regAvatar">Profile image (optional)</label><br>
+              <input id="regAvatar" name="avatar" type="file" accept="image/*" aria-label="Upload profile image">
+            </div>
+            <div style="margin-left:auto;text-align:center">
+              <img id="avatarPreview" class="avatar-preview" src="" alt="avatar preview" style="display:none">
+            </div>
+          </div>
+
+          <div id="registerError" class="error" role="alert" aria-live="assertive" style="min-height:18px"></div>
+
+          <div style="display:flex;gap:10px;margin-top:8px">
+            <button type="button" class="btn primary" id="registerBtn">Create Account</button>
+            <button type="button" class="btn ghost" id="regCancel">Cancel</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+/*
+  authentication.html
+  - Client-side login + register UI
+  - Integrates with localStorage/sessionStorage user flow:
+      * Stores user records as "user_email_<email>" for register/demo purposes
+      * On login stores 'userData' in localStorage and 'activeUser' in sessionStorage
+  - reCAPTCHA: replace YOUR_RECAPTCHA_SITE_KEY with a valid key. Server-side verification still required.
+  - CSRF: client generates a token and includes it in the form. Server must check it.
+  - Password hashing uses SHA-256 in browser for demo. In production, hash and verify on server with bcrypt/argon2.
+*/
+
+/* ---------- Utilities ---------- */
+const $ = id => document.getElementById(id);
+const setTheme = theme => {
+  document.getElementById('authContainer').setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+};
+const getTheme = () => localStorage.getItem('theme') || 'light';
+
+/* ---------- Theme toggle ---------- */
+const themeToggle = $('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const next = getTheme() === 'dark' ? '' : 'dark';
+  setTheme(next);
+});
+setTheme(getTheme());
+
+/* ---------- Tabs ---------- */
+const tabSign = $('tab-signin'), tabReg = $('tab-register');
+const loginForm = $('loginForm'), registerForm = $('registerForm');
+tabSign.addEventListener('click', ()=> { tabSign.classList.add('active'); tabReg.classList.remove('active'); registerForm.style.display='none'; loginForm.style.display='block'; $('loginIdentifier').focus(); });
+tabReg.addEventListener('click', ()=> { tabReg.classList.add('active'); tabSign.classList.remove('active'); loginForm.style.display='none'; registerForm.style.display='block'; $('regName').focus(); });
+
+/* ---------- CSRF token generation ---------- */
+function generateCSRF(){
+  const token = crypto.getRandomValues(new Uint8Array(32));
+  // hex
+  return Array.from(token).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+if(!sessionStorage.getItem('csrfToken')) sessionStorage.setItem('csrfToken', generateCSRF());
+$('csrfToken').value = sessionStorage.getItem('csrfToken');
+$('csrfTokenReg').value = sessionStorage.getItem('csrfToken');
+
+/* ---------- Password show/hide ---------- */
+function bindPwToggle(inputId, toggleId){
+  const input = $(inputId);
+  const toggle = $(toggleId);
+  toggle.addEventListener('click', ()=>{
+    const isPw = input.type === 'password';
+    input.type = isPw ? 'text' : 'password';
+    toggle.textContent = isPw ? '🙈' : '👁️';
+    toggle.setAttribute('aria-pressed', String(isPw));
+  });
+}
+bindPwToggle('loginPassword','loginPwToggle');
+bindPwToggle('regPassword','regPwToggle');
+
+/* ---------- CapsLock indicator ---------- */
+$('loginPassword').addEventListener('keyup', (e) => {
+  $('capsLockNotice').style.display = e.getModifierState('CapsLock') ? 'block' : 'none';
+});
+
+/* ---------- Avatar preview for register ---------- */
+$('regAvatar').addEventListener('change', async (e) => {
+  const f = e.target.files[0];
+  if(!f) { $('avatarPreview').style.display='none'; return; }
+  if(f.size > 2_000_000){ // limit 2MB
+    $('registerError').textContent = 'Avatar too large (max 2MB).';
+    return;
+  }
+  const url = URL.createObjectURL(f);
+  $('avatarPreview').src = url;
+  $('avatarPreview').style.display='block';
+});
+
+/* ---------- Demo fill (for easier testing) ---------- */
+$('demoFill').addEventListener('click', ()=>{
+  // create a demo user if not exists
+  const demoEmail = 'demo@calebstore.test';
+  if(!localStorage.getItem('user_email_' + demoEmail)){
+    // create demo user with hashed password
+    hashString('Password123!').then(hash => {
+      const userObj = { name: 'Demo User', email: demoEmail, username: 'demouser', phone: '+254700000001', gender: 'male', avatar: '', passwordHash: hash };
+      localStorage.setItem('user_email_' + demoEmail, JSON.stringify(userObj));
+      alert('Demo account created.\nEmail: demo@calebstore.test\nPassword: Password123!');
+    });
+  } else {
+    alert('Demo account already exists.\nEmail: demo@calebstore.test\nPassword: Password123!');
+  }
+});
+
+/* ---------- Input validation helpers ---------- */
+function showError(elId, msg){
+  $(elId).textContent = msg;
+}
+function clearError(elId){
+  $(elId).textContent = '';
+}
+function validEmail(email){
+  // basic regex for demonstration; consider server DNS checks too
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/* ---------- Simple client-side rate limiting / lockout ---------- */
+const ATTEMPT_KEY = 'loginAttempts';
+const LOCK_KEY = 'loginLock';
+function recordAttempt(){
+  const now = Date.now();
+  const attempts = JSON.parse(localStorage.getItem(ATTEMPT_KEY) || '[]').filter(t => now - t < 10*60*1000); // keep 10 min window
+  attempts.push(now);
+  localStorage.setItem(ATTEMPT_KEY, JSON.stringify(attempts));
+  if(attempts.length >= 6){ // lock after 6 attempts within 10 minutes
+    const lockUntil = now + 15*60*1000; // lock 15 minutes
+    localStorage.setItem(LOCK_KEY, String(lockUntil));
+  }
+}
+function isLocked(){
+  const lock = Number(localStorage.getItem(LOCK_KEY) || 0);
+  if(!lock) return false;
+  if(Date.now() > lock){ localStorage.removeItem(LOCK_KEY); localStorage.removeItem(ATTEMPT_KEY); return false; }
+  return lock;
+}
+
+/* ---------- Hashing helper (SHA-256) ---------- */
+async function hashString(str){
+  const enc = new TextEncoder();
+  const buf = enc.encode(str);
+  const digest = await crypto.subtle.digest('SHA-256', buf);
+  const hashArray = Array.from(new Uint8Array(digest));
+  return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+/* ---------- Lookup user by identifier (email/username/phone) ---------- */
+function findUserByIdentifier(identifier){
+  identifier = identifier.trim().toLowerCase();
+  // Try email key
+  if(validEmail(identifier)){
+    const data = localStorage.getItem('user_email_' + identifier);
+    if(data) return JSON.parse(data);
+  }
+  // Try username key
+  const usernameKey = Object.keys(localStorage).find(k => k.startsWith('user_email_') && (() => {
+    try{
+      const u = JSON.parse(localStorage.getItem(k));
+      return u.username && u.username.toLowerCase() === identifier;
+    }catch(e){return false}
+  })());
+  if(usernameKey) return JSON.parse(localStorage.getItem(usernameKey));
+  // Try phone
+  const phoneKey = Object.keys(localStorage).find(k => k.startsWith('user_email_') && (() => {
+    try{
+      const u = JSON.parse(localStorage.getItem(k));
+      return u.phone && u.phone.toLowerCase() === identifier;
+    }catch(e){return false}
+  })());
+  if(phoneKey) return JSON.parse(localStorage.getItem(phoneKey));
+  return null;
+}
+
+/* ---------- reCAPTCHA check (client-side) ---------- */
+function isRecaptchaVerified(){
+  // For real implementation: verify grecaptcha.getResponse() server-side
+  if(typeof grecaptcha === 'undefined') {
+    // reCAPTCHA script wasn't loaded; treat as unverified
+    return false;
+  }
+  const resp = grecaptcha.getResponse();
+  return resp && resp.length > 0;
+}
+
+/* ---------- Login handler ---------- */
+$('loginForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+
+  clearError('loginError');
+  const lock = isLocked();
+  if(lock){
+    const mins = Math.ceil((lock - Date.now())/60000);
+    showError('loginError', `Too many attempts. Try again in ${mins} minute(s).`);
+    return;
+  }
+
+  const identifier = $('loginIdentifier').value.trim();
+  const password = $('loginPassword').value;
+
+  // basic required-field checks
+  if(!identifier || !password){
+    showError('loginError', 'Please fill in both fields.');
+    return;
+  }
+
+  // reCAPTCHA check (client)
+  if(typeof grecaptcha !== 'undefined'){
+    if(!isRecaptchaVerified()){
+      showError('loginError', 'Please complete the reCAPTCHA to prove you are human.');
+      return;
+    }
+  } else {
+    // If recaptcha script not loaded, allow fallback for local demo but warn
+    // In production, treat as failure and require proper captcha
+    // showError('loginError', 'reCAPTCHA not loaded. Contact admin.');
+    // return;
+  }
+
+  // simulate secure POST to /login with CSRF token
+  const csrfToken = $('csrfToken').value;
+  if(csrfToken !== sessionStorage.getItem('csrfToken')){
+    showError('loginError', 'Invalid CSRF token. Please refresh the page.');
+    return;
+  }
+
+  // Lookup user and compare password hash
+  const userRecord = findUserByIdentifier(identifier);
+  if(!userRecord){
+    recordAttempt();
+    showError('loginError', 'Account not found.');
+    return;
+  }
+  const hash = await hashString(password);
+
+  // compare
+  if(hash !== userRecord.passwordHash){
+    recordAttempt();
+    showError('loginError', 'Invalid credentials.');
+    return;
+  }
+
+  // successful login: build userData and store
+  const userData = {
+    name: userRecord.name,
+    email: userRecord.email,
+    username: userRecord.username || '',
+    phone: userRecord.phone || '',
+    gender: userRecord.gender || '',
+    avatar: userRecord.avatar || '', // could be data URL if uploaded
+    loggedAt: new Date().toISOString()
+  };
+  localStorage.setItem('userData', JSON.stringify(userData));
+  sessionStorage.setItem('activeUser', userRecord.email);
+  // optionally store remember user (if checked)
+  if($('rememberMe').checked) localStorage.setItem('rememberUser', userRecord.email);
+  // reset attempts on successful login
+  localStorage.removeItem(ATTEMPT_KEY);
+  localStorage.removeItem(LOCK_KEY);
+
+  // redirect to index.html
+  // ensure HTTPS front-note: we only check and redirect; server must serve over HTTPS
+  if(location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1'){
+    // In production, enforce https; here just show a message
+    showError('loginError', 'Warning: connection is not secure (HTTPS). Redirecting anyway for demo.');
+    setTimeout(()=> window.location.href = 'index.html', 1200);
+  } else {
+    window.location.href = 'index.html';
+  }
+});
+
+/* ---------- Register handler ---------- */
+$('registerBtn').addEventListener('click', async () => {
+  clearError('registerError');
+  const name = $('regName').value.trim();
+  const username = $('regUsername').value.trim();
+  const email = $('regEmail').value.trim().toLowerCase();
+  const phone = $('regPhone').value.trim();
+  const pass = $('regPassword').value;
+  const confirm = $('regConfirm').value;
+  const gender = $('regGender').value;
+  const avatarFile = $('regAvatar').files[0];
+
+  if(!name || !username || !email || !phone || !pass || !confirm){
+    showError('registerError', 'Please fill in all required fields.');
+    return;
+  }
+  if(!validEmail(email)){
+    showError('registerError', 'Please provide a valid email address.');
+    return;
+  }
+  if(pass !== confirm){
+    showError('registerError', 'Passwords do not match.');
+    return;
+  }
+  if(localStorage.getItem('user_email_' + email)){
+    showError('registerError', 'An account with this email already exists.');
+    return;
+  }
+  // optional: check username uniqueness
+  const usernameTaken = Object.keys(localStorage).some(k => k.startsWith('user_email_') && (() => {
+    try{ const u = JSON.parse(localStorage.getItem(k)); return u.username && u.username.toLowerCase() === username.toLowerCase(); } catch(e){ return false }
+  })());
+  if(usernameTaken){
+    showError('registerError', 'Username is already taken.');
+    return;
+  }
+
+  // hash password (client-side demonstration only)
+  const passwordHash = await hashString(pass);
+
+  // avatar handling (convert to data URL if provided)
+  let avatarData = '';
+  if(avatarFile){
+    if(avatarFile.size > 2_000_000){ showError('registerError','Avatar too large (max 2MB).'); return; }
+    avatarData = await fileToDataUrl(avatarFile);
+  } else {
+    // assign default based on gender
+    if(gender === 'female') avatarData = 'default-female.png';
+    else if(gender === 'male') avatarData = 'default-male.png';
+    else avatarData = '';
+  }
+
+  const userObj = {
+    name, username, email, phone, gender, avatar: avatarData, passwordHash,
+    createdAt: new Date().toISOString()
+  };
+
+  // store user record keyed by email (server should store securely)
+  localStorage.setItem('user_email_' + email, JSON.stringify(userObj));
+
+  // auto-redirect to sign-in after tiny delay
+  $('registerError').textContent = '';
+  $('registerError').classList.remove('error'); $('registerError').classList.add('success');
+  $('registerError').textContent = 'Account created — redirecting to Sign In...';
+  setTimeout(()=> {
+    tabSign.click();
+    $('regName').value=''; $('regUsername').value=''; $('regEmail').value=''; $('regPhone').value=''; $('regPassword').value=''; $('regConfirm').value=''; $('avatarPreview').style.display='none';
+    $('registerError').textContent = '';
+  }, 1200);
+});
+
+/* ---------- Helper: file -> dataURL ---------- */
+function fileToDataUrl(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej('failed to read file');
+    r.readAsDataURL(file);
+  });
+}
+
+/* ---------- Cancel register (back to login) ---------- */
+$('regCancel').addEventListener('click', ()=>{
+  tabSign.click();
+});
+
+/* ---------- Forgot password flow placeholder ---------- */
+$('forgotLink').addEventListener('click', (e)=>{
+  e.preventDefault();
+  alert('Password reset flow placeholder. Implement server-side reset link generator & email delivery.');
+});
+
+/* ---------- Accept Enter key & accessibility ---------- */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){
+    const active = document.activeElement;
+    if(active && active.tagName === 'INPUT' && active.form){
+      // pressing enter inside a form will submit it normally; no action needed
+    }
+  }
+});
+
+/* ---------- Demo: If a user is already active (userData exists) redirect away ---------- */
+if(localStorage.getItem('userData') && sessionStorage.getItem('activeUser')){
+  // already logged in — go to index
+  setTimeout(()=> window.location.href = 'index.html', 300);
+}
+
+/* ---------- Ensure recaptcha widget exists (if developer replaced key) ---------- */
+window.onload = ()=> {
+  // inject initial CSRF and theme
+  $('csrfToken').value = sessionStorage.getItem('csrfToken') || '';
+  $('csrfTokenReg').value = sessionStorage.getItem('csrfToken') || '';
+  // optionally render grecaptcha if available
+  if(typeof grecaptcha !== 'undefined' && typeof grecaptcha.render === 'function'){
+    try{
+      // render only if not already rendered
+      if(!document.querySelector('.g-recaptcha[data-rendered="1"]')){
+        grecaptcha.render('recaptchaWidget', { 'sitekey' : 'YOUR_RECAPTCHA_SITE_KEY' });
+        document.querySelector('.g-recaptcha').setAttribute('data-rendered','1');
+      }
+    }catch(e){/* ignore */}
+  } else {
+    // If grecaptcha not available, we show a small notice (in production you should require recaptcha)
+    const rc = document.getElementById('recaptchaWidget');
+    if(rc) rc.style.minHeight = '60px';
+  }
+};
+
+/* ---------- Accessibility / focus / autofocus ---------- */
+window.addEventListener('load', ()=> {
+  // autofocus placed in input attribute; ensure focus
+  const id = $('loginIdentifier');
+  if(id) id.focus();
+});
+
+/* ---------- Extra: Clean up stale rememberUser (optional) ---------- */
+// If rememberUser exists but userData cleared, pre-fill identifier
+if(localStorage.getItem('rememberUser')){
+  const rem = localStorage.getItem('rememberUser');
+  if(rem) $('loginIdentifier').value = rem;
+}
+</script>
+</body>
+</html>
