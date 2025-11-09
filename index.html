@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ShopSphere – Modern E‑commerce Demo</title>
   <meta name="description" content="Accessible, responsive e‑commerce demo with product modal, search autocomplete, wishlist, cart, reviews, analytics filters, and more.">
   <meta name="keywords" content="ecommerce, demo, shop, cart, wishlist, product modal, search, accessibility, responsive">
@@ -47,10 +47,10 @@
   <style>
 :root{
   --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
-  --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1900px;
+  --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1600px;
 }
 * {
-  font-size: 1rem; /* fixed: previously 5.5rem */
+  font-size: 1rem; 
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f14,#0b0f14 60%,#0e141c);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
@@ -75,7 +75,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.8);backdrop-fi
 nav{display:flex;gap:16px;overflow:auto;padding:10px 0 12px}
 nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06);white-space:nowrap;background:#0f1623}
 
-/* HERO */
+
 .hero{display:grid;grid-template-columns:1fr;gap:16px;padding:18px 0}
 .hero-left{position:relative;border-radius:var(--radius-lg);overflow:hidden}
 .hero-left img{aspect-ratio:4/1;object-fit:cover}
@@ -90,7 +90,7 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 .mini-card img{border-radius:12px;aspect-ratio:4/3;object-fit:cover}
 .mini-card .foot{display:flex;align-items:center;justify-content:space-between}
 
-/* Men/Women sections */
+
 .section{margin:24px 0}
 .section h2{margin:0 0 12px}
 .grid{display:grid;gap:16px}
@@ -99,14 +99,14 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 .grid .big img{height:100%;width:100%;object-fit:cover}
 .grid .card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
 .grid .card img{aspect-ratio:1/1;object-fit:cover}
-.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:24px}
+.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:15px}
 .card:hover,.big:hover{transform:translateY(-2px);transition:transform .2s ease}
 
-/* carousels */
-.row{display:flex;gap:6px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
-.row .p-card{flex:0 0 274px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+
+.row{display:flex;gap:4px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.row .p-card{flex:0 0 250px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
 .row .p-card img{aspect-ratio:1/1;object-fit:cover}
-.row .p-card .p-meta{padding:10px;font-size:24px}
+.row .p-card .p-meta{padding:10px;font-size:15px}
 .carousel-ctl{display:flex;gap:5px}
 
 /* badges & trust */
@@ -188,7 +188,7 @@ footer a{color:#cbd5e1}
 }
 
 .btn {
-  font-size: 26px;
+  font-size: 16px;
   padding: 6px 19px;
   border-radius: 8px;
 }
@@ -437,7 +437,7 @@ body.modal-open {
   <!-- Dropdown Menu -->
   <div id="accountDropdown" class="dropdown hidden">
     <div id="userProfile" class="user-profile hidden">
-      <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar" />
+      <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar">
       <p id="userName">Guest</p>
       <p id="userEmail" class="email"></p>
     </div>
@@ -742,7 +742,7 @@ loadUserData();
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   integrity="sha512-sA+e2Bz6Tfxy7jsFvdcGaOQdArxWv3Kp8VfGh2oS2sG6ZrM8dD9h9Jt1nRtbAQh5Jd6xS6P6QZp+8uxv2FA0A=="
   crossorigin=""
-/>
+>
 
 <script>
 <!-- Leaflet JS -->
@@ -848,7 +848,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <!-- Mobile Menu Button -->
     <button id="menuToggle" aria-label="Toggle Menu" class="hamburger">
-      <span></span><span></span><span></span>
+      <span></span><span></span><span>
     </button>
   </div>
 </header>
@@ -2797,7 +2797,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <img src="${p.images[0]}" alt="${p.title}" loading="lazy" />
         <div class="p-meta">
           <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
-            <h2 style="margin:0;font-size:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${p.title}">${p.title}</h2>
+            <h2 style="margin:0;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${p.title}">${p.title}</h2>
             <button class="icon-btn add-wish" title="Add to wishlist" aria-label="Add ${p.title} to wishlist">♡</button>
           </div>
           <div class="helper">${starIcons(p.rating)}</div>
