@@ -46,7 +46,7 @@
   <style>
     :root{
       --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
-      --radius:16px; --radius-sm:12px; --radius-lg:22px; }
+      --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1600px; }
     * {
   font-size: 1.5rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
 }
@@ -101,11 +101,11 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 .card:hover,.big:hover{transform:translateY(-2px);transition:transform .2s ease}
 
 /* carousels */
-.row{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.row{display:flex;gap:5px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
 .row .p-card{width:100%;max-width:350px;margin:0 auto;flex:0 0 350px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
 .row .p-card img{height:250px; width:100%;aspect-ratio:1/1;object-fit:cover; display:block;max-width:100%}
 .row .p-card .p-meta{padding:10px;font-size:15px}
-.carousel-ctl{display:flex;gap:10px}
+.carousel-ctl{display:flex;gap:5px}
 
 /* badges & trust */
 .trust{display:flex;flex-wrap:wrap;gap:10px}
