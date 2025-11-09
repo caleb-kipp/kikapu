@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" >
   <title>ShopSphere – Modern E‑commerce Demo</title>
   <meta name="description" content="Accessible, responsive e‑commerce demo with product modal, search autocomplete, wishlist, cart, reviews, analytics filters, and more.">
   <meta name="keywords" content="ecommerce, demo, shop, cart, wishlist, product modal, search, accessibility, responsive">
@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="index.css">
   <!-- React + ReactDOM -->
 <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
@@ -45,40 +44,40 @@
         <script src="inde0.js"></script>
          <script src="index.js"></script>
   <style>
-:root{
-  --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
-  --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1600px;
+    :root{
+      --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:16px; --radius-sm:12px; --radius-lg:22px; --max:1600px;
+    }
+    * {
+  font-size: 5.5rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
 }
-* {
-  font-size: 1rem; 
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f14,#0b0f14 60%,#0e141c);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 16px}
-header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.05)}
-.topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
-.brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
-.brand .logo svg{filter:drop-shadow(0 1px 4px rgba(0,0,0,.25))}
-.search{position:relative;flex:1;max-width:560px}
-.search input{width:100%;padding:12px 44px 12px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0f1623;color:var(--text)}
-.search input::placeholder{color:#94a3b8}
-.search .icon{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:.7}
-.autocomplete{position:absolute;top:44px;left:0;right:0;background:#0f1623;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:none}
-.autocomplete button{display:flex;width:100%;padding:10px 12px;gap:8px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer}
-.autocomplete button:hover{background:#121b2b}.actions{display:flex;align-items:center;gap:10px}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f14,#0b0f14 60%,#0e141c);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 16px}
+    header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.05)}
+    .topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
+    .brand .logo svg{filter:drop-shadow(0 1px 4px rgba(0,0,0,.25))}
+    .search{position:relative;flex:1;max-width:560px}
+    .search input{width:100%;padding:12px 44px 12px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0f1623;color:var(--text)}
+    .search input::placeholder{color:#94a3b8}
+    .search .icon{position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:.7}
+    .autocomplete{position:absolute;top:44px;left:0;right:0;background:#0f1623;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:none}
+    .autocomplete button{display:flex;width:100%;padding:10px 12px;gap:8px;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer}
+    .autocomplete button:hover{background:#121b2b}.actions{display:flex;align-items:center;gap:10px}
 .icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0f1623;cursor:pointer}
 .pill{font-size:12px;background:var(--brand);color:#00140a;border-radius:999px;padding:2px 8px;font-weight:700}
 
 nav{display:flex;gap:16px;overflow:auto;padding:10px 0 12px}
 nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06);white-space:nowrap;background:#0f1623}
 
-
+/* HERO */
 .hero{display:grid;grid-template-columns:1fr;gap:16px;padding:18px 0}
 .hero-left{position:relative;border-radius:var(--radius-lg);overflow:hidden}
-.hero-left img{aspect-ratio:4/1;object-fit:cover}
+.hero-left img{aspect-ratio:16/9;object-fit:cover}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.55));display:flex;align-items:flex-end;padding:18px}
 .hero-ctas{display:flex;gap:10px;margin-top:8px}
 .btn{width:180px;padding:10px 19px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
@@ -90,7 +89,7 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 .mini-card img{border-radius:12px;aspect-ratio:4/3;object-fit:cover}
 .mini-card .foot{display:flex;align-items:center;justify-content:space-between}
 
-
+/* Men/Women sections */
 .section{margin:24px 0}
 .section h2{margin:0 0 12px}
 .grid{display:grid;gap:16px}
@@ -99,15 +98,15 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 .grid .big img{height:100%;width:100%;object-fit:cover}
 .grid .card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
 .grid .card img{aspect-ratio:1/1;object-fit:cover}
-.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:15px}
+.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:24px}
 .card:hover,.big:hover{transform:translateY(-2px);transition:transform .2s ease}
 
-
-.row{display:flex;gap:4px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
-.row .p-card{flex:0 0 250px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+/* carousels */
+.row{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.row .p-card{flex:0 0 274px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
 .row .p-card img{aspect-ratio:1/1;object-fit:cover}
-.row .p-card .p-meta{padding:10px;font-size:15px}
-.carousel-ctl{display:flex;gap:5px}
+.row .p-card .p-meta{padding:10px;font-size:24px}
+.carousel-ctl{display:flex;gap:10px}
 
 /* badges & trust */
 .trust{display:flex;flex-wrap:wrap;gap:10px}
@@ -128,7 +127,7 @@ footer a{color:#cbd5e1}
 .related-carousel{margin-top:10px;display:flex;gap:10px;overflow:auto}
 .related-carousel img{width:90px;height:90px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,.08);cursor:pointer}
 .modal-right{padding:14px;display:grid;gap:10px}
-.price{font-size:14px;font-weight:800}
+.price{font-size:24px;font-weight:800}
 .stars{display:flex;gap:2px}
 .qty{display:flex;gap:8px;align-items:center}
 .options{display:flex;flex-wrap:wrap;gap:8px}
@@ -163,10 +162,13 @@ footer a{color:#cbd5e1}
 @media (max-width: 640px){
   nav { display: none; }
   .hero-right { grid-template-columns: 1fr; }
+
+  /* fix syntax + make 2 per row */
   .grid.mw {
     grid-template-columns: repeat(2, 1fr); 
     grid-auto-rows: 260px;
   }
+
   footer .cols {
     grid-template-columns: 1fr 1fr;
   }
@@ -188,7 +190,7 @@ footer a{color:#cbd5e1}
 }
 
 .btn {
-  font-size: 16px;
+  font-size: 26px;
   padding: 6px 19px;
   border-radius: 8px;
 }
@@ -233,12 +235,12 @@ footer a{color:#cbd5e1}
   background: #ff6b81;
   color: #fff;
 }
-/* Blog teasers */
-.grid.blog{grid-template-columns:repeat(3,1fr);gap:16px}
+    /* Blog teasers */
+    .grid.blog{grid-template-columns:repeat(3,1fr);gap:16px}
     
-/* Product title inside modal */
+    /* Product title inside modal */
 #mTitle {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 8px;
   background: linear-gradient(135deg,#00c6ff,#0072ff);
@@ -248,7 +250,7 @@ footer a{color:#cbd5e1}
 
 /* Product price */
 #mPrice {
-  font-size: 1.28rem;
+  font-size: 1.8rem;
   color: #ffce54;
   font-weight: 600;
   margin: 6px 0;
@@ -258,13 +260,13 @@ footer a{color:#cbd5e1}
 #mSpecs li {
   font-size: 1.1rem;
   line-height: 1.5;
-  word-wrap: break-word;
+  word-wrap: break-word;  /* ensure long text breaks */
   overflow-wrap: break-word;
 }
 
 /* Description – readable block */
 #mDescLong {
-  font-size: 1.25rem;
+  font-size: 1.55rem;
   line-height: 1.7;
   margin-top: 12px;
   white-space: normal;
@@ -274,14 +276,16 @@ footer a{color:#cbd5e1}
 /********************
  * Product modal enhancements
  ********************/
+
+/* Bigger font-size for product information */
 #productModal,
 #productModal .modal-content,
 #productModal .modal-right,
 #productModal .panel,
 #productModal .tabs,
 #productModal .reviews {
-  font-size: 1.2rem;
-  line-height: 1.5;
+  font-size: 2.2rem;   /* ongeza size ya maandishi */
+  line-height: 1.5;    /* spacing safi */
 }
 
 /* Prevent page scroll when modal is open */
@@ -307,8 +311,8 @@ body.modal-open {
 #productModal .modal-content.glassy {
   max-width: 100%;
   width: 95%;
-  height: 95%;
-  overflow-y: auto;
+  height: 95%;         /* hifathi ndani ya screen */
+  overflow-y: auto;    /* scroll ndani ya modal pekee */
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -320,7 +324,7 @@ body.modal-open {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin: 0;
+  margin: 0; /* usiongeze margin-left */
 }
 #productModal .viewer img {
   margin-left:800px;
@@ -343,7 +347,7 @@ body.modal-open {
   text-align: left;
 }
 
-/* Product specs auto-wrap */
+/* Product specs auto-wrap to next line depending on screen */
 #productModal #mSpecs li {
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -351,10 +355,10 @@ body.modal-open {
   margin-bottom: 6px;
 }
 
-/* Responsive grid: 4 per row desktop */
+/* Responsive grid: 4 products per row on desktop, auto-wrap on small screens */
 #similarRow, #recentRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 4 cards kwa screen kubwa */
   gap: 16px;
 }
 
@@ -424,280 +428,234 @@ body.modal-open {
     window.location.href = "cart.html";
   });
 </script>
-<!-- ACCOUNT ICON MENU -->
-<div class="account-menu">
-  <!-- Account Icon / Hamburger -->
-  <button id="accountIcon" class="icon-btn" aria-label="Account Menu">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"></circle>
-      <path d="M12 6a3 3 0 110 6 3 3 0 010-6zm0 8c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" fill="white"></path>
-    </svg>
-  </button>
-
-  <!-- Dropdown Menu -->
-  <div id="accountDropdown" class="dropdown hidden">
-    <div id="userProfile" class="user-profile hidden">
-      <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar">
-      <p id="userName">Guest</p>
-      <p id="userEmail" class="email"></p>
-    </div>
-
-    <!-- Login Button -->
-    <button id="openAuth" class="login-btn" onclick="redirectToAuth()">Login</button>
-
-    <!-- My Account Section (visible only when logged in) -->
-    <div id="accountLinks" class="account-links hidden">
-      <a href="orders.html"><i>📦</i> My Orders</a>
-      <a href="profile.html"><i>👤</i> Personal Info</a>
-      <a href="addresses.html"><i>🏠</i> Address Book</a>
-      <a href="payments.html"><i>💳</i> Payment Methods</a>
-      <a href="wishlist.html"><i>💖</i> Wishlist</a>
-      <a href="help.html"><i>❓</i> Help & Support</a>
-    </div>
-
-    <!-- Contacts -->
-    <div class="contact-info">
-      <p>Email: support@calebstore.com</p>
-      <p>Phone: +254 700 000 000</p>
-    </div>
-
-    <!-- Logout Button -->
-    <button id="logoutBtn" class="logout-btn hidden">Logout</button>
-  </div>
-</div>
-
-<!-- STYLES -->
-<style>
-.account-menu {
-  position: relative;
-  display: inline-block;
-}
-
-.icon-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.icon-btn:hover {
-  transform: scale(1.1);
-}
-
-.dropdown {
-  position: absolute;
-  right: 0;
-  top: 45px;
-  background: rgba(25, 25, 25, 0.95);
-  border-radius: 18px;
-  padding: 15px;
-  min-width: 240px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  animation: fadeSlide 0.4s ease;
-  z-index: 200;
-  backdrop-filter: blur(8px);
-  overflow: hidden;
-}
-
-.hidden {
-  display: none;
-}
-
-.avatar {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  object-fit: cover;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.avatar:hover {
-  transform: rotate(6deg) scale(1.05);
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.user-profile {
-  text-align: center;
-  color: white;
-  margin-bottom: 12px;
-  animation: fadeIn 0.5s ease;
-}
-
-.user-profile p {
-  margin: 4px 0;
-}
-
-.email {
-  font-size: 0.85em;
-  color: #bbb;
-}
-
-/* Account Links */
-.account-links {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
-.account-links a {
-  color: #f5f5f5;
-  text-decoration: none;
-  font-size: 0.95em;
-  padding: 8px 10px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.account-links a:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateX(5px);
-}
-
-.contact-info {
-  color: white;
-  font-size: 0.9em;
-  margin-top: 12px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 10px;
-}
-
-.login-btn, .logout-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.login-btn:hover {
-  background-color: #0062cc;
-  transform: translateY(-2px);
-}
-
-.logout-btn {
-  background-color: crimson;
-}
-
-.logout-btn:hover {
-  background-color: darkred;
-  transform: translateY(-2px);
-}
-
-@keyframes fadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style>
-
-<!-- JAVASCRIPT -->
-<script>
-// Elements
-const accountIcon = document.getElementById("accountIcon");
-const dropdown = document.getElementById("accountDropdown");
-const userProfile = document.getElementById("userProfile");
-const userImage = document.getElementById("userImage");
-const userName = document.getElementById("userName");
-const userEmail = document.getElementById("userEmail");
-const loginBtn = document.getElementById("openAuth");
-const logoutBtn = document.getElementById("logoutBtn");
-const accountLinks = document.getElementById("accountLinks");
-
-// Toggle dropdown
-accountIcon.addEventListener("click", () => {
-  dropdown.classList.toggle("hidden");
-});
-
-// Redirect to login/register
-function redirectToAuth() {
-  window.location.href = "authentication.html";
-}
-
-// Load user data
-function loadUserData() {
-  const userData = JSON.parse(localStorage.getItem("userData")) || null;
-
-  if (userData) {
-    // Display user info
-    userProfile.classList.remove("hidden");
-    userName.textContent = userData.name;
-    userEmail.textContent = userData.email || "";
-    userImage.src = userData.avatar
-      ? userData.avatar
-      : userData.gender === "female"
-      ? "default-female.png"
-      : "default-male.png";
-
-    loginBtn.classList.add("hidden");
-    logoutBtn.classList.remove("hidden");
-    accountLinks.classList.remove("hidden");
-  } else {
-    // Default guest view
-    userProfile.classList.remove("hidden");
-    userName.textContent = "Guest";
-    userEmail.textContent = "";
-    userImage.src = "default-avatar.png";
-
-    loginBtn.classList.remove("hidden");
-    logoutBtn.classList.add("hidden");
-    accountLinks.classList.add("hidden");
-  }
-}
-
-// Secure logout
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem("userData");
-  localStorage.removeItem("cartItems");
-  localStorage.removeItem("wishlist");
-  localStorage.removeItem("orders");
-  alert("You have been securely logged out.");
-  loadUserData();
-  dropdown.classList.add("hidden");
-});
-
-// Detect click outside to close dropdown
-document.addEventListener("click", (e) => {
-  if (!accountIcon.contains(e.target) && !dropdown.contains(e.target)) {
-    dropdown.classList.add("hidden");
-  }
-});
-
-// Initialize on load
-loadUserData();
-</script>
           <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"><path d="M4 21a8 8 0 0116 0" stroke="white"></svg></button>
         </div>
       </div>
   </ul>
 </nav>
+ <button class="btn" id="loginBtn">Login</button>
+      <button class="btn hidden" id="logoutBtn">Logout</button>
+      <button class="btn cart-btn" id="cartBtn">🛒 Cart</button>
+    </div>
 
+
+  <script>
+    // --- Utility functions ---
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const cartBtn = document.getElementById('cartBtn');
+
+    function updateButtons() {
+      const user = sessionStorage.getItem('activeUser');
+      if (user) {
+        loginBtn.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+      } else {
+        loginBtn.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+      }
+    }
+
+    // --- Redirect logic for cart access ---
+    cartBtn.addEventListener('click', () => {
+      const user = sessionStorage.getItem('activeUser');
+      if (user) {
+        window.location.href = 'cart.html';
+      } else {
+        window.location.href = 'authentication2.html';
+      }
+    });
+
+    // --- Login / Logout buttons ---
+    loginBtn.addEventListener('click', () => {
+      window.location.href = 'authentication2.html';
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('activeUser');
+      alert('You have been logged out.');
+      updateButtons();
+    });
+
+    // --- Initialize ---
+    updateButtons();
+  </script>
+<style>:root {
+  --brand: #2563eb;
+  --accent: #9333ea;
+  --light-bg: #f9fafb;
+  --dark-bg: #0f1623;
+  --text-light: #ffffff;
+  --text-dark: #111827;
+  --radius: 14px;
+  --transition: 0.3s ease;
+}
+
+/* ===== Base Header ===== */
+.glassy-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  background: rgba(15, 22, 35, 0.55);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: background var(--transition);
+}
+.glassy-header.scrolled {
+  background: rgba(15, 22, 35, 0.9);
+}
+
+/* ===== Container ===== */
+.nav-container {
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2rem;
+}
+
+/* ===== Logo ===== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+.brand .logo {
+  filter: drop-shadow(0 0 10px rgba(37, 117, 252, 0.5));
+}
+
+/* ===== Nav Links ===== */
+.primary-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-link {
+  color: #e0e0e0;
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.nav-link:hover,
+.nav-link.active {
+  color: #6ea8ff;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transition: width var(--transition);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ===== Icons Section ===== */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.icon-btn {
+  background: linear-gradient(145deg, #1c2535, #0a0f18);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6),
+              -3px -3px 8px rgba(255, 255, 255, 0.08);
+}
+.icon-btn:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.6),
+              -4px -4px 10px rgba(255, 255, 255, 0.1);
+}
+.pill {
+  background: var(--brand);
+  border-radius: 50%;
+  color: white;
+  padding: 2px 7px;
+  font-size: 0.7rem;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+/* ===== Mobile Menu ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: var(--transition);
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .primary-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background: rgba(15, 22, 35, 0.95);
+    width: 100%;
+    padding: 1.2rem 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+  .primary-nav.open {
+    display: flex;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+</style>
   <header class="main-header glassy-header">
   <div class="nav-container">
     <nav aria-label="Primary categories" class="primary-nav">
@@ -742,7 +700,7 @@ loadUserData();
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   integrity="sha512-sA+e2Bz6Tfxy7jsFvdcGaOQdArxWv3Kp8VfGh2oS2sG6ZrM8dD9h9Jt1nRtbAQh5Jd6xS6P6QZp+8uxv2FA0A=="
   crossorigin=""
->
+/>
 
 <script>
 <!-- Leaflet JS -->
@@ -844,11 +802,47 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<!-- Login/Logout Buttons -->
+<div class="auth-buttons">
+  <button id="loginBtn" class="neumorphic-button">Login</button>
+  <button id="logoutBtn" class="neumorphic-button" style="display:none;">Logout</button>
+</div>
 
+<script>
+// Check login status on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  if (loggedInUser) {
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'inline-block';
+  } else {
+    loginBtn.style.display = 'inline-block';
+    logoutBtn.style.display = 'none';
+  }
+
+  // Login button redirects to authentication.html
+  loginBtn.addEventListener('click', () => {
+    window.location.href = 'authentication2.html';
+  });
+
+  // Logout button clears session and refreshes
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser');
+    alert('You have been logged out.');
+    window.location.reload();
+  });
+});
+</script>
+
+
+    </nav>
 
     <!-- Mobile Menu Button -->
     <button id="menuToggle" aria-label="Toggle Menu" class="hamburger">
-      <span></span><span></span><span>
+      <span></span><span></span><span></span>
     </button>
   </div>
 </header>
@@ -935,7 +929,7 @@ menuToggle.addEventListener('click', () => {
 .hero {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 16px;
   margin-top: 20px;
   perspective: 1000px;
 }
@@ -978,7 +972,7 @@ menuToggle.addEventListener('click', () => {
   animation: fadeIn 1s ease;
 }
 .hero-overlay h1 {
-  font-size: clamp(2rem, 4vw, 1.5rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
   margin: 0 0 10px;
 }
 .hero-overlay p {
@@ -989,7 +983,7 @@ menuToggle.addEventListener('click', () => {
 /* CTA Buttons */
 .hero-ctas {
   display: flex;
-  gap: 5px;
+  gap: 12px;
 }
 .hero-ctas .btn {
   font-size: 1rem;
@@ -1006,7 +1000,7 @@ menuToggle.addEventListener('click', () => {
 .hero-right {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 5px;
+  gap: 16px;
   flex: 1 1 50%;
 }
 .mini-card {
@@ -1103,142 +1097,95 @@ document.getElementById('learnMore').addEventListener('click', () => {
 
 <!-- CSS -->
 <style>
-/* PRODUCT GRID STYLES */
-.grid.mw {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 5px; /* minimal spacing between cards */
-  justify-items: center;
-  padding: 10px;
-}
-
-/* PRODUCT CARD */
-.product-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  width: 100%;
-  max-width: 220px;
-}
-
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-
-/* PRODUCT IMAGE */
-.product-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-img {
-  transform: scale(1.05);
-}
-
-/* TEXT DETAILS */
-.product-title {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #fff;
-  margin: 4px 0;
-  line-height: 1.2;
-}
-
-.product-price {
-  font-size: 0.85rem;
-  color: #ffce54;
-  margin: 4px 0;
-}
-
-.product-rating {
-  color: gold;
-  margin: 6px 0;
-  font-size: 0.8rem;
-}
-
-/* ACTION BUTTONS */
-.product-actions {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 6px 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  font-size: 0.9rem;
-}
-
-.add-cart {
-  background: linear-gradient(135deg, rgba(0,180,0,0.8), rgba(37,186,0,0.8));
-  color: #fff;
-}
-
-.wishlist, .quickview {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-
-.btn:hover {
-  filter: brightness(1.2);
-}
-
-/* RESPONSIVENESS */
-
-/* 🖥️ Desktop (≥1025px): 4–5 per row */
-@media (min-width: 1025px) {
   .grid.mw {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
   }
-  .product-img {
-    height: 180px;
-  }
-}
 
-/* 💻 Tablet (641px–1024px): 3 per row */
-@media (max-width: 1024px) and (min-width: 641px) {
-  .grid.mw {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
-  .product-img {
-    height: 160px;
-  }
-}
-
-/* 📱 Mobile (≤640px): 2 per row */
-@media (max-width: 640px) {
-  .grid.mw {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-  }
   .product-card {
-    max-width: none;
-    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    position: relative;
   }
+
+  .product-card:hover {
+    transform: translateY(-10px) scale(1.05) rotateX(3deg);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+
   .product-img {
-    height: 140px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: transform 0.5s ease;
   }
+
+  .product-card:hover .product-img {
+    transform: scale(1.1);
+  }
+
+  .product-title {
+    font-size: 1.1rem;
+    margin: 6px 0;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .product-price {
+    font-size: 1rem;
+    color: #ffce54;
+    margin-bottom: 6px;
+  }
+
+  .product-rating {
+    color: gold;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
   .btn {
-    padding: 4px 10px;
-    font-size: 0.8rem;
+    padding: 8px 27px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1.2rem;
   }
-}
+
+  .add-cart {
+    background: linear-gradient(135deg, rgba(248,240,240,0.8), rgba(37,186,0,0.8));
+    color: #fff;
+  }
+
+  .wishlist {
+    background: rgba(255,255,255,0.1);
+    color: red;
+  }
+
+  .quickview {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  .btn:hover {
+    filter: brightness(1.2);
+  }
 </style>
 
 <!-- JS -->
@@ -1258,7 +1205,109 @@ document.getElementById('learnMore').addEventListener('click', () => {
     // open product modal
   }
 </script>
+<!-- Authentication Buttons + Welcome Banner -->
+<div class="auth-container">
+  <div class="welcome-banner" id="welcomeBanner"></div>
+  <div class="auth-buttons">
+    <button id="loginBtn" class="neumorphic-button">Login</button>
+    <button id="logoutBtn" class="neumorphic-button" style="display:none;">Logout</button>
+  </div>
+</div>
 
+<script>
+// Check login status and update UI
+document.addEventListener('DOMContentLoaded', () => {
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const welcomeBanner = document.getElementById('welcomeBanner');
+
+  if (loggedInUser) {
+    // Show welcome message and logout button
+    welcomeBanner.textContent = `👋 Welcome, ${loggedInUser}`;
+    welcomeBanner.style.display = 'block';
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'inline-block';
+  } else {
+    // Hide welcome message and show login button
+    welcomeBanner.style.display = 'none';
+    loginBtn.style.display = 'inline-block';
+    logoutBtn.style.display = 'none';
+  }
+
+  loginBtn.addEventListener('click', () => {
+    window.location.href = 'authentication.html';
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('loggedInUser');
+    alert('You have been logged out.');
+    window.location.reload();
+  });
+});
+</script>
+
+<style>
+/* Container for both banner and buttons */
+.auth-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 999;
+  animation: fadeIn 1s ease;
+}
+
+/* Welcome banner */
+.welcome-banner {
+  background: #e0e0e0;
+  color: #333;
+  padding: 10px 18px;
+  border-radius: 15px;
+  box-shadow: inset 5px 5px 10px #b8b8b8, inset -5px -5px 10px #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  animation: fadeInUp 0.6s ease;
+  display: none;
+}
+
+/* Neumorphic buttons */
+.neumorphic-button {
+  background: #e0e0e0;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.neumorphic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
 <section class="section" aria-labelledby="womenHeading">
   <h2 id="womenHeading">Women • Featured</h2>
   <div class="grid mw" id="womenGrid" aria-label="Women grid with one big and four small cards">
@@ -1300,214 +1349,6 @@ document.getElementById('learnMore').addEventListener('click', () => {
     <div id="rowLiked" class="row" aria-label="Most Liked carousel"></div>
   </div>
 </section>
-<section class="section" aria-label="Dynamic product rows for categories">
-  <!-- HOME -->
-  <div style="display:grid;gap:8px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Home</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowHome">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowHome">▶</button>
-      </div>
-    </div>
-    <div id="rowHome" class="row" aria-label="Home carousel"></div>
-  </div>
-
-  <!-- FURNITURE -->
-  <div style="display:grid;gap:8px;margin-top:18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Furniture</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowFurniture">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowFurniture">▶</button>
-      </div>
-    </div>
-    <div id="rowFurniture" class="row" aria-label="Furniture carousel"></div>
-  </div>
-
-  <!-- BEVERAGES -->
-  <div style="display:grid;gap:8px;margin-top:18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Beverages</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowBeverages">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowBeverages">▶</button>
-      </div>
-    </div>
-    <div id="rowBeverages" class="row" aria-label="Beverages carousel"></div>
-  </div>
-
-  <!-- BALE -->
-  <div style="display:grid;gap:8px;margin-top:18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Bale</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowBale">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowBale">▶</button>
-      </div>
-    </div>
-    <div id="rowBale" class="row" aria-label="Bale carousel"></div>
-  </div>
-
-  <!-- GROCERY -->
-  <div style="display:grid;gap:8px;margin-top:18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Grocery</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowGrocery">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowGrocery">▶</button>
-      </div>
-    </div>
-    <div id="rowGrocery" class="row" aria-label="Grocery carousel"></div>
-  </div>
-
-  <!-- VEHICLES -->
-  <div style="display:grid;gap:8px;margin-top:18px">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <h2>Vehicles</h2>
-      <div class="carousel-ctl">
-        <button class="btn btn-ghost" data-scroll="prev" data-target="#rowVehicles">◀</button>
-        <button class="btn btn-ghost" data-scroll="next" data-target="#rowVehicles">▶</button>
-      </div>
-    </div>
-    <div id="rowVehicles" class="row" aria-label="Vehicles carousel"></div>
-  </div>
-</section>
-
-<script>
-const categories = {
-  home: [
-    {id:'h1', title:'Wall Clock', price:15.00, rating:4.5, img:'https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?q=80&w=800&auto=format&fit=crop'},
-    {id:'h2', title:'Cotton Bedsheet', price:28.00, rating:4.3, img:'https://images.unsplash.com/photo-1600488995806-3c9d1d5a4b09?q=80&w=800&auto=format&fit=crop'},
-    {id:'h3', title:'Wall Mirror', price:49.00, rating:4.7, img:'https://images.unsplash.com/photo-1621609777003-16a777b74843?q=80&w=800&auto=format&fit=crop'},
-    {id:'h4', title:'LED Lamp', price:19.00, rating:4.6, img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'},
-    {id:'h5', title:'Curtain Set', price:38.00, rating:4.4, img:'https://images.unsplash.com/photo-1589654318141-219c04370b1b?q=80&w=800&auto=format&fit=crop'},
-    {id:'h6', title:'Wall Art', price:22.00, rating:4.2, img:'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=800&auto=format&fit=crop'},
-    {id:'h7', title:'Table Vase', price:14.00, rating:4.0, img:'https://images.unsplash.com/photo-1567016523656-bc0c43fd8b18?q=80&w=800&auto=format&fit=crop'},
-    {id:'h8', title:'Carpet Rug', price:59.00, rating:4.5, img:'https://images.unsplash.com/photo-1520178858619-ec0f5a6c0f6f?q=80&w=800&auto=format&fit=crop'},
-    {id:'h9', title:'Decor Candles', price:18.00, rating:4.3, img:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=800&auto=format&fit=crop'},
-    {id:'h10', title:'Laundry Basket', price:25.00, rating:4.1, img:'https://images.unsplash.com/photo-1598300056889-f4f2f85a9b43?q=80&w=800&auto=format&fit=crop'},
-  ],
-  furniture: [
-    {id:'f1', title:'Wooden Chair', price:45.00, rating:4.6, img:'https://images.unsplash.com/photo-1616627983853-387b985dfd3b?q=80&w=800&auto=format&fit=crop'},
-    {id:'f2', title:'Modern Sofa', price:250.00, rating:4.9, img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=800&auto=format&fit=crop'},
-    {id:'f3', title:'Dining Table', price:180.00, rating:4.8, img:'https://images.unsplash.com/photo-1598300057129-6533e2d84f4a?q=80&w=800&auto=format&fit=crop'},
-    {id:'f4', title:'Office Desk', price:110.00, rating:4.5, img:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=800&auto=format&fit=crop'},
-    {id:'f5', title:'Bookshelf', price:85.00, rating:4.3, img:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=800&auto=format&fit=crop'},
-    {id:'f6', title:'Wardrobe', price:200.00, rating:4.4, img:'https://images.unsplash.com/photo-1600488995806-3c9d1d5a4b09?q=80&w=800&auto=format&fit=crop'},
-    {id:'f7', title:'Coffee Table', price:70.00, rating:4.2, img:'https://images.unsplash.com/photo-1588854337111-2d1fbbfd1b40?q=80&w=800&auto=format&fit=crop'},
-    {id:'f8', title:'TV Stand', price:95.00, rating:4.6, img:'https://images.unsplash.com/photo-1605281983989-53aa3c4df1dc?q=80&w=800&auto=format&fit=crop'},
-    {id:'f9', title:'Recliner', price:150.00, rating:4.7, img:'https://images.unsplash.com/photo-1616627561330-263fc7b43f0e?q=80&w=800&auto=format&fit=crop'},
-    {id:'f10', title:'Side Stool', price:35.00, rating:4.0, img:'https://images.unsplash.com/photo-1598300056848-9e6bb6a03f8c?q=80&w=800&auto=format&fit=crop'}
-  ],
-  beverages: [
-    {id:'b1', title:'Orange Juice', price:3.00, rating:4.4, img:'https://images.unsplash.com/photo-1613470201977-9a21f14d27b4?q=80&w=800&auto=format&fit=crop'},
-    {id:'b2', title:'Coca Cola 1L', price:2.50, rating:4.7, img:'https://images.unsplash.com/photo-1600103567519-9f6a65b8b6b2?q=80&w=800&auto=format&fit=crop'},
-    {id:'b3', title:'Energy Drink', price:3.50, rating:4.3, img:'https://images.unsplash.com/photo-1621848062431-f7cfc14c53cd?q=80&w=800&auto=format&fit=crop'},
-    {id:'b4', title:'Mineral Water', price:1.20, rating:4.1, img:'https://images.unsplash.com/photo-1561047029-3000e92aefeb?q=80&w=800&auto=format&fit=crop'},
-    {id:'b5', title:'Milk 1L', price:2.00, rating:4.5, img:'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=800&auto=format&fit=crop'},
-    {id:'b6', title:'Coffee Pack', price:8.00, rating:4.8, img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop'},
-    {id:'b7', title:'Green Tea', price:5.00, rating:4.6, img:'https://images.unsplash.com/photo-1551022372-0bdcb6e7fa2e?q=80&w=800&auto=format&fit=crop'},
-    {id:'b8', title:'Wine Bottle', price:15.00, rating:4.9, img:'https://images.unsplash.com/photo-1510626176961-4b37d0f0b17b?q=80&w=800&auto=format&fit=crop'},
-    {id:'b9', title:'Beer 500ml', price:2.80, rating:4.3, img:'https://images.unsplash.com/photo-1598133894009-1bb7d5a7f3d5?q=80&w=800&auto=format&fit=crop'},
-    {id:'b10', title:'Smoothie Mix', price:6.50, rating:4.4, img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop'}
-  ]
-};
-
-// Generic function to create stars
-function stars(rating){
-  const full = Math.floor(rating);
-  const half = rating - full >= 0.5;
-  let html = '';
-  for(let i=0;i<5;i++){
-    if(i<full) html += '★'; else if(i===full && half) html += '☆'; else html += '✩';
-  }
-  return `<span>${html}</span> <small>${rating.toFixed(1)}</small>`;
-}
-
-// Render each product card
-function makeCard(p){
-  return `
-  <article class="p-card" data-id="${p.id}">
-    <img src="${p.img}" alt="${p.title}" loading="lazy" />
-    <div class="p-meta">
-      <h3>${p.title}</h3>
-      <div>${stars(p.rating)}</div>
-      <div class="price"><strong>$${p.price.toFixed(2)}</strong></div>
-      <div style="display:flex;gap:6px;margin-top:6px">
-        <button class="btn btn-primary" onclick="addToCart('${p.id}')">Add</button>
-        <button class="btn btn-ghost" onclick="viewProduct('${p.id}')">View</button>
-      </div>
-    </div>
-  </article>`;
-}
-
-function fillSection(sectionId, products){
-  document.querySelector(sectionId).innerHTML = products.map(makeCard).join('');
-}
-
-// Fill data
-fillSection('#rowHome', categories.home);
-fillSection('#rowFurniture', categories.furniture);
-fillSection('#rowBeverages', categories.beverages);
-
-// Add to Cart
-function addToCart(id){
-  window.location.href = 'cart.html';
-}
-
-// View product modal
-function viewProduct(id){
-  alert('Open product modal for product ID: '+id);
-  // You can replace alert() with your modal logic
-}
-</script>
-
-<style>
-.section .row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 6px;
-}
-.p-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.1);
-  padding: 10px;
-  text-align: center;
-}
-.p-card img {
-  width: 100%;
-  height: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.p-meta h3 {
-  font-size: 0.8rem;
-  margin: 6px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.price {
-  font-weight: bold;
-  margin: 4px 0;
-}
-.btn {
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.btn-primary {
-  background: #007bff;
-  color: #fff;
-}
-.btn-ghost {
-  background: #f1f1f1;
-}
-</style>
 <!-- ================= PRODUCTS SECTION ================= -->
 <section id="shop" class="section">
   <div class="container">
@@ -1708,7 +1549,7 @@ function viewProduct(id){
 <style>
 /* Blog Section Enhancements */
 .blog-heading {
-  font-size: 0.8rem;
+  font-size: 2.8rem;
   text-align: center;
   color: #fff;
   margin-bottom: 8px;
@@ -1726,7 +1567,7 @@ function viewProduct(id){
 .enhanced-blog {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 6px;
+  gap: 32px;
 }
 
 /* Blog cards */
@@ -1783,7 +1624,7 @@ function viewProduct(id){
 
 .blog-card h3 {
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-bottom: 8px;
   font-weight: 600;
 }
@@ -2039,7 +1880,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- CSS -->
 <style>
 * {
-  font-size: 1.25rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
+  font-size: 1.5rem; /* unaweza adjust kuwa 1.3rem au 1.4rem */
 }
 .product-modal {
   display:none; position:fixed; top:0px; left:0; width:100%; height:100%;
@@ -2068,10 +1909,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .modal-right { flex:1; min-width:300px; }
 
-.stars { color:gold; font-size:1.2rem; margin:6px 0; }
-.price { font-size:1.2rem; color:#ffce54; margin-bottom:10px; }
+.stars { color:gold; font-size:1.5rem; margin:6px 0; }
+.price { font-size:1.5rem; color:#ffce54; margin-bottom:10px; }
 
-.variant-grid { display:flex; gap:5px; margin:8px 0; }
+.variant-grid { display:flex; gap:8px; margin:8px 0; }
 .variant {
   width:30px; height:30px; border-radius:50%;
   cursor:pointer; transition:transform 0.3s;
@@ -2081,7 +1922,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .qty { margin:10px 0; }
 .qty input { padding:12px; border-radius:8px; border:none; text-align:center; }
 
-.action-row { display:flex; gap:5px; margin:12px 0; flex-wrap:wrap; }
+.action-row { display:flex; gap:10px; margin:12px 0; flex-wrap:wrap; }
 .btn {
   padding:10px 26px; border-radius:12px;
   border:none; cursor:pointer;
@@ -2091,7 +1932,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .btn-ghost { background:rgba(255,255,255,0.1); color:#fff; }
 .btn:hover { transform:translateY(-2px); filter:brightness(1.2); }
 
-.tabs { margin:16px 0; display:flex; gap:5px; }
+.tabs { margin:16px 0; display:flex; gap:8px; }
 .tabs button { background:rgba(255,255,255,0.08); border:none; padding:8px 12px; border-radius:8px; color:#fff; cursor:pointer; }
 .tabs button[aria-selected="true"] { background:#0072ff; }
 
@@ -2797,7 +2638,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <img src="${p.images[0]}" alt="${p.title}" loading="lazy" />
         <div class="p-meta">
           <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
-            <h2 style="margin:0;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${p.title}">${p.title}</h2>
+            <h2 style="margin:0;font-size:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${p.title}">${p.title}</h2>
             <button class="icon-btn add-wish" title="Add to wishlist" aria-label="Add ${p.title} to wishlist">♡</button>
           </div>
           <div class="helper">${starIcons(p.rating)}</div>
