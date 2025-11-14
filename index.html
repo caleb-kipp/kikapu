@@ -158,42 +158,12 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.8);backdrop-fi
 .icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0f1623;cursor:pointer}
 .pill{font-size:12px;background:var(--brand);color:#00140a;border-radius:999px;padding:2px 8px;font-weight:700}
 
-nav{display:flex;gap:16px;overflow:auto;padding:10px 0 12px}
-nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06);white-space:nowrap;background:#0f1623}
-
-
-.hero{display:grid;grid-template-columns:1fr;gap:16px;padding:18px 0}
-.hero-left{position:relative;border-radius:var(--radius-lg);overflow:hidden}
-.hero-left img{aspect-ratio:4/1;object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.55));display:flex;align-items:flex-end;padding:18px}
-.hero-ctas{display:flex;gap:10px;margin-top:8px}
-.btn{width:180px;padding:10px 19px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
-.btn-primary{background:linear-gradient(135deg,var(--brand),#16a34a);color:#04120b}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text)}
-
-.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.mini-card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:14px;display:grid;grid-template-rows:auto 1fr auto;gap:10px}
-.mini-card img{border-radius:12px;aspect-ratio:4/3;object-fit:cover}
-.mini-card .foot{display:flex;align-items:center;justify-content:space-between}
-
-
-.section{margin:24px 0}
-.section h2{margin:0 0 12px}
-.grid{display:grid;gap:16px}
-.grid.mw{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
-.grid .big{grid-row:span 2;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
-.grid .big img{height:100%;width:100%;object-fit:cover}
-.grid .card{background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;position:relative}
-.grid .card img{aspect-ratio:1/1;object-fit:cover}
-.card .meta{position:absolute;inset:auto 8px 8px 8px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:8px;border-radius:10px;font-size:15px}
-.card:hover,.big:hover{transform:translateY(-2px);transition:transform .2s ease}
-
 
 .row{display:flex;gap:4px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
-.row .p-card{flex:0 0 250px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+.row .p-card{flex:0 0 200px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
 .row .p-card img{aspect-ratio:1/1;object-fit:cover}
 .row .p-card .p-meta{padding:10px;font-size:15px}
-.carousel-ctl{display:flex;gap:5px}
+.carousel-ctl{display:flex;gap:2px}
 
 /* badges & trust */
 .trust{display:flex;flex-wrap:wrap;gap:10px}
@@ -259,12 +229,7 @@ footer a{color:#cbd5e1}
 }
 
 @media (max-width: 640px){
-  nav { display: none; }
-  .hero-right { grid-template-columns: 1fr; }
-  .grid.mw {
-    grid-template-columns: repeat(2, 1fr); 
-    grid-auto-rows: 260px;
-  }
+  
   footer .cols {
     grid-template-columns: 1fr 1fr;
   }
@@ -505,28 +470,6 @@ body {
   padding: 0 1rem;
 }
 
-/* HERO SECTION FIX */
-.hero {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 16px;
-}
-
-/* Left and Right hero images auto fit */
-.hero-left,
-.hero-right {
-  flex: 1 1 100%;
-  width: 100%;
-}
-
-/* When large screen, split 50/50 */
-@media (min-width: 768px) {
-  .hero-left,
-  .hero-right {
-    flex: 1 1 50%;
-  }
-}
 
 /* IMAGE RESPONSIVENESS */
 img {
@@ -541,14 +484,14 @@ img {
 .row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 6px;
   width: 100%;
 }
 
 /* SECTION PADDING */
 .section {
   width: 100%;
-  padding: 20px 0;
+  padding: 2px 0;
 }
 
 /* TOPBAR RESPONSIVENESS */
@@ -558,7 +501,7 @@ img {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 12px;
+  gap: 4px;
 }
 
 /* SEARCH BAR FULL WIDTH ON MOBILE */
@@ -573,30 +516,13 @@ img {
   }
 }
 
-/* NAVIGATION WRAP */
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-}
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 6px 12px;
-  transition: background 0.2s ease;
-}
-nav a:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-}
+
 
 /* RESPONSIVE MEDIA QUERIES - 10 BREAKPOINTS */
 @media (max-width: 1400px) { .container { max-width: 1200px; } }
 @media (max-width: 1200px) { .container { max-width: 1000px; } }
-@media (max-width: 1024px) { .hero-left, .hero-right { flex: 1 1 100%; } }
-@media (max-width: 900px)  { nav { flex-direction: column; } }
+
+
 @media (max-width: 768px)  { .grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
 @media (max-width: 600px)  { .topbar { flex-direction: column; } }
 @media (max-width: 480px)  { h1, h2, h3 { font-size: 60%; } }
@@ -605,237 +531,334 @@ nav a:hover {
   </style>
 </head>
 <body>
-  <header aria-label="Site header with navigation, search, cart, and wishlist">
-    <div class="container">
-      <div class="topbar">
-        <a class="brand" href="#" aria-label="ShopSphere home">
-          <span class="logo" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
-              <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" stroke="white" stroke-width="2">
-              <circle cx="12" cy="12" r="3" fill="white">
-            </svg>
-          </span>
-          <span>ShopSphere</span>
-        </a>
-        <div class="search" role="search">
-          <label class="sr-only" for="searchInput">Search products</label>
-          <input id="searchInput" type="search" placeholder="Search products... (⌘/Ctrl + K)" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="acList">
-          <div class="icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="white"><path d="M20 20l-3.5-3.5" stroke="white"></svg>
-          </div>
-          <div id="autocomplete" class="autocomplete" role="listbox" aria-label="Search suggestions"></div>
+<header aria-label="Site header with navigation, search, cart, and wishlist">
+  <div class="container">
+    <div class="topbar">
+      <!-- Brand -->
+      <a class="brand" href="#" aria-label="ShopSphere home">
+        <span class="logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" stroke="white" stroke-width="2"/>
+            <circle cx="12" cy="12" r="3" fill="white"/>
+          </svg>
+        </span>
+        <span>ShopSphere</span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search" role="search">
+        <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products">
+        <div class="icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="white"/>
+            <path d="M20 20l-3.5-3.5" stroke="white"/>
+          </svg>
         </div>
-        <div class="actions">
-          <button class="icon-btn" id="openWishlist" aria-label="Open wishlist"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-7-10a4 4 0 018-1 4 4 0 018 1c0 5.65-7 10-7 10z" stroke="white"></svg></button>
-      <a href="cart.html" aria-label="Go to cart">
-  <button class="icon-btn" id="openCart" aria-label="Open cart">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <circle cx="10" cy="20" r="1" fill="white"></circle>
-      <circle cx="17" cy="20" r="1" fill="white"></circle>
-      <path d="M3 4h2l2.4 12.5A2 2 0 009.37 18H18a2 2 0 001.96-1.6L22 8H6"
-        stroke="white"></path>
-    </svg>
-    <span id="cartCount" class="pill" aria-live="polite" aria-label="Items in cart">0</span>
-  </button>
-</a>
-<script>
-  document.getElementById("openCart").addEventListener("click", function () {
-    window.location.href = "cart.html";
-  });
-</script>
-<!-- ACCOUNT ICON MENU -->
-<div class="account-menu">
-  <!-- Account Icon / Hamburger -->
-  <button id="accountIcon" class="icon-btn" aria-label="Account Menu">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"></circle>
-      <path d="M12 6a3 3 0 110 6 3 3 0 010-6zm0 8c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" fill="white"></path>
-    </svg>
-  </button>
+      </div>
 
-  <!-- Dropdown Menu -->
-  <div id="accountDropdown" class="dropdown hidden">
-    <div id="userProfile" class="user-profile hidden">
-      <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar">
-      <p id="userName">Guest</p>
-      <p id="userEmail" class="email"></p>
+      <!-- Top Actions -->
+      <div class="actions">
+        <button class="icon-btn" id="openWishlist" aria-label="Wishlist">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s-7-4.35-7-10a4 4 0 018-1 4 4 0 018 1c0 5.65-7 10-7 10z" stroke="white"/>
+          </svg>
+        </button>
+
+        <a href="cart.html" aria-label="Cart">
+          <button class="icon-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="10" cy="20" r="1" fill="white"/>
+              <circle cx="17" cy="20" r="1" fill="white"/>
+              <path d="M3 4h2l2.4 12.5A2 2 0 009.37 18H18a2 2 0 001.96-1.6L22 8H6" stroke="white"/>
+            </svg>
+            <span id="cartCount" class="pill">0</span>
+          </button>
+        </a>
+
+        <!-- Account Icon -->
+        <div class="account-menu">
+          <button id="accountIcon" class="icon-btn" aria-label="Account Menu">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+              <path d="M12 6a3 3 0 110 6 3 3 0 010-6zm0 8c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" fill="white"/>
+            </svg>
+          </button>
+          <div id="accountDropdown" class="dropdown hidden">
+            <div id="userProfile" class="user-profile">
+              <img id="userImage" src="default-avatar.png" alt="User Avatar" class="avatar">
+              <p id="userName">Guest</p>
+              <p id="userEmail" class="email"></p>
+            </div>
+            <button id="openAuth" class="login-btn">Login</button>
+            <div id="accountLinks" class="account-links hidden">
+              <a href="orders.html">📦 My Orders</a>
+              <a href="profile.html">👤 Personal Info</a>
+              <a href="addresses.html">🏠 Address Book</a>
+              <a href="payments.html">💳 Payment Methods</a>
+              <a href="wishlist.html">💖 Wishlist</a>
+              <a href="help.html">❓ Help & Support</a>
+            </div>
+            <div class="contact-info">
+              <p>Email: support@calebstore.com</p>
+              <p>Phone: +254 700 000 000</p>
+            </div>
+            <button id="logoutBtn" class="logout-btn hidden">Logout</button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Login Button -->
-    <button id="openAuth" class="login-btn" onclick="redirectToAuth()">Login</button>
-
-    <!-- My Account Section (visible only when logged in) -->
-    <div id="accountLinks" class="account-links hidden">
-      <a href="orders.html"><i>📦</i> My Orders</a>
-      <a href="profile.html"><i>👤</i> Personal Info</a>
-      <a href="addresses.html"><i>🏠</i> Address Book</a>
-      <a href="payments.html"><i>💳</i> Payment Methods</a>
-      <a href="wishlist.html"><i>💖</i> Wishlist</a>
-      <a href="help.html"><i>❓</i> Help & Support</a>
-    </div>
-
-    <!-- Contacts -->
-    <div class="contact-info">
-      <p>Email: support@calebstore.com</p>
-      <p>Phone: +254 700 000 000</p>
-    </div>
-
-    <!-- Logout Button -->
-    <button id="logoutBtn" class="logout-btn hidden">Logout</button>
   </div>
-</div>
+</header>
 
-<!-- STYLES -->
+<!-- Primary Nav -->
+<header class="main-header glassy-header">
+  <div class="nav-container">
+    <nav aria-label="Primary categories" class="primary-nav">
+      <a href="#rowNew" class="nav-link active">New Arrivals</a>
+      <a href="#rowBest" class="nav-link">Best Sellers</a>
+      <a href="#menHeading" class="nav-link">Men</a>
+      <a href="#womenHeading" class="nav-link">Women</a>
+      <a href="#" class="nav-link">Accessories</a>
+      <a href="#" class="nav-link">Limited</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="#helpModal" class="nav-link">Help Center</a>
+      <a href="chats1.html?modal=chat" class="nav-link">💬 Chat Support</a>
+    </nav>
+  </div>
+</header>
 <style>
-.account-menu {
+:root {
+  --brand: #00bfa6;
+  --brand-2: #00897b;
+  --text: #fff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* GLOBAL RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Inter', sans-serif; background: #0a0f17; color: var(--text); scroll-behavior: smooth; }
+
+/* HEADER STYLES */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(11,15,20,0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  width: 100%;
+  animation: fadeSlideDown 0.4s ease;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* TOP BAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  flex-wrap: wrap;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: .5px;
+}
+.brand .logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,var(--brand),var(--brand-2));
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+}
+
+/* SEARCH */
+.search {
   position: relative;
-  display: inline-block;
+  flex: 1;
+  max-width: 560px;
+  min-width: 200px;
+  transition: all .3s ease;
+}
+.search input {
+  width: 100%;
+  padding: 12px 44px 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: #0f1623;
+  color: var(--text);
+  transition: all .2s ease;
+}
+.search input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(0,191,166,0.2);
+}
+.search .icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: .8;
 }
 
+/* ACTIONS */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
 .icon-btn {
-  background: transparent;
-  border: none;
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #0f1623;
   cursor: pointer;
-  color: white;
-  transition: transform 0.3s ease;
+  transition: all .3s ease;
 }
-
 .icon-btn:hover {
-  transform: scale(1.1);
+  background: rgba(255,255,255,.1);
+  transform: translateY(-3px);
+}
+.pill {
+  font-size: 12px;
+  background: var(--brand);
+  color: #00140a;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-weight: 700;
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }
 
+/* ACCOUNT MENU */
+.account-menu { position: relative; }
 .dropdown {
   position: absolute;
   right: 0;
-  top: 45px;
-  background: rgba(25, 25, 25, 0.95);
+  top: 48px;
+  background: rgba(25,25,25,0.95);
   border-radius: 18px;
-  padding: 15px;
-  min-width: 240px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  animation: fadeSlide 0.4s ease;
-  z-index: 200;
-  backdrop-filter: blur(8px);
-  overflow: hidden;
-}
-
-.hidden {
+  padding: 16px;
+  width: 260px;
+  box-shadow: var(--shadow);
+  animation: fadeSlide .4s ease;
   display: none;
 }
-
-.avatar {
+.dropdown.show { display: block; }
+.user-profile {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.user-profile .avatar {
   width: 65px;
   height: 65px;
   border-radius: 50%;
   border: 2px solid #fff;
-  object-fit: cover;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  margin-bottom: 6px;
+  transition: transform .4s ease;
 }
+.user-profile .avatar:hover { transform: scale(1.05) rotate(3deg); }
 
-.avatar:hover {
-  transform: rotate(6deg) scale(1.05);
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.user-profile {
-  text-align: center;
-  color: white;
-  margin-bottom: 12px;
-  animation: fadeIn 0.5s ease;
-}
-
-.user-profile p {
-  margin: 4px 0;
-}
-
-.email {
-  font-size: 0.85em;
-  color: #bbb;
-}
-
-/* Account Links */
+/* LINKS */
 .account-links {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
-
 .account-links a {
   color: #f5f5f5;
   text-decoration: none;
-  font-size: 0.95em;
-  padding: 8px 10px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all .2s ease;
 }
-
 .account-links a:hover {
   background: rgba(255,255,255,0.1);
   transform: translateX(5px);
 }
 
-.contact-info {
-  color: white;
-  font-size: 0.9em;
-  margin-top: 12px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 10px;
+/* NAVIGATION */
+.nav-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
 }
-
-.login-btn, .logout-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  width: 100%;
-  padding: 8px;
-  border-radius: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+.primary-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
-
-.login-btn:hover {
-  background-color: #0062cc;
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #0f1623;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all .2s ease;
+}
+.nav-link:hover {
+  background: rgba(255,255,255,0.1);
   transform: translateY(-2px);
 }
-
-.logout-btn {
-  background-color: crimson;
+.nav-link.active {
+  background: linear-gradient(135deg,var(--brand),var(--brand-2));
+  color: #00140a;
 }
 
-.logout-btn:hover {
-  background-color: darkred;
-  transform: translateY(-2px);
+/* RESPONSIVENESS */
+@media (max-width: 1064px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .search { order: 2; width: 100%; }
+  .actions { order: 3; align-self: flex-end; }
+}
+@media (max-width: 768px) {
+  .nav-link { padding: 6px 10px; font-size: 0.9rem; }
+  .brand span:last-child { font-size: 1rem; }
+}
+@media (max-width: 480px) {
+  .icon-btn { width: 38px; height: 38px; }
+  .search input { padding: 10px 40px 10px 12px; }
+  .topbar { gap: 6px; }
+  .nav-link { padding: 5px 8px; font-size: 0.85rem; }
 }
 
+/* ANIMATIONS */
 @keyframes fadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}</style>
+<script>
+  document.getElementById("openCart").addEventListener("click", function () {
+    window.location.href = "cart.html";
+  });
+</script>
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style>
 
 <!-- JAVASCRIPT -->
 <script>
@@ -912,29 +935,6 @@ document.addEventListener("click", (e) => {
 // Initialize on load
 loadUserData();
 </script>
-          <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"><path d="M4 21a8 8 0 0116 0" stroke="white"></svg></button>
-        </div>
-      </div>
-  </ul>
-</nav>
-
-  <header class="main-header glassy-header">
-  <div class="nav-container">
-    <nav aria-label="Primary categories" class="primary-nav">
-      <a href="#rowNew" id="openRow" class="nav-link active">New Arrivals</a>
-      <a href="#rowBest" class="nav-link">Best Sellers</a>
-      <a href="#menHeading" class="nav-link">Men</a>
-      <a href="#womenHeading" class="nav-link">Women</a>
-      <a href="#" class="nav-link">Accessories</a>
-      <a href="#" class="nav-link">Limited</a>
-      <a href="blog.html" class="nav-link">Blog</a>
-      <a href="#helpModal" id="openHelp" class="nav-link">Help Center</a>
- 
-
-      <a href="chats1.html?modal=chat">Chat Support</a>
-      <button id="modeToggle" class="btn btn-ghost" style="position:fixed;bottom:20px;right:20px;z-index:1000;">
-  🌙 Dark Mode
-</button>
 
 <script>
   const modeToggle = document.getElementById('modeToggle');
@@ -950,19 +950,6 @@ loadUserData();
   });
 </script>
 
-      <!-- Location Button + Map -->
-<div id="locationWrapper">
-  <a href="#" id="locationBtn" class="btn btn-ghost">Location</a>
-  <div id="mapPreview"></div>
-</div>
-
-<!-- Leaflet CSS -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha512-sA+e2Bz6Tfxy7jsFvdcGaOQdArxWv3Kp8VfGh2oS2sG6ZrM8dD9h9Jt1nRtbAQh5Jd6xS6P6QZp+8uxv2FA0A=="
-  crossorigin=""
->
 
 <script>
 <!-- Leaflet JS -->
@@ -1066,12 +1053,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 
-    <!-- Mobile Menu Button -->
-    <button id="menuToggle" aria-label="Toggle Menu" class="hamburger">
-      <span></span><span></span><span>
-    </button>
-  </div>
-</header>
 
 <script>
 /* Sticky Header Scroll Effect */
@@ -1097,9 +1078,14 @@ menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('active');
   navMenu.classList.toggle('open');
 });
-</script> <section class="hero" aria-label="Hero and featured">
+</script> 
+<section class="hero" aria-label="Hero and featured">
+  <!-- HERO LEFT (AUTO SLIDER) -->
   <div class="hero-left" id="heroSlider" aria-roledescription="carousel" aria-label="Promotions" tabindex="0">
-    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" alt="Summer collection banner" loading="eager">
+    <img class="slide active" src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" alt="Summer collection banner" loading="eager">
+    <img class="slide" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1400&auto=format&fit=crop" alt="Autumn fashion sale" loading="lazy">
+    <img class="slide" src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=1400&auto=format&fit=crop" alt="Winter accessories" loading="lazy">
+
     <div class="hero-overlay">
       <div>
         <h1>Feel Good. Look Great.</h1>
@@ -1112,176 +1098,339 @@ menuToggle.addEventListener('click', () => {
     </div>
   </div>
 
+  <!-- HERO RIGHT (MINI CARDS) -->
   <div class="hero-right">
-    <!-- mini-cards remain same -->
-    <!-- Eco Tees, City Sneakers, Athleisure, Accessories -->
-   <article class="mini-card" aria-label="Card 1">  
-          <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop" alt="Eco tees" loading="lazy">  
-          <div>  
-            <h3 style="margin:6px 0">Eco Tees</h3>  
-            <p class="helper">Breathable, organic, everyday staples.</p>  
-          </div>  
-          <div class="foot"><span class="pill">New</span><button class="btn btn-ghost" data-cat="tees">Explore</button></div>  
-        </article>  
-        <article class="mini-card" aria-label="Card 2">  
-          <img src="https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=800&auto=format&fit=crop" alt="City sneakers" loading="lazy">  
-          <div>  
-            <h3 style="margin:6px 0">City Sneakers</h3>  
-            <p class="helper">Comfort meets performance.</p>  
-          </div>  
-          <div class="foot"><span class="pill" style="background:var(--accent);color:#1f1300">Deal</span><button class="btn btn-ghost" data-cat="sneakers">Shop</button></div>  
-        </article>  
-        <article class="mini-card" aria-label="Card 3">  
-          <img src="https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=800&auto=format&fit=crop" alt="Athleisure sets" loading="lazy">  
-          <div>  
-            <h3 style="margin:6px 0">Athleisure Sets</h3>  
-            <p class="helper">Mix, match, move.</p>  
-          </div>  
-          <div class="foot"><span class="pill" style="background:#60a5fa;color:#001229">Popular</span><button class="btn btn-ghost" data-cat="athleisure">Browse</button></div>  
-        </article>  
-        <article class="mini-card" aria-label="Card 4">  
-          <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy">  
-          <div>  
-            <h3 style="margin:6px 0">Accessories</h3>  
-            <p class="helper">Finish the look.</p>  
-          </div>  
-          <div class="foot"><span class="pill" style="background:#f472b6;color:#240013">Hot</span><button class="btn btn-ghost" data-cat="accessories">See More</button></div>  
-        </article>  
+    <article class="mini-card" aria-label="Card 1">  
+      <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop" alt="Eco tees" loading="lazy">  
+      <div>  
+        <h3 style="margin:6px 0">Eco Tees</h3>  
+        <p class="helper">Breathable, organic, everyday staples.</p>  
       </div>  
+      <div class="foot"><span class="pill">New</span><button class="btn btn-ghost" data-cat="tees">Explore</button></div>  
+    </article>  
+
+    <article class="mini-card" aria-label="Card 2">  
+      <img src="https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=800&auto=format&fit=crop" alt="City sneakers" loading="lazy">  
+      <div>  
+        <h3 style="margin:6px 0">City Sneakers</h3>  
+        <p class="helper">Comfort meets performance.</p>  
+      </div>  
+      <div class="foot"><span class="pill" style="background:var(--accent);color:#1f1300">Deal</span><button class="btn btn-ghost" data-cat="sneakers">Shop</button></div>  
+    </article>  
+
+    <article class="mini-card" aria-label="Card 3">  
+      <img src="https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=800&auto=format&fit=crop" alt="Athleisure sets" loading="lazy">  
+      <div>  
+        <h3 style="margin:6px 0">Athleisure Sets</h3>  
+        <p class="helper">Mix, match, move.</p>  
+      </div>  
+      <div class="foot"><span class="pill" style="background:#60a5fa;color:#001229">Popular</span><button class="btn btn-ghost" data-cat="athleisure">Browse</button></div>  
+    </article>  
+
+    <article class="mini-card" aria-label="Card 4">  
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy">  
+      <div>  
+        <h3 style="margin:6px 0">Accessories</h3>  
+        <p class="helper">Finish the look.</p>  
+      </div>  
+      <div class="foot"><span class="pill" style="background:#f472b6;color:#240013">Hot</span><button class="btn btn-ghost" data-cat="accessories">See More</button></div>  
+    </article>  
   </div>
 </section>
+
+<!-- JS: Auto Slide Logic -->
+<script>
+const slides = document.querySelectorAll('#heroSlider .slide');
+let currentSlide = 0;
+
+function showNextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+setInterval(showNextSlide, 5000);
+</script>
 <style>
-/* === HERO SECTION === */
-.hero {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 20px;
-  perspective: 1000px;
+:root {
+  --radius: 12px;
+  --radius-lg: 18px;
+  --brand: #22c55e;
+  --accent: #facc15;
+  --text: #f3f4f6;
 }
 
-/* Hero Left: Image + Overlay */
+/* ---------- HERO CONTAINER ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ---------- HERO LEFT (Main Slider) ---------- */
 .hero-left {
   position: relative;
-  flex: 1 1 50%;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  height: clamp(220px, 35vw, 480px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .hero-left:hover {
-  transform: rotateY(2deg) scale(1.02);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  transform: scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
-.hero-left img {
+
+.hero-left img.slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1s ease;
-}
-.hero-left:hover img {
-  transform: scale(1.05);
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
-/* Overlay Text */
+.hero-left img.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ---------- SLIDER OVERLAY ---------- */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, .0), rgba(0, 0, 0, .6));
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px;
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  animation: fadeIn 1s ease;
-}
-.hero-overlay h1 {
-  font-size: clamp(2rem, 4vw, 1.5rem);
-  margin: 0 0 10px;
-}
-.hero-overlay p {
-  font-size: 1.1rem;
-  margin-bottom: 18px;
+  align-items: flex-end;
+  padding: 22px;
+  color: white;
 }
 
-/* CTA Buttons */
+.hero-overlay h1 {
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.hero-overlay .helper {
+  opacity: 0.85;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+}
+
 .hero-ctas {
   display: flex;
-  gap: 5px;
-}
-.hero-ctas .btn {
-  font-size: 1rem;
-  padding: 10px 22px;
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.hero-ctas .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  gap: 12px;
+  margin-top: 10px;
 }
 
-/* Hero Right: mini-cards */
+.btn {
+  width: 180px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand), #16a34a);
+  color: #04120b;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--text);
+}
+
+/* ---------- HERO RIGHT (Mini Cards Grid) ---------- */
 .hero-right {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 5px;
-  flex: 1 1 50%;
-}
-.mini-card {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: pointer;
-}
-.mini-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
-.mini-card img {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
   width: 100%;
-  height: 150px;
-  object-fit: cover;
 }
+
+.mini-card {
+  background: #0f1623;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mini-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+
+.mini-card img {
+  border-radius: 12px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
 .mini-card .foot {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
+  justify-content: space-between;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.pill {
+  background: rgba(255,255,255,0.15);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero { flex-direction: column; }
-  .hero-left, .hero-right { flex: 1 1 100%; }
-  .hero-overlay { padding: 20px; }
-}
-</style>
-<script>
-// SHOP NOW → scrolls to product section
-document.getElementById('shopNow').addEventListener('click', () => {
-  const rowNew = document.querySelector('#rowNew') || document.querySelector('#main');
-  if (rowNew) {
-    rowNew.scrollIntoView({ behavior: 'smooth' });
-  } else {
-    alert('Explore our latest arrivals below!');
+/* ---------- RESPONSIVE LAYOUTS ---------- */
+
+/* ✅ Medium Devices (1200px and below) */
+@media (max-width: 1200px) {
+  .hero-right {
+    grid-template-columns: repeat(4, 1fr);
   }
-});
 
-// LEARN MORE → opens a demo modal or shows info
-document.getElementById('learnMore').addEventListener('click', () => {
-  alert('Discover our sustainable mission and timeless designs in the About section!');
-});
-</script><!-- MEN FEATURED -->
+  .mini-card {
+    padding: 12px;
+  }
+
+  .hero-left {
+    height: clamp(200px, 40vw, 420px);
+  }
+}
+
+/* ✅ Tablets (992px and below) */
+@media (max-width: 992px) {
+  .hero-right {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero {
+    gap: 14px;
+  }
+
+  .mini-card img {
+    aspect-ratio: 1.1/1;
+  }
+}
+
+/* ✅ Mobile Large (768px and below) */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left {
+    height: clamp(180px, 50vw, 360px);
+  }
+
+  .hero-right {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 9px 12px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ✅ Small Phones (600px and below — includes Infinix i40) */
+@media (max-width: 600px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-left {
+    height: clamp(160px, 55vw, 300px);
+  }
+
+  .hero-right {
+    grid-template-columns: repeat(5, minmax(60px, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .hero-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mini-card {
+    min-width: 120px;
+    scroll-snap-align: start;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .mini-card img {
+    aspect-ratio: 1/1;
+  }
+
+  .hero-left, .mini-card {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeSlideUp 0.6s ease forwards;
+  }
+
+  .mini-card:nth-child(2) { animation-delay: 0.1s; }
+  .mini-card:nth-child(3) { animation-delay: 0.2s; }
+  .mini-card:nth-child(4) { animation-delay: 0.3s; }
+
+  @keyframes fadeSlideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ✅ Ultra Small Devices (480px and below) */
+@media (max-width: 480px) {
+  .hero-left {
+    height: 220px;
+  }
+
+  .mini-card {
+    min-width: 100px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ---------- HERO SLIDER ANIMATION ---------- */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+<style><!-- MEN FEATURED -->
 <section class="section" aria-labelledby="menHeading">
   <h2 id="menHeading">Men • Featured</h2>
   <div class="grid mw" id="menGrid" aria-label="Men product grid">
@@ -1744,9 +1893,9 @@ function viewProduct(id){
 /* Mobile fix: show 2 products per row (2×2 visible grid) */
 @media (max-width: 600px) {
   .section .row {
-    grid-template-columns: repeat(auto-fit, minmax(34%, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     gap: 1px;
-    width:90%;
+    width:100%;
     
   }
 
@@ -1754,7 +1903,7 @@ function viewProduct(id){
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,.1);
-  padding: 10px;
+  padding: 4px;
   text-align: center;
 }
 .p-card img {
@@ -1762,11 +1911,11 @@ function viewProduct(id){
   height: 135px;
   height: 135px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .p-meta h3 {
   font-size: 0.4rem;
-  margin: 3px 0;
+  margin: 2px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1777,8 +1926,8 @@ function viewProduct(id){
 }
 .btn {
   border: none;
-  padding: 2px 4px;
-  border-radius: 4px;
+  padding: 2px 2px;
+  border-radius: 2px;
   cursor: pointer;
 }
 .btn-primary {
