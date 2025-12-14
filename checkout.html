@@ -125,7 +125,18 @@
     </aside>
   </div>
 </div>
+<!-- Stripe SDK -->
+<script src="https://js.stripe.com/v3/"></script>
 
+<!-- Checkout Controller -->
+<script src="/js/checkout-controller.js"></script>
+
+<!-- PWA -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js');
+}
+  </script>
 <script>
 // checkout.html script — reads sessionStorage checkoutCart set by index page
 (function(){
